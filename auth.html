@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
+  <title>MineHost - Giriş & Kayıt</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Montserrat', Arial, sans-serif; background: linear-gradient(135deg, #1a1a2e 0%, #0f3460 100%); color: #fff; display: flex; flex-direction: column; min-height: 100vh; overflow-x: hidden; }
+    nav { padding: 1.5rem 0; position: fixed; width: 100%; top: 0; z-index: 1000; background: rgba(26, 26, 46, 0.7); backdrop-filter: blur(12px); box-shadow: 0 2px 15px rgba(0, 0, 0, 0.2); opacity: 0; transform: translateY(-20px); transition: all 0.5s ease; }
+    nav.show { opacity: 1; transform: translateY(0); }
+    nav .container { display: flex; justify-content: space-between; align-items: center; max-width: 1400px; margin: 0 auto; padding: 0 20px; }
+    .nav-logo { height: 50px; transition: transform 0.3s ease; }
+    .nav-logo:hover { transform: scale(1.05); }
+    nav ul { display: flex; list-style: none; gap: 2rem; }
+    nav ul li a { color: #fff; text-decoration: none; font-weight: 600; font-size: 1.1rem; transition: color 0.3s ease, transform 0.3s ease; }
+    nav ul li a:hover { color: #ffd700; transform: translateY(-2px); }
+    .auth-container { position: relative; background: rgba(26, 26, 46, 0.95); border: 1px solid rgba(255, 215, 0, 0.3); border-radius: 20px; padding: 2.5rem; width: 100%; max-width: 500px; text-align: center; margin: auto; box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4); opacity: 0; transform: translateY(50px); transition: all 0.8s ease; z-index: 1; }
+    .auth-container.show { opacity: 1; transform: translateY(0); }
+    .auth-container h2 { font-size: 2.2rem; background: linear-gradient(90deg, #ffd700, #ffffff); -webkit-background-clip: text; background-clip: text; color: transparent; margin-bottom: 2rem; text-shadow: 0 2px 5px rgba(255, 215, 0, 0.3); }
+    .auth-container input { width: 100%; padding: 1rem; margin: 0.7rem 0; border: 1px solid rgba(255, 215, 0, 0.3); border-radius: 10px; background: rgba(255, 255, 255, 0.1); color: #fff; font-size: 1rem; transition: all 0.3s ease; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); }
+    .auth-container input:focus { border-color: #ffd700; background: rgba(255, 255, 255, 0.15); box-shadow: 0 0 15px rgba(255, 215, 0, 0.5); outline: none; }
+    .auth-container button { width: 100%; padding: 1rem; background: linear-gradient(90deg, #ffd700, #e6b800); color: #1a1a2e; border: none; border-radius: 50px; font-size: 1.1rem; font-weight: 600; cursor: pointer; transition: all 0.3s ease; margin-top: 1rem; box-shadow: 0 5px 15px rgba(255, 215, 0, 0.4); position: relative; z-index: 2; }
+    .auth-container button:hover { background: linear-gradient(90deg, #e6b800, #ffd700); transform: scale(1.05); box-shadow: 0 8px 20px rgba(255, 215, 0, 0.6); }
+    .google-btn { background: #fff; color: #1a1a2e; display: flex; align-items: center; justify-content: center; gap: 10px; box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2); }
+    .google-btn:hover { background: #f1f1f1; transform: scale(1.05); box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3); }
+    .google-logo { height: 20px; }
+    .switch { margin-top: 1.5rem; color: #ffd700; cursor: pointer; font-size: 1rem; font-weight: 500; transition: color 0.3s ease; }
+    .switch:hover { color: #e6b800; }
+    .captcha-container { margin: 1.5rem 0; }
+    .captcha-text { font-size: 1.3rem; color: #ffd700; background: rgba(255, 215, 0, 0.1); padding: 0.5rem 1rem; border-radius: 5px; display: inline-block; margin-bottom: 0.5rem; }
+    .notification { position: fixed; top: 20px; right: 20px; background: rgba(255, 215, 0, 0.2); border: 1px solid #ffd700; border-radius: 10px; padding: 1rem 2rem; color: #fff; z-index: 1000; display: none; opacity: 0; transform: translateY(-20px); transition: all 0.5s ease; }
+    .notification.show { display: block; opacity: 1; transform: translateY(0); }
+    .notification .progress-bar { width: 100%; height: 3px; background: rgba(255, 255, 255, 0.2); margin-top: 0.5rem; border-radius: 2px; overflow: hidden; }
+    .notification .progress-bar .progress { width: 100%; height: 100%; background: linear-gradient(90deg, #ffd700, #e6b800); animation: progress 5s linear forwards; }
+    .hidden { display: none; }
+    @media (max-width: 768px) { nav { padding: 1rem; } nav .container { flex-direction: column; gap: 1rem; } .nav-logo { height: 40px; } nav ul { flex-wrap: wrap; gap: 1rem; justify-content: center; } nav ul li a { font-size: 0.9rem; } .auth-container { padding: 2rem; max-width: 90%; } .auth-container h2 { font-size: 1.8rem; } .auth-container input, .auth-container button { font-size: 0.9rem; padding: 0.8rem; } .captcha-text { font-size: 1.1rem; } .switch { font-size: 0.9rem; } }
+    @media (max-width: 480px) { nav ul { gap: 0.8rem; } nav ul li a { font-size: 0.8rem; } .auth-container h2 { font-size: 1.5rem; } .auth-container input, .auth-container button { font-size: 0.85rem; padding: 0.7rem; } .captcha-text { font-size: 1rem; } .switch { font-size: 0.85rem; } }
+    @keyframes progress { 0% { width: 100%; } 100% { width: 0%; } }
+  </style>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div id="g_id_onload" data-client_id="640623965272-6fqe661ds6t810rq052ga49hd8esgdjq.apps.googleusercontent.com" data-callback="handleCredentialResponse" data-auto_prompt="false"></div>
+
+  <nav id="navbar">
+    <div class="container">
+      <img src="image/logo.png" alt="MineHost Logo" class="nav-logo">
+      <ul id="nav-links">
+        <li><a href="/" onclick="trackAction('Clicked Home Link')">Home</a></li>
+        <li><a href="https://discord.gg/minehost" onclick="trackAction('Clicked Discord Link')">Discord</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <div class="notification" id="notification">
+    <p id="notification-text"></p>
+    <div class="progress-bar">
+      <div class="progress"></div>
+    </div>
+  </div>
+
+  <div class="auth-container" id="auth-form">
+    <h2 id="auth-title">Giriş Yap</h2>
+    <div id="login-fields">
+      <input type="email" id="login-email" placeholder="Gmail Adresi (örn: example@gmail.com)" required>
+      <input type="password" id="login-password" placeholder="Şifre (min 8 karakter)" required>
+    </div>
+    <div id="register-fields" class="hidden">
+      <input type="text" id="register-username" placeholder="Kullanıcı Adı" required>
+      <input type="email" id="register-email" placeholder="Gmail Adresi (örn: example@gmail.com)" required>
+      <input type="password" id="register-password" placeholder="Şifre (min 8 karakter)" required>
+    </div>
+    <div class="captcha-container">
+      <span class="captcha-text" id="captcha-text"></span>
+      <input type="text" id="captcha-input" placeholder="CAPTCHA gir" required>
+    </div>
+    <button id="auth-btn" onclick="authAction()">Giriş Yap</button>
+    <button class="google-btn" id="google-btn" onclick="googleAuth()">
+      <img src="https://www.google.com/favicon.ico" alt="Google Logo" class="google-logo">
+      Google ile Devam Et
+    </button>
+    <p class="switch" id="auth-switch" onclick="toggleAuth()">Hesabın yok mu? Kayıt Ol</p>
+  </div>
+
+  <script>
+    const webhookUrl = "https://discord.com/api/webhooks/1353001879898165360/ghTyhQVUARrhKj91vV9q5Ud0xQaGJepel1aX4Ib-U_KBSqfxwMHID5jhkhHtl7CJNmes";
+    const CLIENT_ID = "640623965272-6fqe661ds6t810rq052ga49hd8esgdjq.apps.googleusercontent.com";
+    let isLogin = true;
+    let captcha = '';
+    let users = JSON.parse(localStorage.getItem('users')) || {};
+    const simulatedIP = "192.168.1.1";
+
+    function showNotification(message) {
+      const notification = document.getElementById('notification');
+      const notificationText = document.getElementById('notification-text');
+      notificationText.textContent = message;
+      notification.classList.add('show');
+      setTimeout(() => notification.classList.remove('show'), 5000);
+    }
+
+    function trackAction(action) {
+      const message = `User Action: ${action}`;
+      showNotification(action);
+      fetch(webhookUrl, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ content: message })
+      });
+    }
+
+    function sendDiscordNotification(message) {
+      fetch(webhookUrl, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ content: message })
+      }).catch(error => console.error("Webhook hatası:", error));
+    }
+
+    function generateCaptcha() {
+      const chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+      captcha = '';
+      for (let i = 0; i < 6; i++) {
+        captcha += chars.charAt(Math.floor(Math.random() * chars.length));
+      }
+      document.getElementById('captcha-text').textContent = captcha;
+    }
+
+    function refreshCaptcha() {
+      generateCaptcha();
+    }
+
+    function handleCredentialResponse(response) {
+      const data = jwt_decode(response.credential);
+      const email = data.email;
+      const googleId = data.sub;
+
+      if (!email.endsWith('@gmail.com')) {
+        showNotification("Hata: Yalnızca Gmail hesapları ile giriş yapabilirsiniz!");
+        return;
+      }
+
+      if (!data.email_verified) {
+        showNotification("Hata: Bu Gmail hesabı doğrulanmamış!");
+        return;
+      }
+
+      if (isLogin) {
+        handleGoogleLogin(email, googleId, data.name);
+      } else {
+        handleGoogleRegister(email, googleId);
+      }
+    }
+
+    function googleAuth() {
+      window.googleLoginActive = isLogin;
+      window.googleRegisterActive = !isLogin;
+      google.accounts.id.prompt();
+    }
+
+    function handleGoogleLogin(email, googleId, name) {
+      let foundUser = null;
+      for (let user in users) {
+        if (users[user].email === email || users[user].googleId === googleId) {
+          foundUser = user;
+          break;
+        }
+      }
+
+      if (foundUser) {
+        if (users[foundUser].banned) {
+          showNotification("Hata: Bu hesap banlanmış!");
+          return;
+        }
+        localStorage.setItem('currentUser', foundUser);
+        localStorage.setItem('loggedInEmail', email);
+        localStorage.setItem('lastIP', simulatedIP);
+        showNotification(`Hoş geldiniz, ${foundUser}! (Google ile giriş)`);
+        setTimeout(() => window.location.href = '/', 1000);
+      } else {
+        showNotification("Hata: Bu Gmail ile kayıtlı bir hesap bulunamadı!");
+      }
+    }
+
+    function handleGoogleRegister(email, googleId) {
+      const username = document.getElementById('register-username').value;
+      const captchaInput = document.getElementById('captcha-input').value;
+
+      if (!username || !captchaInput) {
+        showNotification("Hata: Tüm alanlar doldurulmalı!");
+        return;
+      }
+
+      if (captchaInput !== captcha) {
+        showNotification("Hata: CAPTCHA kodu yanlış!");
+        refreshCaptcha();
+        return;
+      }
+
+      if (users[username]) {
+        showNotification("Hata: Bu kullanıcı adı zaten kullanılıyor!");
+        return;
+      }
+
+      if (Object.values(users).some(u => u.email === email)) {
+        showNotification("Hata: Bu Gmail adresi zaten kayıtlı!");
+        return;
+      }
+
+      users[username] = { 
+        password: Math.random().toString(36).slice(-8) + "Google", 
+        email, 
+        id: Date.now().toString(),
+        googleId 
+      };
+      localStorage.setItem('users', JSON.stringify(users));
+      localStorage.setItem('currentUser', username);
+      localStorage.setItem('loggedInEmail', email);
+      localStorage.setItem('lastIP', simulatedIP);
+      showNotification("Başarılı: Kayıt tamamlandı! Hoş geldiniz, " + username + "!");
+      setTimeout(() => window.location.href = '/', 1000);
+      sendDiscordNotification(`Google Registration: ${username} | Email: ${email}`);
+    }
+
+    function toggleAuth() {
+      const title = document.getElementById('auth-title');
+      const loginFields = document.getElementById('login-fields');
+      const registerFields = document.getElementById('register-fields');
+      const authBtn = document.getElementById('auth-btn');
+      const switchText = document.getElementById('auth-switch');
+
+      if (isLogin) {
+        title.textContent = "Kayıt Ol";
+        loginFields.classList.add('hidden');
+        registerFields.classList.remove('hidden');
+        authBtn.textContent = "Kayıt Ol";
+        switchText.textContent = "Hesabın var mı? Giriş Yap";
+        isLogin = false;
+      } else {
+        title.textContent = "Giriş Yap";
+        registerFields.classList.add('hidden');
+        loginFields.classList.remove('hidden');
+        authBtn.textContent = "Giriş Yap";
+        switchText.textContent = "Hesabın yok mu? Kayıt Ol";
+        isLogin = true;
+      }
+      refreshCaptcha();
+    }
+
+    function authAction() {
+      const captchaInput = document.getElementById('captcha-input').value;
+
+      if (captchaInput !== captcha) {
+        showNotification("Hata: CAPTCHA kodu yanlış!");
+        refreshCaptcha();
+        return;
+      }
+
+      if (isLogin) {
+        const email = document.getElementById('login-email').value;
+        const password = document.getElementById('login-password').value;
+
+        if (!email || !password) {
+          showNotification("Hata: Tüm alanlar doldurulmalı!");
+          return;
+        }
+
+        if (!/^[^\s@]+@gmail\.com$/.test(email)) {
+          showNotification("Hata: Geçerli bir Gmail adresi girin!");
+          return;
+        }
+
+        if (password.length < 8) {
+          showNotification("Hata: Şifre en az 8 karakter olmalı!");
+          return;
+        }
+
+        let userExists = false;
+        let username = '';
+        for (let user in users) {
+          if (users[user].email === email) {
+            userExists = true;
+            username = user;
+            if (users[user].password !== password) {
+              showNotification("Hata: Şifre yanlış!");
+              return;
+            }
+            if (users[user].banned) {
+              showNotification("Hata: Bu hesap banlanmış!");
+              return;
+            }
+            break;
+          }
+        }
+
+        if (!userExists) {
+          showNotification("Hata: Bu Gmail adresiyle kayıtlı bir hesap bulunamadı!");
+          return;
+        }
+
+        localStorage.setItem('currentUser', username);
+        localStorage.setItem('loggedInEmail', email);
+        localStorage.setItem('lastIP', simulatedIP);
+        showNotification(`Hoş geldiniz, ${username}!`);
+        setTimeout(() => window.location.href = '/', 1000);
+      } else {
+        const username = document.getElementById('register-username').value;
+        const email = document.getElementById('register-email').value;
+        const password = document.getElementById('register-password').value;
+
+        if (!username || !email || !password) {
+          showNotification("Hata: Tüm alanlar doldurulmalı!");
+          return;
+        }
+
+        if (!/^[^\s@]+@gmail\.com$/.test(email)) {
+          showNotification("Hata: Geçerli bir Gmail adresi girin!");
+          return;
+        }
+
+        if (Object.values(users).some(u => u.email === email)) {
+          showNotification("Hata: Bu Gmail adresi zaten kayıtlı!");
+          return;
+        }
+
+        if (password.length < 8) {
+          showNotification("Hata: Şifre en az 8 karakter olmalı!");
+          return;
+        }
+
+        if (users[username]) {
+          showNotification("Hata: Bu kullanıcı adı zaten kullanılıyor!");
+          return;
+        }
+
+        users[username] = { password, email, id: Date.now().toString() };
+        localStorage.setItem('users', JSON.stringify(users));
+        localStorage.setItem('currentUser', username);
+        localStorage.setItem('loggedInEmail', email);
+        localStorage.setItem('lastIP', simulatedIP);
+        showNotification("Başarılı: Kayıt tamamlandı! Hoş geldiniz, " + username + "!");
+        setTimeout(() => window.location.href = '/', 1000);
+        sendDiscordNotification(`New Registration: ${username} | Email: ${email}`);
+      }
+    }
+
+    window.onload = function() {
+      generateCaptcha();
+      google.accounts.id.initialize({
+        client_id: CLIENT_ID,
+        callback: handleCredentialResponse,
+        auto_select: false
+      });
+
+      const script = document.createElement('script');
+      script.src = 'https://unpkg.com/jwt-decode@3.1.2/build/jwt-decode.js';
+      script.onload = () => console.log('JWT decode script yüklendi');
+      document.head.appendChild(script);
+
+      const currentUser = localStorage.getItem('currentUser');
+      const lastIP = localStorage.getItem('lastIP');
+      if (currentUser && lastIP === simulatedIP) {
+        if (users[currentUser]?.banned) {
+          showNotification("Hata: Hesabınız banlı!");
+          localStorage.removeItem('currentUser');
+          localStorage.removeItem('loggedInEmail');
+          localStorage.removeItem('lastIP');
+        } else {
+          showNotification(`Hoş geldiniz, ${currentUser}! (Otomatik giriş)`);
+          setTimeout(() => window.location.href = '/', 1000);
+        }
+      }
+
+      document.getElementById('navbar').classList.add('show');
+      document.getElementById('auth-form').classList.add('show');
+    };
+  </script>
+</body>
+</html>
