@@ -63,7 +63,6 @@
       color: #ffd700;
       transform: translateY(-2px);
     }
-    /* Dropdown Menu Styles */
     .dropdown {
       position: relative;
     }
@@ -99,12 +98,11 @@
       background: rgba(255, 215, 0, 0.2);
       color: #ffd700;
     }
-    /* Hosting Plans Section */
-    .hosting-plans-section {
+    .physical-packages {
       padding: 8rem 1rem 5rem;
       min-height: 100vh;
     }
-    .hosting-plans-section h2 {
+    .physical-packages h2 {
       text-align: center;
       font-size: 2.5rem;
       margin-bottom: 3rem;
@@ -113,12 +111,12 @@
       background-clip: text;
       color: transparent;
     }
-    .plans-container {
+    .packages-container {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
       gap: 2rem;
     }
-    .plan-card {
+    .package {
       background: rgba(255, 255, 255, 0.05);
       border: 1px solid rgba(255, 255, 255, 0.1);
       border-radius: 15px;
@@ -127,12 +125,12 @@
       transition: all 0.3s ease;
       position: relative;
     }
-    .plan-card.most-sale {
+    .package.most-sale {
       border: 2px solid #ffd700;
       box-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
     }
-    .plan-card.most-sale::before {
-      content: "En Çok Satılan";
+    .package.most-sale::before {
+      content: "Most Sale";
       position: absolute;
       top: -15px;
       left: 50%;
@@ -144,26 +142,26 @@
       font-size: 0.9rem;
       font-weight: 600;
     }
-    .plan-card:hover {
+    .package:hover {
       transform: translateY(-10px);
       background: rgba(255, 255, 255, 0.1);
     }
-    .plan-card h3 {
+    .package h3 {
       font-size: 1.8rem;
       color: #ffd700;
       margin-bottom: 1rem;
     }
-    .plan-card p {
+    .package p {
       font-size: 1rem;
       margin: 0.5rem 0;
       opacity: 0.9;
     }
-    .plan-card .price {
+    .package .price {
       font-size: 1.5rem;
       color: #ffffff;
       margin: 1rem 0;
     }
-    .plan-card button {
+    .package button {
       padding: 0.8rem 2rem;
       background: linear-gradient(90deg, #ffd700, #e6b800);
       color: #1a1a2e;
@@ -174,11 +172,10 @@
       cursor: pointer;
       transition: all 0.3s ease;
     }
-    .plan-card button:hover {
+    .package button:hover {
       background: linear-gradient(90deg, #e6b800, #ffd700);
       transform: scale(1.05);
     }
-    /* Footer Styles */
     footer {
       padding: 3rem 1rem;
       background: rgba(26, 26, 46, 0.9);
@@ -261,7 +258,6 @@
       opacity: 1;
       transform: translateY(0);
     }
-    /* Mobile Responsiveness */
     @media (max-width: 768px) {
       nav {
         padding: 1rem;
@@ -288,29 +284,29 @@
         font-size: 0.9rem;
         padding: 0.6rem 0.8rem;
       }
-      .hosting-plans-section {
+      .physical-packages {
         padding: 6rem 1rem 3rem;
       }
-      .hosting-plans-section h2 {
+      .physical-packages h2 {
         font-size: 2rem;
       }
-      .plans-container {
+      .packages-container {
         grid-template-columns: 1fr;
         gap: 1.5rem;
       }
-      .plan-card {
+      .package {
         padding: 1.5rem;
       }
-      .plan-card h3 {
+      .package h3 {
         font-size: 1.5rem;
       }
-      .plan-card p {
+      .package p {
         font-size: 0.9rem;
       }
-      .plan-card .price {
+      .package .price {
         font-size: 1.2rem;
       }
-      .plan-card button {
+      .package button {
         padding: 0.7rem 1.5rem;
         font-size: 0.9rem;
       }
@@ -336,26 +332,25 @@
       nav ul li a {
         font-size: 0.8rem;
       }
-      .hosting-plans-section h2 {
+      .physical-packages h2 {
         font-size: 1.8rem;
       }
-      .plan-card h3 {
+      .package h3 {
         font-size: 1.3rem;
       }
-      .plan-card p {
+      .package p {
         font-size: 0.85rem;
       }
-      .plan-card .price {
+      .package .price {
         font-size: 1.1rem;
       }
-      .plan-card button {
+      .package button {
         padding: 0.6rem 1.2rem;
         font-size: 0.85rem;
       }
     }
   </style>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
-  <!-- Add Font Awesome for icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 </head>
 <body>
@@ -385,61 +380,99 @@
     </div>
   </nav>
 
-  <section class="hosting-plans-section">
+  <section class="physical-packages">
     <div class="container">
-      <h2>Hosting Paketlerimiz</h2>
-      <div class="plans-container">
-        <!-- Starter Plan -->
-        <div class="plan-card">
-          <h3>STARTER</h3>
-          <p>Kişisel bloglar ve küçük web siteleri için ideal</p>
-          <p>5 GB NVMe SSD Disk</p>
-          <p>Sınırsız Trafik</p>
-          <p>5 Adet E-posta</p>
-          <p>1 Adet Web Sitesi</p>
-          <p>Ücretsiz SSL</p>
-          <p>LiteSpeed Web Server</p>
-          <p class="price">₺29.90 /aylık</p>
-          <button onclick="addToCart('Starter', 29.90, 'Kişisel bloglar ve küçük web siteleri için ideal', '5 GB NVMe SSD Disk', 'Sınırsız Trafik', '5 Adet E-posta', '1 Adet Web Sitesi', 'Ücretsiz SSL', 'LiteSpeed Web Server')">Satın Al</button>
+      <h2>Fiziksel Sunucularımız</h2>
+      <div class="packages-container">
+        <div class="package">
+          <h3>MH-1</h3>
+          <p>Intel Xeon E5-2699v4</p>
+          <p>2 Çekirdek CPU</p>
+          <p>4GB DDR4 RAM</p>
+          <p>40 GB Datacenter SSD</p>
+          <p>Limitsiz Trafik</p>
+          <p class="price">150₺ /aylık</p>
+          <button onclick="addToCart('MH-1', 150, 'Intel Xeon E5-2699v4', '2 Çekirdek CPU', '4GB DDR4 RAM', '40 GB Datacenter SSD', 'Limitsiz Trafik')">Satın Al</button>
         </div>
-        <!-- Basic Plan -->
-        <div class="plan-card">
-          <h3>BASIC</h3>
-          <p>Kurumsal web siteleri ve e-ticaret projeleri için</p>
-          <p>10 GB NVMe SSD Disk</p>
-          <p>Sınırsız Trafik</p>
-          <p>10 Adet E-posta</p>
-          <p>2 Adet Web Sitesi</p>
-          <p>Ücretsiz SSL</p>
-          <p>LiteSpeed Web Server</p>
-          <p class="price">₺49.90 /aylık</p>
-          <button onclick="addToCart('Basic', 49.90, 'Kurumsal web siteleri ve e-ticaret projeleri için', '10 GB NVMe SSD Disk', 'Sınırsız Trafik', '10 Adet E-posta', '2 Adet Web Sitesi', 'Ücretsiz SSL', 'LiteSpeed Web Server')">Satın Al</button>
+        <div class="package">
+          <h3>MH-2</h3>
+          <p>Intel Xeon E5-2699v4</p>
+          <p>2 Çekirdek CPU</p>
+          <p>6GB DDR4 RAM</p>
+          <p>45 GB Datacenter SSD</p>
+          <p>Limitsiz Trafik</p>
+          <p class="price">270₺ /aylık</p>
+          <button onclick="addToCart('MH-2', 270, 'Intel Xeon E5-2699v4', '2 Çekirdek CPU', '6GB DDR4 RAM', '45 GB Datacenter SSD', 'Limitsiz Trafik')">Satın Al</button>
         </div>
-        <!-- Professional Plan (Most Popular) -->
-        <div class="plan-card most-sale">
-          <h3>PROFESSIONAL</h3>
-          <p>Yüksek trafıklı web siteleri için güçlü hosting</p>
-          <p>20 GB NVMe SSD Disk</p>
-          <p>Sınırsız Trafik</p>
-          <p>20 Adet E-posta</p>
-          <p>3 Adet Web Sitesi</p>
-          <p>Ücretsiz SSL</p>
-          <p>LiteSpeed Web Server</p>
-          <p class="price">₺79.90 /aylık</p>
-          <button onclick="addToCart('Professional', 79.90, 'Yüksek trafıklı web siteleri için güçlü hosting', '20 GB NVMe SSD Disk', 'Sınırsız Trafik', '20 Adet E-posta', '3 Adet Web Sitesi', 'Ücretsiz SSL', 'LiteSpeed Web Server')">Satın Al</button>
+        <div class="package most-sale">
+          <h3>MH-3</h3>
+          <p>Intel Xeon E5-2699v4</p>
+          <p>3 Çekirdek CPU</p>
+          <p>8GB DDR4 RAM</p>
+          <p>80 GB Datacenter SSD</p>
+          <p>Limitsiz Trafik</p>
+          <p class="price">340₺ /aylık</p>
+          <button onclick="addToCart('MH-3', 340, 'Intel Xeon E5-2699v4', '3 Çekirdek CPU', '8GB DDR4 RAM', '80 GB Datacenter SSD', 'Limitsiz Trafik')">Satın Al</button>
         </div>
-        <!-- Enterprise Plan -->
-        <div class="plan-card">
-          <h3>ENTERPRISE</h3>
-          <p>Büyük ölçekli projeler için kurumsal hosting</p>
-          <p>30 GB NVMe SSD Disk</p>
-          <p>Sınırsız Trafik</p>
-          <p>Sınırsız E-posta</p>
-          <p>5 Adet Web Sitesi</p>
-          <p>Ücretsiz SSL</p>
-          <p>LiteSpeed Web Server</p>
-          <p class="price">₺99.90 /aylık</p>
-          <button onclick="addToCart('Enterprise', 99.90, 'Büyük ölçekli projeler için kurumsal hosting', '30 GB NVMe SSD Disk', 'Sınırsız Trafik', 'Sınırsız E-posta', '5 Adet Web Sitesi', 'Ücretsiz SSL', 'LiteSpeed Web Server')">Satın Al</button>
+        <div class="package">
+          <h3>MH-4</h3>
+          <p>Intel Xeon E5-2699v4</p>
+          <p>3 Çekirdek CPU</p>
+          <p>12GB DDR4 RAM</p>
+          <p>120 GB Datacenter SSD</p>
+          <p>Limitsiz Trafik</p>
+          <p class="price">530₺ /aylık</p>
+          <button onclick="addToCart('MH-4', 530, 'Intel Xeon E5-2699v4', '3 Çekirdek CPU', '12GB DDR4 RAM', '120 GB Datacenter SSD', 'Limitsiz Trafik')">Satın Al</button>
+        </div>
+        <div class="package">
+          <h3>MH-5</h3>
+          <p>Intel Xeon E5-2699v4</p>
+          <p>6 Çekirdek CPU</p>
+          <p>16GB DDR4 RAM</p>
+          <p>180 GB Datacenter SSD</p>
+          <p>Limitsiz Trafik</p>
+          <p class="price">720₺ /aylık</p>
+          <button onclick="addToCart('MH-5', 720, 'Intel Xeon E5-2699v4', '6 Çekirdek CPU', '16GB DDR4 RAM', '180 GB Datacenter SSD', 'Limitsiz Trafik')">Satın Al</button>
+        </div>
+        <div class="package">
+          <h3>MH-6</h3>
+          <p>Intel Xeon E5-2699v4</p>
+          <p>6 Çekirdek CPU</p>
+          <p>20GB DDR4 RAM</p>
+          <p>200 GB Datacenter SSD</p>
+          <p>Limitsiz Trafik</p>
+          <p class="price">910₺ /aylık</p>
+          <button onclick="addToCart('MH-6', 910, 'Intel Xeon E5-2699v4', '6 Çekirdek CPU', '20GB DDR4 RAM', '200 GB Datacenter SSD', 'Limitsiz Trafik')">Satın Al</button>
+        </div>
+        <div class="package">
+          <h3>MH-7</h3>
+          <p>Intel Xeon E5-2699v4</p>
+          <p>8 Çekirdek CPU</p>
+          <p>24GB DDR4 RAM</p>
+          <p>240 GB Datacenter SSD</p>
+          <p>Limitsiz Trafik</p>
+          <p class="price">1100₺ /aylık</p>
+          <button onclick="addToCart('MH-7', 1100, 'Intel Xeon E5-2699v4', '8 Çekirdek CPU', '24GB DDR4 RAM', '240 GB Datacenter SSD', 'Limitsiz Trafik')">Satın Al</button>
+        </div>
+        <div class="package">
+          <h3>MH-8</h3>
+          <p>Intel Xeon E5-2699v4</p>
+          <p>8 Çekirdek CPU</p>
+          <p>32GB DDR4 RAM</p>
+          <p>320 GB Datacenter SSD</p>
+          <p>Limitsiz Trafik</p>
+          <p class="price">1480₺ /aylık</p>
+          <button onclick="addToCart('MH-8', 1480, 'Intel Xeon E5-2699v4', '8 Çekirdek CPU', '32GB DDR4 RAM', '320 GB Datacenter SSD', 'Limitsiz Trafik')">Satın Al</button>
+        </div>
+        <div class="package">
+          <h3>MH-9</h3>
+          <p>Intel Xeon E5-2699v4</p>
+          <p>16 Çekirdek CPU</p>
+          <p>64GB DDR4 RAM</p>
+          <p>480 GB Datacenter SSD</p>
+          <p>Limitsiz Trafik</p>
+          <p class="price">2950₺ /aylık</p>
+          <button onclick="addToCart('MH-9', 2950, 'Intel Xeon E5-2699v4', '16 Çekirdek CPU', '64GB DDR4 RAM', '480 GB Datacenter SSD', 'Limitsiz Trafik')">Satın Al</button>
         </div>
       </div>
     </div>
@@ -447,7 +480,6 @@
 
   <footer>
     <div class="container footer-container">
-      <!-- Hosting Section -->
       <div class="footer-section">
         <h4>Hosting</h4>
         <ul>
@@ -455,7 +487,6 @@
           <li><a href="#">Plesk Hosting</a></li>
         </ul>
       </div>
-      <!-- Sunucu Section -->
       <div class="footer-section">
         <h4>Sunucu</h4>
         <ul>
@@ -463,17 +494,16 @@
           <li><a href="physical.html">Fiziksel Sunucu</a></li>
         </ul>
       </div>
-      <!-- İletişim Section -->
       <div class="footer-section">
         <h4>İletişim</h4>
         <ul>
           <li class="contact-info">
             <i class="fas fa-envelope"></i>
-            <span>minehost@minehost.com</span>
+            <span>info@minehost.com</span>
           </li>
           <li class="contact-info">
             <i class="fas fa-phone"></i>
-            <span>+63 963 852 7195</span>
+            <span>+90 850 123 4567</span>
           </li>
           <li class="contact-info">
             <i class="fas fa-map-marker-alt"></i>
@@ -489,87 +519,14 @@
   </footer>
 
   <script>
-    const webhookUrl = "https://discord.com/api/webhooks/1353001879898165360/ghTyhQVUARrhKj91vV9q5Ud0xQaGJepel1aX4Ib-U_KBSqfxwMHID5jhkhHtl7CJNmes";
-
-    function showNotification(message) {
-      const notification = document.getElementById('notification');
-      const notificationText = document.getElementById('notification-text');
-      notificationText.textContent = message;
-      notification.classList.add('show');
-      setTimeout(() => notification.classList.remove('show'), 5000);
-    }
-
-    function sendDiscordNotification(message) {
-      fetch(webhookUrl, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ content: message })
-      }).catch(error => console.error("Webhook hatası:", error));
-    }
-
-    function trackAction(action) {
-      const currentUser = localStorage.getItem('currentUser');
-      const message = `User Action: ${action}${currentUser ? ` | User: ${currentUser}` : ''}`;
-      showNotification(action);
-      sendDiscordNotification(message);
-    }
-
-    function addToCart(packageName, price, description, disk, traffic, email, website, ssl, webserver) {
-      const currentUser = localStorage.getItem('currentUser');
-      if (!currentUser) {
-        showNotification("Lütfen giriş yapın!");
-        window.location.href = 'auth.html';
-        return;
-      }
-
-      const userId = JSON.parse(localStorage.getItem('users'))[currentUser]?.id || 'Unknown';
-      const message = `
+    const webhookUrl="https://discord.com/api/webhooks/1353001879898165360/ghTyhQVUARrhKj91vV9q5Ud0xQaGJepel1aX4Ib-U_KBSqfxwMHID5jhkhHtl7CJNmes";function showNotification(e){const t=document.getElementById("notification"),n=document.getElementById("notification-text");n.textContent=e,t.classList.add("show"),setTimeout((() => t.classList.remove("show")),5e3)}function sendDiscordNotification(e){fetch(webhookUrl,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({content:e})}).catch((e => console.error("Webhook hatası:",e)))}function trackAction(e){const t=localStorage.getItem("currentUser"),n=`User Action: ${e}${t?` | User: ${t}`:""}`;showNotification(e),sendDiscordNotification(n)}function addToCart(e,t,n,o,r,i,a){const s=localStorage.getItem("currentUser");if(!s)return showNotification("Lütfen giriş yapın!"),localStorage.setItem("redirectAfterLogin","physical.html"),void setTimeout((() => window.location.href="auth.html"),1e3);const c=JSON.parse(localStorage.getItem("users"))[s].id||"Unknown",l=`
 **New Order Initiated**
-- User: ${currentUser}
-- User ID: ${userId}
-- Package: ${packageName}
-- Price: ${price}₺ /ay
-- Description: ${description}
-- Specs: ${disk}, ${traffic}, ${email}, ${website}, ${ssl}, ${webserver}
-      `;
-      showNotification(`${packageName} için ödeme sayfasına yönlendiriliyorsunuz!`);
-      sendDiscordNotification(message);
-
-      // Redirect to payment.html with query parameters
-      const paymentUrl = `payment.html?package=${encodeURIComponent(packageName)}&price=${encodeURIComponent(price)}&description=${encodeURIComponent(description)}&disk=${encodeURIComponent(disk)}&traffic=${encodeURIComponent(traffic)}&email=${encodeURIComponent(email)}&website=${encodeURIComponent(website)}&ssl=${encodeURIComponent(ssl)}&webserver=${encodeURIComponent(webserver)}`;
-      setTimeout(() => window.location.href = paymentUrl, 1000);
-    }
-
-    function logout() {
-      localStorage.removeItem('currentUser');
-      localStorage.removeItem('loggedInEmail');
-      localStorage.removeItem('lastIP');
-      localStorage.removeItem('isAdmin');
-      showNotification("Çıkış yaptınız!");
-      setTimeout(() => window.location.href = 'auth.html', 1000);
-    }
-
-    window.onload = function() {
-      const currentUser = localStorage.getItem('currentUser');
-      const lastIP = localStorage.getItem('lastIP');
-      const simulatedIP = "192.168.1.1";
-
-      if (currentUser && lastIP === simulatedIP) {
-        const users = JSON.parse(localStorage.getItem('users')) || {};
-        if (users[currentUser]?.banned) {
-          showNotification("Hata: Hesabınız banlı! Giriş yapamazsınız.");
-          localStorage.removeItem('currentUser');
-          localStorage.removeItem('loggedInEmail');
-          localStorage.removeItem('lastIP');
-          localStorage.removeItem('isAdmin');
-          setTimeout(() => window.location.href = 'auth.html', 1000);
-        } else {
-          showNotification(`Hoş geldiniz, ${currentUser}! (Otomatik giriş)`);
-        }
-      } else if (!currentUser) {
-        window.location.href = 'auth.html';
-      }
-    };
+- User: ${s}
+- User ID: ${c}
+- Package: ${e}
+- Price: ${t}₺ /ay
+- Specs: ${n}, ${o}, ${r}, ${i}, ${a}
+      `;showNotification(`${e} için ödeme sayfasına yönlendiriliyorsunuz!`),sendDiscordNotification(l);const d=`payment.html?package=${encodeURIComponent(e)}&price=${encodeURIComponent(t)}&processor=${encodeURIComponent(n)}&cpu=${encodeURIComponent(o)}&ram=${encodeURIComponent(r)}&ssd=${encodeURIComponent(i)}&traffic=${encodeURIComponent(a)}`;setTimeout((() => window.location.href=d),1e3)}function logout(){localStorage.removeItem("currentUser"),localStorage.removeItem("loggedInEmail"),localStorage.removeItem("lastIP"),localStorage.removeItem("isAdmin"),showNotification("Çıkış yaptınız!"),setTimeout((() => window.location.href="auth.html"),1e3)}window.onload=function(){const e=localStorage.getItem("currentUser"),t=localStorage.getItem("lastIP"),n="192.168.1.1";e&&t===n&&((JSON.parse(localStorage.getItem("users"))||{})[e]?.banned?(showNotification("Hata: Hesabınız banlı! Giriş yapamazsınız."),localStorage.removeItem("currentUser"),localStorage.removeItem("loggedInEmail"),localStorage.removeItem("lastIP"),localStorage.removeItem("isAdmin"),setTimeout((() => window.location.href="auth.html"),1e3)):showNotification(`Hoş geldiniz, ${e}! (Otomatik giriş)`))};
   </script>
 </body>
 </html>
