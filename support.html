@@ -3,25 +3,31 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>MineHost - Destek</title>
+  <title>MineHost - Bakımda</title>
   <style>
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
     }
+
     body {
       font-family: 'Montserrat', Arial, sans-serif;
       background: linear-gradient(135deg, #1a1a2e 0%, #0f3460 100%);
       color: #fff;
       line-height: 1.6;
       overflow-x: hidden;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
     }
+
     .container {
       max-width: 1400px;
       margin: 0 auto;
       padding: 0 20px;
     }
+
     nav {
       padding: 1.5rem 0;
       position: fixed;
@@ -35,30 +41,33 @@
       transform: translateY(-50px);
       transition: all 0.5s ease;
     }
+
     nav.show {
       opacity: 1;
       transform: translateY(0);
     }
+
     nav .container {
       display: flex;
       justify-content: space-between;
       align-items: center;
     }
+
     .nav-logo {
       height: 50px;
       transition: transform 0.3s ease;
     }
+
     .nav-logo:hover {
       transform: scale(1.05);
     }
+
     nav ul {
       display: flex;
       list-style: none;
       gap: 2rem;
     }
-    nav ul li {
-      position: relative;
-    }
+
     nav ul li a {
       color: #fff;
       text-decoration: none;
@@ -66,343 +75,56 @@
       font-size: 1.1rem;
       transition: color 0.3s ease, transform 0.3s ease;
     }
+
     nav ul li a:hover {
       color: #ffd700;
       transform: translateY(-2px);
     }
-    .dropdown {
-      position: relative;
-    }
-    .dropdown-content {
-      display: none;
-      position: absolute;
-      top: 100%;
-      left: 0;
-      background: rgba(26, 26, 46, 0.95);
-      border-radius: 10px;
-      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-      min-width: 200px;
-      z-index: 1;
-      opacity: 0;
-      transform: translateY(10px);
-      transition: all 0.3s ease;
-    }
-    .dropdown:hover .dropdown-content,
-    .dropdown-content:hover {
-      display: block;
-      opacity: 1;
-      transform: translateY(0);
-    }
-    .dropdown-content a {
-      display: block;
-      padding: 0.8rem 1rem;
-      color: #fff;
-      text-decoration: none;
-      font-size: 1rem;
-      transition: background 0.3s ease;
-    }
-    .dropdown-content a:hover {
-      background: rgba(255, 215, 0, 0.2);
-      color: #ffd700;
-    }
-    .support-section {
+
+    .maintenance-section {
+      flex-grow: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
       padding: 8rem 1rem 4rem;
-      min-height: 100vh;
       text-align: center;
       opacity: 0;
       transform: translateY(50px);
       transition: all 0.5s ease 0.2s;
     }
-    .support-section.show {
+
+    .maintenance-section.show {
       opacity: 1;
       transform: translateY(0);
     }
-    .support-section h2 {
-      font-size: 2.5rem;
+
+    .maintenance-content h1 {
+      font-size: 3rem;
       background: linear-gradient(90deg, #ffd700, #ffffff);
       -webkit-background-clip: text;
       background-clip: text;
       color: transparent;
-      margin-bottom: 3rem;
+      text-shadow: 0 2px 5px rgba(255, 215, 0, 0.3);
+      margin-bottom: 1.5rem;
+      animation: pulse 2s infinite;
     }
-    .tabs {
-      display: flex;
-      gap: 1.5rem;
-      justify-content: center;
+
+    .maintenance-content p {
+      font-size: 1.2rem;
+      opacity: 0.8;
       margin-bottom: 2rem;
-      flex-wrap: wrap;
     }
-    .tab-btn {
-      padding: 1rem 2.5rem;
-      background: linear-gradient(90deg, #ffd700, #e6b800);
-      color: #1a1a2e;
-      border: none;
-      border-radius: 50px;
-      font-size: 1.2rem;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      opacity: 0;
-      transform: scale(0.9);
-    }
-    .tab-btn.show {
-      opacity: 1;
-      transform: scale(1);
-    }
-    .tab-btn:hover, .tab-btn.active {
-      background: linear-gradient(90deg, #e6b800, #ffd700);
-      transform: scale(1.05);
-    }
-    .tab-content {
-      display: none;
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid rgba(255, 215, 0, 0.2);
-      border-radius: 15px;
-      padding: 2rem;
-      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
-      opacity: 0;
-      transform: translateY(20px);
-      transition: all 0.5s ease;
-    }
-    .tab-content.active {
-      display: block;
-      opacity: 1;
-      transform: translate modelling(0);
-    }
-    input, textarea {
-      width: 100%;
-      padding: 0.8rem;
-      margin: 0.5rem 0;
-      border: 1px solid rgba(255, 215, 0, 0.3);
-      border-radius: 5px;
-      background: rgba(255, 255, 255, 0.1);
-      color: #fff;
-      font-size: 1rem;
-      transition: all 0.3s ease;
-    }
-    input:focus, textarea:focus {
-      border-color: #ffd700;
-      background: rgba(255, 255, 255, 0.2);
-      box-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
-      outline: none;
-    }
-    textarea {
-      height: 150px;
-      resize: vertical;
-    }
-    button {
-      padding: 0.8rem 2rem;
-      background: linear-gradient(90deg, #ffd700, #e6b800);
-      color: #1a1a2e;
-      border: none;
-      border-radius: 50px;
-      font-size: 1rem;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.3s ease;
-    }
-    button:hover {
-      background: linear-gradient(90deg, #e6b800, #ffd700);
-      transform: scale(1.05);
-    }
-    .ticket {
-      background: rgba(255, 255, 255, 0.1);
-      padding: 1rem;
-      margin: 1rem 0;
-      border-radius: 10px;
-      cursor: pointer;
-      transition: all 0.3s ease;
-    }
-    .ticket:hover {
-      transform: translateY(-5px);
-      background: rgba(255, 255, 255, 0.15);
-    }
-    .ticket .status {
-      font-weight: 600;
-      padding: 0.3rem 0.8rem;
-      border-radius: 5px;
-      display: inline-block;
-    }
-    .status-waiting { background: #ff9800; }
-    .status-answered { background: #2196f3; }
-    .status-resolved { background: #4caf50; }
-    .status-closed { background: #f44336; }
-    .admin-profile {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      margin-top: 0.5rem;
-    }
-    .admin-avatar {
-      width: 30px;
-      height: 30px;
+
+    .spinner {
+      width: 60px;
+      height: 60px;
+      border: 6px solid rgba(255, 215, 0, 0.3);
+      border-top: 6px solid #ffd700;
       border-radius: 50%;
-      background: linear-gradient(45deg, #ffd700, #e6b800);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1em;
-      color: #1a1a2e;
-      text-transform: uppercase;
-      font-weight: bold;
+      animation: spin 1s linear infinite;
+      margin: 0 auto;
     }
-    .chat-modal {
-      display: none;
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0, 0, 0, 0.8);
-      z-index: 2000;
-      justify-content: center;
-      align-items: center;
-    }
-    .chat-modal.active {
-      display: flex;
-    }
-    .chat-container {
-      background: rgba(26, 26, 46, 0.95);
-      border: 1px solid #ffd700;
-      border-radius: 15px;
-      width: 90%;
-      max-width: 1100px;
-      height: 90vh;
-      display: flex;
-      flex-direction: column;
-      padding: 1.5rem;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-      opacity: 0;
-      transform: scale(0.9);
-      transition: all 0.3s ease;
-    }
-    .chat-container.active {
-      opacity: 1;
-      transform: scale(1);
-    }
-    .chat-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 0.5rem 0;
-      border-bottom: 1px solid rgba(255, 215, 0, 0.2);
-    }
-    .chat-header h3 {
-      color: #ffd700;
-      font-size: 1.2rem;
-    }
-    .chat-messages {
-      flex-grow: 1;
-      overflow-y: auto;
-      padding: 1.5rem;
-      max-height: 70vh;
-      background: rgba(0, 0, 0, 0.2);
-      border-radius: 10px;
-      margin: 1rem 0;
-    }
-    .message {
-      background: rgba(255, 215, 0, 0.15);
-      padding: 1rem;
-      margin: 0.7rem 0;
-      border-radius: 8px;
-      word-wrap: break-word;
-      font-size: 1.1rem;
-      line-height: 1.5;
-    }
-    .message img {
-      max-width: 100%;
-      border-radius: 5px;
-      margin-top: 0.5rem;
-    }
-    .typing-indicator {
-      font-style: italic;
-      color: #ffd700;
-      opacity: 0.7;
-      display: none;
-      padding: 0.5rem 0;
-    }
-    .chat-input {
-      display: flex;
-      gap: 1rem;
-      padding: 0.5rem 0;
-      border-top: 1px solid rgba(255, 215, 0, 0.2);
-      flex-wrap: wrap;
-    }
-    .chat-input.hidden {
-      display: none;
-    }
-    .chat-input textarea {
-      flex-grow: 1;
-      height: 40px;
-      resize: none;
-    }
-    .chat-input input[type="file"] {
-      padding: 0.5rem;
-    }
-    .rating-container {
-      display: none;
-      text-align: center;
-      padding: 1rem;
-      background: rgba(255, 215, 0, 0.1);
-      border-radius: 10px;
-      margin-top: 1rem;
-      opacity: 0;
-      transform: translateY(20px);
-      transition: all 0.5s ease;
-    }
-    .rating-container.active {
-      display: block;
-      opacity: 1;
-      transform: translateY(0);
-    }
-    .rating-stars {
-      display: flex;
-      justify-content: center;
-      gap: 0.5rem;
-    }
-    .star {
-      font-size: 2rem;
-      color: #ccc;
-      cursor: pointer;
-      transition: transform 0.3s ease, color 0.3s ease;
-    }
-    .star:hover {
-      transform: scale(1.2);
-    }
-    .star.rated {
-      color: #ffd700;
-      animation: starGlow 0.5s ease-in-out;
-    }
-    @keyframes starGlow {
-      0% { transform: scale(1); }
-      50% { transform: scale(1.3); }
-      100% { transform: scale(1); }
-    }
-    .rating-text {
-      margin-top: 0.5rem;
-      font-size: 1rem;
-      color: #ffd700;
-    }
-    .notification {
-      position: fixed;
-      top: 20px;
-      right: 20px;
-      background: rgba(255, 215, 0, 0.2);
-      border: 1px solid #ffd700;
-      border-radius: 10px;
-      padding: 1rem;
-      color: #fff;
-      z-index: 1000;
-      display: none;
-      opacity: 0;
-      transform: translateY(-20px);
-      transition: all 0.5s ease;
-    }
-    .notification.show {
-      display: block;
-      opacity: 1;
-      transform: translateY(0);
-    }
+
     footer {
       padding: 3rem 1rem;
       text-align: center;
@@ -411,116 +133,105 @@
       transform: translateY(50px);
       transition: all 0.5s ease 0.4s;
     }
+
     footer.show {
       opacity: 1;
       transform: translateY(0);
     }
+
     footer .logo {
       height: 60px;
       margin-bottom: 1rem;
     }
+
     footer p {
       font-size: 0.9rem;
       opacity: 0.8;
     }
-    .partners-container {
-      max-width: 1200px;
-      margin: 40px auto;
-      padding: 0 20px;
-      opacity: 0;
-      transform: translateY(50px);
-      transition: all 0.5s ease 0.6s;
+
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+      100% { transform: scale(1); }
     }
-    .partners-container.show {
-      opacity: 1;
-      transform: translateY(0);
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
     }
-    .partner {
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid rgba(255, 215, 0, 0.2);
-      border-radius: 15px;
-      padding: 2rem;
-      margin-top: 2rem;
-      transition: all 0.3s ease;
-    }
-    .partner:hover {
-      transform: translateY(-10px);
-      background: rgba(255, 255, 255, 0.1);
-    }
-    .partner h3 {
-      font-size: 1.8rem;
-      color: #ffd700;
-      margin-bottom: 1rem;
-    }
-    .partner p {
-      font-size: 1rem;
-      opacity: 0.9;
-    }
-    .partner-links {
-      display: flex;
-      gap: 1rem;
-      margin-top: 1rem;
-      flex-wrap: wrap;
-    }
-    .partner-link {
-      padding: 0.5rem 1rem;
-      background: linear-gradient(90deg, #ffd700, #e6b800);
-      color: #1a1a2e;
-      border-radius: 50px;
-      text-decoration: none;
-      font-weight: 600;
-      transition: all 0.3s ease;
-    }
-    .partner-link:hover {
-      background: linear-gradient(90deg, #e6b800, #ffd700);
-      transform: scale(1.05);
-    }
+
     @media (max-width: 768px) {
-      nav { padding: 1rem; }
-      nav .container { flex-direction: column; gap: 1rem; }
-      .nav-logo { height: 40px; }
-      nav ul { flex-wrap: wrap; gap: 1rem; justify-content: center; }
-      nav ul li a { font-size: 0.9rem; }
-      .dropdown-content { min-width: 150px; }
-      .dropdown-content a { font-size: 0.9rem; padding: 0.6rem 0.8rem; }
-      .support-section { padding: 6rem 1rem 3rem; }
-      .support-section h2 { font-size: 2rem; }
-      .tab-btn { padding: 0.8rem 2rem; font-size: 1rem; }
-      .tab-content { padding: 1.5rem; }
-      input, textarea { font-size: 0.9rem; }
-      button { padding: 0.7rem 1.5rem; font-size: 0.9rem; }
-      .chat-container { width: 95%; height: 90vh; }
-      .chat-header h3 { font-size: 1.1rem; }
-      .chat-messages { max-height: 65vh; padding: 1rem; }
-      .chat-input textarea { height: 35px; }
-      .partner { padding: 1.5rem; }
-      .partner h3 { font-size: 1.5rem; }
-      .partner p { font-size: 0.9rem; }
-      footer .logo { height: 50px; }
-      footer p { font-size: 0.8rem; }
+      nav {
+        padding: 1rem;
+      }
+
+      nav .container {
+        flex-direction: column;
+        gap: 1rem;
+      }
+
+      .nav-logo {
+        height: 40px;
+      }
+
+      nav ul {
+        flex-wrap: wrap;
+        gap: 1rem;
+        justify-content: center;
+      }
+
+      nav ul li a {
+        font-size: 0.9rem;
+      }
+
+      .maintenance-content h1 {
+        font-size: 2rem;
+      }
+
+      .maintenance-content p {
+        font-size: 1rem;
+      }
+
+      .spinner {
+        width: 50px;
+        height: 50px;
+      }
+
+      footer .logo {
+        height: 50px;
+      }
+
+      footer p {
+        font-size: 0.8rem;
+      }
     }
+
     @media (max-width: 480px) {
-      nav ul { gap: 0.8rem; }
-      nav ul li a { font-size: 0.8rem; }
-      .support-section h2 { font-size: 1.8rem; }
-      .tab-btn { padding: 0.7rem 1.5rem; font-size: 0.9rem; }
-      input, textarea { font-size: 0.85rem; }
-      button { padding: 0.6rem 1.2rem; font-size: 0.85rem; }
-      .ticket p { font-size: 0.9rem; }
-      .chat-header h3 { font-size: 1rem; }
-      .chat-messages { max-height: 55vh; padding: 0.8rem; }
-      .message { font-size: 0.9rem; padding: 0.8rem; }
-      .partner h3 { font-size: 1.3rem; }
-      .partner p { font-size: 0.85rem; }
+      nav ul {
+        gap: 0.8rem;
+      }
+
+      nav ul li a {
+        font-size: 0.8rem;
+      }
+
+      .maintenance-content h1 {
+        font-size: 1.8rem;
+      }
+
+      .maintenance-content p {
+        font-size: 0.9rem;
+      }
+
+      .spinner {
+        width: 40px;
+        height: 40px;
+      }
     }
   </style>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
-  <div class="notification" id="notification">
-    <p id="notification-text"></p>
-  </div>
-
   <nav>
     <div class="container">
       <img src="image/logo.png" alt="MineHost Logo" class="nav-logo">
@@ -528,78 +239,22 @@
         <li><a href="/" onclick="trackAction('Clicked Home Link')">Home</a></li>
         <li><a href="/team.html" onclick="trackAction('Clicked Team Link')">Ekip</a></li>
         <li><a href="domain.html" onclick="trackAction('Clicked Domain Link')">Alan Adı</a></li>
-        <li class="dropdown">
-          <a href="#" class="dropbtn">Sunucular</a>
-          <div class="dropdown-content">
-            <a href="physical.html" onclick="trackAction('Clicked Physical Servers Link')">Fiziksel Sunucu</a>
-            <a href="vds.html" onclick="trackAction('Clicked Virtual Servers Link')">Sanal Sunucu</a>
-          </div>
-        </li>
+        <li><a href="physical.html" onclick="trackAction('Clicked Physical Servers Link')">Fiziksel Sunucu</a></li>
+        <li><a href="vds.html" onclick="trackAction('Clicked Virtual Servers Link')">Sanal Sunucu</a></li>
         <li><a href="profile.html">Profil</a></li>
         <li><a href="support.html">Destek</a></li>
         <li><a href="https://discord.gg/minehost" onclick="trackAction('Clicked Discord Link')">Discord</a></li>
-        <li><a href="#" onclick="logout()">Çıkış Yap</a></li>
       </ul>
     </div>
   </nav>
 
-  <section class="support-section">
-    <div class="container">
-      <h2>Destek Merkezi</h2>
-      <div class="tabs">
-        <button class="tab-btn active" onclick="showTab('my-tickets')">Taleplerim</button>
-        <button class="tab-btn" onclick="showTab('new-ticket')">Yeni Talep</button>
-      </div>
-
-      <div class="tab-content active" id="my-tickets">
-        <div id="ticket-list"></div>
-      </div>
-
-      <div class="tab-content" id="new-ticket">
-        <input type="email" id="support-email" placeholder="E-posta" required>
-        <input type="text" id="support-subject" placeholder="Konu" required>
-        <textarea id="support-message" placeholder="Açıklama" required></textarea>
-        <button onclick="sendSupportRequest()">Talep Gönder</button>
-      </div>
+  <section class="maintenance-section">
+    <div class="maintenance-content">
+      <h1>Bakımda!</h1>
+      <p>Sistemlerimiz şu anda bakım altında. Lütfen daha sonra tekrar deneyin.</p>
+      <div class="spinner"></div>
     </div>
   </section>
-
-  <div class="chat-modal" id="chat-modal">
-    <div class="chat-container" id="chat-container">
-      <div class="chat-header">
-        <h3 id="chat-title"></h3>
-        <button onclick="closeChat()">Kapat</button>
-      </div>
-      <div class="chat-messages" id="chat-messages"></div>
-      <div class="typing-indicator" id="typing-indicator">Yazıyor...</div>
-      <div class="chat-input" id="chat-input">
-        <textarea id="chat-input-text" placeholder="Mesajınızı yazın..."></textarea>
-        <input type="file" id="chat-input-file" accept="image/*">
-        <button onclick="sendChatMessage()">Gönder</button>
-      </div>
-      <div class="rating-container" id="rating-container">
-        <div class="rating-stars" id="rating-stars">
-          <span class="star" data-value="1">★</span>
-          <span class="star" data-value="2">★</span>
-          <span class="star" data-value="3">★</span>
-          <span class="star" data-value="4">★</span>
-          <span class="star" data-value="5">★</span>
-        </div>
-        <p class="rating-text" id="rating-text">Desteğimizi puanlayın!</p>
-      </div>
-    </div>
-  </div>
-
-  <div class="partners-container">
-    <div class="partner" id="server-section">
-      <h3 id="server-name">MineHost</h3>
-      <p id="server-description">Yüksek performanslı hosting ve sunucu çözümleri ile işinizi büyütün.</p>
-      <div class="partner-links">
-        <a class="partner-link" id="server-discord" href="https://discord.gg/minehost" target="_blank">Discord</a>
-        <a class="partner-link" id="server-website" href="https://minehost.com.tr" target="_blank">Website</a>
-      </div>
-    </div>
-  </div>
 
   <footer>
     <div class="container">
@@ -610,328 +265,14 @@
   </footer>
 
   <script>
-    const webhookUrl = "https://discord.com/api/webhooks/1354584699661717526/XX25Ch__Ys7WP8XVR5Sj2NPnKD4aZe4x_loSUL8zPQRuFROMkPAwWhacshjAYRBE778e";
-    let currentUser = localStorage.getItem('currentUser');
-    let supportTickets = JSON.parse(localStorage.getItem('supportTickets')) || {};
-    let lastSupportData = JSON.stringify(supportTickets);
-    let currentTicketId = null;
-    let typingTimeout;
-
-    function showNotification(message) {
-      const notification = document.getElementById('notification');
-      const notificationText = document.getElementById('notification-text');
-      notificationText.textContent = message;
-      notification.classList.add('show');
-      setTimeout(() => notification.classList.remove('show'), 5000);
-    }
-
     function trackAction(action) {
-      const message = `User Action: ${action}${currentUser ? ` | User: ${currentUser}` : ''}`;
-      showNotification(action);
-      fetch(webhookUrl, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ content: message })
-      });
-    }
-
-    function showTab(tabId) {
-      document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
-      document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
-      document.getElementById(tabId).classList.add('active');
-      document.querySelector(`[onclick="showTab('${tabId}')"]`).classList.add('active');
-      if (tabId === 'my-tickets') loadTickets();
-    }
-
-    function hasOpenTicket() {
-      return Object.values(supportTickets).some(ticket => 
-        ticket.username === currentUser && (ticket.status === 'waiting' || ticket.status === 'answered')
-      );
-    }
-
-    function sendSupportRequest() {
-      if (!currentUser) {
-        showNotification("Giriş yapmalısınız!");
-        window.location.href = 'auth.html';
-        return;
-      }
-      if (hasOpenTicket()) {
-        showNotification("Açık bir destek talebiniz varken yeni talep açamazsınız!");
-        return;
-      }
-      const email = document.getElementById('support-email').value;
-      const subject = document.getElementById('support-subject').value;
-      const message = document.getElementById('support-message').value;
-
-      if (!email || !subject || !message) {
-        showNotification("Tüm alanları doldurun!");
-        return;
-      }
-
-      const ticketId = Date.now().toString();
-      supportTickets[ticketId] = {
-        username: currentUser,
-        email,
-        subject,
-        messages: [{ sender: currentUser, text: message, timestamp: Date.now() }],
-        status: 'waiting',
-        assignedTo: null,
-        assignedAdminProfile: null,
-        rating: null
-      };
-      localStorage.setItem('supportTickets', JSON.stringify(supportTickets));
-      showNotification("Talep gönderildi!");
-      document.getElementById('support-email').value = '';
-      document.getElementById('support-subject').value = '';
-      document.getElementById('support-message').value = '';
-      showTab('my-tickets');
-      fetch(webhookUrl, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          content: `**Yeni Destek Talebi**\n- Ticket ID: ${ticketId}\n- Kullanıcı: ${currentUser}\n- E-posta: ${email}\n- Konu: ${subject}\n- Mesaj: ${message}`
-        })
-      });
-    }
-
-    function loadTickets() {
-      const ticketList = document.getElementById('ticket-list');
-      ticketList.innerHTML = '';
-      const userTickets = Object.entries(supportTickets).filter(([_, ticket]) => ticket.username === currentUser);
-      if (userTickets.length === 0) {
-        ticketList.innerHTML = '<p style="text-align: center; opacity: 0.7;">Henüz talebiniz yok.</p>';
-        return;
-      }
-      userTickets.forEach(([ticketId, ticket]) => {
-        let statusText = '';
-        let statusClass = '';
-        switch (ticket.status) {
-          case 'waiting': statusText = 'Cevap Bekleniyor'; statusClass = 'status-waiting'; break;
-          case 'answered': statusText = 'Cevaplandı'; statusClass = 'status-answered'; break;
-          case 'resolved': statusText = 'Çözüldü'; statusClass = 'status-resolved'; break;
-          case 'closed': statusText = 'Kapandı'; statusClass = 'status-closed'; break;
-        }
-        const adminProfile = ticket.assignedAdminProfile || {};
-        const adminAvatar = adminProfile.avatar || '';
-        const adminName = adminProfile.name || ticket.assignedTo || 'Bilinmeyen Yetkili';
-        ticketList.innerHTML += `
-          <div class="ticket" onclick="openChat('${ticketId}')">
-            <p><strong>Konu:</strong> ${ticket.subject}</p>
-            <p><strong>Durum:</strong> <span class="status ${statusClass}">${statusText}</span></p>
-            ${ticket.rating ? `<p><strong>Puan:</strong> ${ticket.rating}/5</p>` : ''}
-            ${ticket.assignedTo ? `
-              <div class="admin-profile">
-                <strong>Devralan:</strong>
-                <div class="admin-avatar" style="background-image: url('${adminAvatar}'); background-size: cover;">
-                  ${!adminAvatar ? adminName.charAt(0) : ''}
-                </div>
-                <span>${adminName}</span>
-              </div>
-            ` : ''}
-          </div>
-        `;
-      });
-    }
-
-    function openChat(ticketId) {
-      currentTicketId = ticketId;
-      const ticket = supportTickets[ticketId];
-      const representative = ticket.assignedTo ? ticket.assignedTo : 'Temsilci Atanmadı';
-      document.getElementById('chat-title').textContent = `Ticket #${ticketId} - Temsilci: ${representative}`;
-      document.getElementById('chat-modal').classList.add('active');
-      setTimeout(() => document.getElementById('chat-container').classList.add('active'), 10);
-      loadChatMessages(ticketId);
-      updateChatUI(ticket);
-
-      const chatInput = document.getElementById('chat-input-text');
-      chatInput.oninput = () => {
-        clearTimeout(typingTimeout);
-        document.getElementById('typing-indicator').style.display = 'block';
-        typingTimeout = setTimeout(() => {
-          document.getElementById('typing-indicator').style.display = 'none';
-        }, 1000);
-      };
-    }
-
-    function updateChatUI(ticket) {
-      const chatInput = document.getElementById('chat-input');
-      const ratingContainer = document.getElementById('rating-container');
-      const ratingStars = document.querySelectorAll('.star');
-
-      if (ticket.status === 'resolved' || ticket.status === 'closed') {
-        chatInput.classList.add('hidden');
-        ratingContainer.classList.add('active');
-
-        if (ticket.rating) {
-          ratingStars.forEach(star => {
-            const value = parseInt(star.getAttribute('data-value'));
-            if (value <= ticket.rating) star.classList.add('rated');
-          });
-          document.getElementById('rating-text').textContent = `Bu talebi ${ticket.rating}/5 olarak puanladınız.`;
-          ratingStars.forEach(star => star.style.pointerEvents = 'none');
-        } else {
-          ratingStars.forEach(star => {
-            star.classList.remove('rated');
-            star.style.pointerEvents = 'auto';
-            star.onclick = () => rateTicket(ticket, parseInt(star.getAttribute('data-value')));
-          });
-        }
-      } else {
-        chatInput.classList.remove('hidden');
-        ratingContainer.classList.remove('active');
-      }
-    }
-
-    function rateTicket(ticket, rating) {
-      ticket.rating = rating;
-      localStorage.setItem('supportTickets', JSON.stringify(supportTickets));
-      loadChatMessages(currentTicketId);
-      updateChatUI(ticket);
-      showNotification(`Desteğimizi ${rating}/5 olarak puanladınız!`);
-      fetch(webhookUrl, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          content: `**Ticket #${currentTicketId} Puanlandı**\n- Kullanıcı: ${currentUser}\n- Puan: ${rating}/5`
-        })
-      });
-    }
-
-    function closeChat() {
-      document.getElementById('chat-modal').classList.remove('active');
-      document.getElementById('chat-container').classList.remove('active');
-      currentTicketId = null;
-    }
-
-    function loadChatMessages(ticketId) {
-      const chatMessages = document.getElementById('chat-messages');
-      chatMessages.innerHTML = '';
-      const ticket = supportTickets[ticketId];
-      ticket.messages.forEach(msg => {
-        const messageHTML = msg.image ? `
-          <div class="message">
-            <strong>${msg.sender}:</strong> ${msg.text || ''}<br>
-            <img src="${msg.image}" alt="Uploaded Image">
-            <small>(${new Date(msg.timestamp).toLocaleString()})</small>
-          </div>
-        ` : `
-          <div class="message">
-            <strong>${msg.sender}:</strong> ${msg.text}
-            <small>(${new Date(msg.timestamp).toLocaleString()})</small>
-          </div>
-        `;
-        chatMessages.innerHTML += messageHTML;
-      });
-      chatMessages.scrollTop = chatMessages.scrollHeight;
-    }
-
-    function sendChatMessage() {
-      if (!currentTicketId) return;
-      const text = document.getElementById('chat-input-text').value;
-      const fileInput = document.getElementById('chat-input-file');
-      const file = fileInput.files[0];
-      const ticket = supportTickets[currentTicketId];
-
-      if (!text && !file) {
-        showNotification("Mesaj veya dosya ekleyin!");
-        return;
-      }
-
-      let messageObj = {
-        sender: currentUser,
-        timestamp: Date.now()
-      };
-
-      if (text) messageObj.text = text;
-      if (file) {
-        const reader = new FileReader();
-        reader.onload = (e) => {
-          messageObj.image = e.target.result;
-          ticket.messages.push(messageObj);
-          localStorage.setItem('supportTickets', JSON.stringify(supportTickets));
-          loadChatMessages(currentTicketId);
-          sendToWebhook(currentTicketId, messageObj);
-        };
-        reader.readAsDataURL(file);
-      } else {
-        ticket.messages.push(messageObj);
-        localStorage.setItem('supportTickets', JSON.stringify(supportTickets));
-        loadChatMessages(currentTicketId);
-        sendToWebhook(currentTicketId, messageObj);
-      }
-
-      document.getElementById('chat-input-text').value = '';
-      fileInput.value = '';
-      if (ticket.status !== 'answered') ticket.status = 'waiting';
-      localStorage.setItem('supportTickets', JSON.stringify(supportTickets));
-    }
-
-    function sendToWebhook(ticketId, messageObj) {
-      const content = messageObj.image ? 
-        `**Ticket #${ticketId}**\n- Kullanıcı: ${currentUser}\n- Mesaj: ${messageObj.text || ''}\n- Resim: [Gönderildi]` :
-        `**Ticket #${ticketId}**\n- Kullanıcı: ${currentUser}\n- Mesaj: ${messageObj.text}`;
-      fetch(webhookUrl, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ content })
-      });
-    }
-
-    function startAutoRefresh() {
-      setInterval(() => {
-        const currentSupportData = localStorage.getItem('supportTickets');
-        if (currentSupportData !== lastSupportData) {
-          supportTickets = JSON.parse(currentSupportData) || {};
-          if (document.getElementById('my-tickets').classList.contains('active')) {
-            loadTickets();
-          }
-          if (currentTicketId) {
-            loadChatMessages(currentTicketId);
-            const ticket = supportTickets[currentTicketId];
-            const representative = ticket.assignedTo ? ticket.assignedTo : 'Temsilci Atanmadı';
-            document.getElementById('chat-title').textContent = `Ticket #${currentTicketId} - Temsilci: ${representative}`;
-            updateChatUI(ticket);
-          }
-          lastSupportData = currentSupportData;
-        }
-      }, 1000);
-    }
-
-    function logout() {
-      localStorage.removeItem('currentUser');
-      localStorage.removeItem('loggedInEmail');
-      localStorage.removeItem('lastIP');
-      localStorage.removeItem('isAdmin');
-      showNotification("Çıkış yaptınız!");
-      setTimeout(() => window.location.href = 'auth.html', 1000);
+      console.log(`Action tracked: ${action}`);
     }
 
     window.onload = function() {
-      if (!currentUser) {
-        window.location.href = 'auth.html';
-        return;
-      }
       document.querySelector('nav').classList.add('show');
-      document.querySelector('.support-section').classList.add('show');
-      document.querySelectorAll('.tab-btn').forEach((btn, index) => {
-        setTimeout(() => btn.classList.add('show'), index * 200);
-      });
-      document.querySelector('.partners-container').classList.add('show');
+      document.querySelector('.maintenance-section').classList.add('show');
       document.querySelector('footer').classList.add('show');
-
-      loadTickets();
-      startAutoRefresh();
-
-      const serverData = JSON.parse(localStorage.getItem('serverData')) || {
-        name: "MineHost",
-        description: "Yüksek performanslı hosting ve sunucu çözümleri ile işinizi büyütün.",
-        discord: "https://discord.gg/minehost",
-        website: "https://minehost.com.tr"
-      };
-      document.getElementById('server-name').textContent = serverData.name;
-      document.getElementById('server-description').textContent = serverData.description;
-      document.getElementById('server-discord').href = serverData.discord;
-      document.getElementById('server-website').href = serverData.website;
     };
   </script>
 </body>
