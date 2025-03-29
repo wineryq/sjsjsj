@@ -17,22 +17,13 @@ const adminPasswordsFromJS = {
     showSponsor: true,
     showAdmins: true
   },
-  "KeremBuA11e": {
-    name: "Kerem K.",
+  "minehostumutksifresi1199": {
+    name: "Umut K..",
     email: "kerem.test@tempmail.com", // Geçici e-posta adresi
-    showMembers: false,
+    showMembers: true,
     showSupport: true,
-    showServer: false,
-    showSponsor: false,
-    showAdmins: false
-  },
-  "QlnKqmsjS2e": {
-    name: "Sefa B.",
-    email: "sefa.test@tempmail.com", // Geçici e-posta adresi
-    showMembers: false,
-    showSupport: true,
-    showServer: false,
-    showSponsor: false,
-    showAdmins: false
+    showServer: true,
+    showSponsor: true,
+    showAdmins: true
   }
 };
