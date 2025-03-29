@@ -1,9 +1,11 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="tr">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>MineHost - Premium Hc</title>
+  <title>MineHost - Yüksek Performanslı VDS ve Fiziksel Sunucu Hizmetleri</title>
+  <meta name="description" content="MineHost ile yüksek performanslı VDS ve fiziksel sunucu çözümleri keşfedin! Güvenilir hosting hizmetlerimizle projelerinizi güçlendirin. Hemen inceleyin!">
+  <link rel="icon" type="image/png" href="image/favicon.png">
   <style>
     * {
       margin: 0;
@@ -105,6 +107,19 @@
       display: flex;
       flex-direction: column;
       justify-content: center;
+      background: url('image/hero-bg.jpg') no-repeat center center/cover;
+      position: relative;
+      z-index: 1;
+    }
+    .hero-section::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(26, 26, 46, 0.6);
+      z-index: -1;
     }
     .hero-section h1 {
       font-size: 3.5rem;
@@ -197,7 +212,6 @@
       font-size: 1rem;
       opacity: 0.8;
     }
-    /* Yeni "Biz Kimiz?" Bölümü */
     .about-us-section {
       padding: 5rem 1rem;
       background: rgba(15, 52, 96, 0.2);
@@ -237,7 +251,6 @@
       opacity: 0.9;
       margin-bottom: 1rem;
     }
-    /* Footer Styles */
     footer {
       padding: 3rem 1rem;
       background: rgba(26, 26, 46, 0.9);
@@ -313,7 +326,7 @@
       display: none;
       opacity: 0;
       transform: translateY(-20px);
-      transition: all 0.5s ease;
+      transition: all 0.3s ease;
     }
     .notification.show {
       display: block;
@@ -377,7 +390,6 @@
       .feature p {
         font-size: 0.9rem;
       }
-      /* Biz Kimiz? Bölümü için Responsive Tasarım */
       .about-us-section .container {
         flex-direction: column;
         text-align: center;
@@ -448,7 +460,6 @@
     }
   </style>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
-  <!-- Add Font Awesome for icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 </head>
 <body>
@@ -503,7 +514,6 @@
     </div>
   </section>
 
-  <!-- Yeni "Biz Kimiz?" Bölümü -->
   <section class="about-us-section">
     <div class="container">
       <div class="about-us-image">
@@ -520,7 +530,6 @@
 
   <footer>
     <div class="container footer-container">
-      <!-- Hosting Section -->
       <div class="footer-section">
         <h4>Hosting</h4>
         <ul>
@@ -528,7 +537,6 @@
           <li><a href="#">Plesk Hosting</a></li>
         </ul>
       </div>
-      <!-- Sunucu Section -->
       <div class="footer-section">
         <h4>Sunucu</h4>
         <ul>
@@ -536,7 +544,6 @@
           <li><a href="physical.html">Fiziksel Sunucu</a></li>
         </ul>
       </div>
-      <!-- İletişim Section -->
       <div class="footer-section">
         <h4>İletişim</h4>
         <ul>
@@ -618,8 +625,6 @@
         } else {
           showNotification(`Hoş geldiniz, ${currentUser}! (Otomatik giriş)`);
         }
-      } else if (!currentUser) {
-        window.location.href = 'auth.html';
       }
     };
   </script>
