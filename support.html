@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>MineHost - Bakımda</title>
+  <title>MineHost - Destek Sayfası</title>
   <style>
     * {
       margin: 0;
@@ -23,256 +23,474 @@
     }
 
     .container {
-      max-width: 1400px;
+      max-width: 1200px;
       margin: 0 auto;
       padding: 0 20px;
     }
 
-    nav {
-      padding: 1.5rem 0;
-      position: fixed;
-      width: 100%;
-      top: 0;
-      z-index: 1000;
-      background: rgba(26, 26, 46, 0.9);
-      backdrop-filter: blur(10px);
-      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
-      opacity: 0;
-      transform: translateY(-50px);
-      transition: all 0.5s ease;
-    }
-
-    nav.show {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    nav .container {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .nav-logo {
-      height: 50px;
-      transition: transform 0.3s ease;
-    }
-
-    .nav-logo:hover {
-      transform: scale(1.05);
-    }
-
-    nav ul {
-      display: flex;
-      list-style: none;
-      gap: 2rem;
-    }
-
-    nav ul li a {
-      color: #fff;
-      text-decoration: none;
-      font-weight: 600;
-      font-size: 1.1rem;
-      transition: color 0.3s ease, transform 0.3s ease;
-    }
-
-    nav ul li a:hover {
-      color: #ffd700;
-      transform: translateY(-2px);
-    }
-
-    .maintenance-section {
-      flex-grow: 1;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      padding: 8rem 1rem 4rem;
+    header {
+      padding: 2rem 0;
       text-align: center;
-      opacity: 0;
-      transform: translateY(50px);
-      transition: all 0.5s ease 0.2s;
     }
 
-    .maintenance-section.show {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    .maintenance-content h1 {
-      font-size: 3rem;
+    h1 {
+      font-size: 2.5rem;
       background: linear-gradient(90deg, #ffd700, #ffffff);
       -webkit-background-clip: text;
       background-clip: text;
       color: transparent;
       text-shadow: 0 2px 5px rgba(255, 215, 0, 0.3);
+    }
+
+    .support-form {
+      background: rgba(26, 26, 46, 0.95);
+      border: 1px solid rgba(255, 215, 0, 0.3);
+      padding: 2rem;
+      border-radius: 15px;
+      margin: 2rem auto;
+      max-width: 600px;
+      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+    }
+
+    .support-form h2 {
+      font-size: 1.8rem;
+      background: linear-gradient(90deg, #ffd700, #ffffff);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
       margin-bottom: 1.5rem;
-      animation: pulse 2s infinite;
+      text-shadow: 0 2px 5px rgba(255, 215, 0, 0.3);
     }
 
-    .maintenance-content p {
-      font-size: 1.2rem;
-      opacity: 0.8;
-      margin-bottom: 2rem;
+    .support-form input,
+    .support-form textarea {
+      width: 100%;
+      padding: 1rem;
+      margin: 0.7rem 0;
+      border: 1px solid rgba(255, 215, 0, 0.3);
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.1);
+      color: #fff;
+      font-size: 1rem;
+      transition: all 0.3s ease;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
     }
 
-    .spinner {
-      width: 60px;
-      height: 60px;
-      border: 6px solid rgba(255, 215, 0, 0.3);
-      border-top: 6px solid #ffd700;
-      border-radius: 50%;
-      animation: spin 1s linear infinite;
-      margin: 0 auto;
+    .support-form input:focus,
+    .support-form textarea:focus {
+      border-color: #ffd700;
+      background: rgba(255, 255, 255, 0.15);
+      box-shadow: 0 0 15px rgba(255, 215, 0, 0.5);
+      outline: none;
     }
 
-    footer {
-      padding: 3rem 1rem;
-      text-align: center;
-      background: rgba(26, 26, 46, 0.9);
+    .support-form textarea {
+      height: 150px;
+      resize: vertical;
+    }
+
+    button {
+      padding: 0.8rem 2rem;
+      background: linear-gradient(90deg, #ffd700, #e6b800);
+      color: #1a1a2e;
+      border: none;
+      border-radius: 50px;
+      cursor: pointer;
+      margin: 0.5rem 0;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      box-shadow: 0 5px 15px rgba(255, 215, 0, 0.4);
+    }
+
+    button:hover {
+      background: linear-gradient(90deg, #e6b800, #ffd700);
+      transform: scale(1.05);
+      box-shadow: 0 8px 20px rgba(255, 215, 0, 0.6);
+    }
+
+    .support-tickets {
+      margin: 2rem 0;
+    }
+
+    .support-ticket {
+      background: rgba(255, 255, 255, 0.1);
+      padding: 1.5rem;
+      margin: 1rem 0;
+      border-radius: 10px;
+      transition: all 0.3s ease;
+    }
+
+    .support-ticket:hover {
+      background: rgba(255, 255, 255, 0.15);
+      transform: translateY(-5px);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    .ticket-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .status {
+      font-weight: 600;
+      padding: 0.3rem 0.8rem;
+      border-radius: 5px;
+      display: inline-block;
+    }
+
+    .status-waiting { background: #ff9800; }
+    .status-answered { background: #2196f3; }
+    .status-resolved { background: #4caf50; }
+    .status-closed { background: #f44336; }
+
+    .messages {
+      max-height: 250px;
+      overflow-y: auto;
+      margin-bottom: 1rem;
+      padding: 1rem;
+      background: rgba(0, 0, 0, 0.2);
+      border-radius: 10px;
+    }
+
+    .message {
+      background: rgba(255, 215, 0, 0.15);
+      padding: 0.7rem;
+      margin: 0.5rem 0;
+      border-radius: 5px;
+    }
+
+    .message img {
+      max-width: 100%;
+      border-radius: 5px;
+      margin-top: 0.5rem;
+    }
+
+    .reply-section {
+      display: none;
+    }
+
+    .reply-section.active {
+      display: block;
+    }
+
+    .notification {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: rgba(255, 215, 0, 0.2);
+      border: 1px solid #ffd700;
+      border-radius: 10px;
+      padding: 1rem 2rem;
+      color: #fff;
+      z-index: 1000;
+      display: none;
       opacity: 0;
-      transform: translateY(50px);
-      transition: all 0.5s ease 0.4s;
+      transform: translateY(-20px);
+      transition: all 0.5s ease;
     }
 
-    footer.show {
+    .notification.show {
+      display: block;
       opacity: 1;
       transform: translateY(0);
     }
 
-    footer .logo {
-      height: 60px;
-      margin-bottom: 1rem;
+    .notification .progress-bar {
+      width: 100%;
+      height: 3px;
+      background: rgba(255, 255, 255, 0.2);
+      margin-top: 0.5rem;
+      border-radius: 2px;
+      overflow: hidden;
     }
 
-    footer p {
-      font-size: 0.9rem;
-      opacity: 0.8;
+    .notification .progress-bar .progress {
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, #ffd700, #e6b800);
+      animation: progress 5s linear forwards;
     }
 
-    @keyframes pulse {
-      0% { transform: scale(1); }
-      50% { transform: scale(1.05); }
-      100% { transform: scale(1); }
-    }
-
-    @keyframes spin {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
+    @keyframes progress {
+      0% { width: 100%; }
+      100% { width: 0%; }
     }
 
     @media (max-width: 768px) {
-      nav {
-        padding: 1rem;
-      }
-
-      nav .container {
-        flex-direction: column;
-        gap: 1rem;
-      }
-
-      .nav-logo {
-        height: 40px;
-      }
-
-      nav ul {
-        flex-wrap: wrap;
-        gap: 1rem;
-        justify-content: center;
-      }
-
-      nav ul li a {
-        font-size: 0.9rem;
-      }
-
-      .maintenance-content h1 {
+      h1 {
         font-size: 2rem;
       }
 
-      .maintenance-content p {
-        font-size: 1rem;
+      .support-form {
+        padding: 1.5rem;
+        max-width: 90%;
       }
 
-      .spinner {
-        width: 50px;
-        height: 50px;
+      .support-form h2 {
+        font-size: 1.5rem;
       }
 
-      footer .logo {
-        height: 50px;
+      .support-form input,
+      .support-form textarea {
+        font-size: 0.9rem;
+        padding: 0.8rem;
       }
 
-      footer p {
-        font-size: 0.8rem;
+      button {
+        padding: 0.7rem 1.5rem;
+        font-size: 0.9rem;
+      }
+
+      .support-ticket {
+        padding: 1rem;
       }
     }
 
     @media (max-width: 480px) {
-      nav ul {
-        gap: 0.8rem;
-      }
-
-      nav ul li a {
-        font-size: 0.8rem;
-      }
-
-      .maintenance-content h1 {
+      h1 {
         font-size: 1.8rem;
       }
 
-      .maintenance-content p {
-        font-size: 0.9rem;
+      .support-form h2 {
+        font-size: 1.3rem;
       }
 
-      .spinner {
-        width: 40px;
-        height: 40px;
+      .support-form input,
+      .support-form textarea {
+        font-size: 0.85rem;
+        padding: 0.7rem;
+      }
+
+      button {
+        padding: 0.6rem 1.2rem;
+        font-size: 0.85rem;
       }
     }
   </style>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
-  <nav>
-    <div class="container">
-      <img src="image/logo.png" alt="MineHost Logo" class="nav-logo">
-      <ul id="nav-links">
-        <li><a href="/" onclick="trackAction('Clicked Home Link')">Home</a></li>
-        <li><a href="/team.html" onclick="trackAction('Clicked Team Link')">Ekip</a></li>
-        <li><a href="domain.html" onclick="trackAction('Clicked Domain Link')">Alan Adı</a></li>
-        <li><a href="physical.html" onclick="trackAction('Clicked Physical Servers Link')">Fiziksel Sunucu</a></li>
-        <li><a href="vds.html" onclick="trackAction('Clicked Virtual Servers Link')">Sanal Sunucu</a></li>
-        <li><a href="profile.html">Profil</a></li>
-        <li><a href="support.html">Destek</a></li>
-        <li><a href="https://discord.gg/minehost" onclick="trackAction('Clicked Discord Link')">Discord</a></li>
-      </ul>
+  <div class="notification" id="notification">
+    <p id="notification-text"></p>
+    <div class="progress-bar">
+      <div class="progress"></div>
     </div>
-  </nav>
+  </div>
 
-  <section class="maintenance-section">
-    <div class="maintenance-content">
-      <h1>Bakımda!</h1>
-      <p>Sistemlerimiz şu anda bakım altında. Lütfen daha sonra tekrar deneyin.</p>
-      <div class="spinner"></div>
-    </div>
-  </section>
+  <header>
+    <h1>MineHost Destek</h1>
+  </header>
 
-  <footer>
-    <div class="container">
-      <img src="image/logo.png" alt="MineHost Logo" class="logo">
-      <p>Licensed by MineHost</p>
-      <p>© 2025 MineHost. All rights reserved.</p>
+  <div class="container">
+    <div class="support-form">
+      <h2>Yeni Destek Talebi</h2>
+      <input type="text" id="subject" placeholder="Konu">
+      <textarea id="message" placeholder="Mesajınızı buraya yazın..."></textarea>
+      <input type="file" id="file" accept="image/*">
+      <button onclick="submitTicket()">Talebi Gönder</button>
     </div>
-  </footer>
+
+    <div class="support-tickets" id="support-tickets">
+      <h2>Talepleriniz</h2>
+      <div id="ticket-list"></div>
+    </div>
+  </div>
 
   <script>
-    function trackAction(action) {
-      console.log(`Action tracked: ${action}`);
+    const API_BASE_URL = 'https://www.minehost.com.tr/api';
+    const currentUser = localStorage.getItem('currentUser');
+
+    function showNotification(message) {
+      const notification = document.getElementById('notification');
+      const notificationText = document.getElementById('notification-text');
+      notificationText.textContent = message;
+      notification.classList.add('show');
+      setTimeout(() => notification.classList.remove('show'), 5000);
+    }
+
+    async function submitTicket() {
+      if (!currentUser) {
+        showNotification('Lütfen önce giriş yapın!');
+        window.location.href = 'https://www.minehost.com.tr/auth.html';
+        return;
+      }
+
+      const subject = document.getElementById('subject').value;
+      const message = document.getElementById('message').value;
+      const file = document.getElementById('file').files[0];
+
+      if (!subject || !message) {
+        showNotification('Konu ve mesaj alanları boş olamaz!');
+        return;
+      }
+
+      const ticketData = {
+        username: currentUser,
+        email: localStorage.getItem('loggedInEmail') || 'Bilinmiyor',
+        subject,
+        messages: [{ sender: currentUser, text: message, timestamp: Date.now() }],
+        status: 'waiting'
+      };
+
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = async (e) => {
+          ticketData.messages[0].image = e.target.result;
+          await sendTicket(ticketData);
+        };
+        reader.readAsDataURL(file);
+      } else {
+        await sendTicket(ticketData);
+      }
+    }
+
+    async function sendTicket(ticketData) {
+      try {
+        const response = await fetch(`${API_BASE_URL}/support-tickets`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${localStorage.getItem('adminToken') || ''}`
+          },
+          body: JSON.stringify(ticketData)
+        });
+        if (response.ok) {
+          document.getElementById('subject').value = '';
+          document.getElementById('message').value = '';
+          document.getElementById('file').value = '';
+          showNotification('Destek talebiniz gönderildi!');
+          loadTickets();
+        } else {
+          showNotification('Talep gönderilirken bir hata oluştu.');
+        }
+      } catch (error) {
+        showNotification('Bir hata oluştu, lütfen tekrar deneyin.');
+      }
+    }
+
+    async function loadTickets() {
+      const ticketList = document.getElementById('ticket-list');
+      ticketList.innerHTML = '<p style="text-align: center; opacity: 0.7;">Yükleniyor...</p>';
+
+      try {
+        const response = await fetch(`${API_BASE_URL}/support-tickets?username=${currentUser}`, {
+          headers: { 'Authorization': `Bearer ${localStorage.getItem('adminToken') || ''}` }
+        });
+        const tickets = await response.json();
+
+        ticketList.innerHTML = '';
+        if (!tickets || Object.keys(tickets).length === 0) {
+          ticketList.innerHTML = '<p style="text-align: center; opacity: 0.7;">Henüz destek talebiniz yok.</p>';
+          return;
+        }
+
+        for (let ticketId in tickets) {
+          const ticket = tickets[ticketId];
+          let statusText = '';
+          let statusClass = '';
+          switch (ticket.status) {
+            case 'waiting': statusText = 'Cevap Bekleniyor'; statusClass = 'status-waiting'; break;
+            case 'answered': statusText = 'Cevaplandı'; statusClass = 'status-answered'; break;
+            case 'resolved': statusText = 'Çözüldü'; statusClass = 'status-resolved'; break;
+            case 'closed': statusText = 'Kapandı'; statusClass = 'status-closed'; break;
+            default: statusText = 'Bilinmiyor'; statusClass = 'status-waiting';
+          }
+
+          let messagesHTML = '<div class="messages">';
+          ticket.messages.forEach(msg => {
+            const messageContent = msg.image ? 
+              `${msg.text || ''}<br><img src="${msg.image}" alt="Uploaded Image">` :
+              msg.text || 'Mesaj yok';
+            messagesHTML += `<div class="message"><strong>${msg.sender || 'Bilinmeyen Gönderici'}:</strong> ${messageContent} (${new Date(msg.timestamp).toLocaleString()})</div>`;
+          });
+          messagesHTML += '</div>';
+
+          const isClosedOrResolved = ticket.status === 'closed' || ticket.status === 'resolved';
+
+          ticketList.innerHTML += `
+            <div class="support-ticket">
+              <div class="ticket-header">
+                <span><strong>Ticket ID:</strong> ${ticketId} | <strong>Konu:</strong> ${ticket.subject || 'Konu yok'}</span>
+                <span class="status ${statusClass}">${statusText}</span>
+              </div>
+              ${messagesHTML}
+              <div class="reply-section ${!isClosedOrResolved ? 'active' : ''}" id="reply-section-${ticketId}">
+                <textarea id="reply-${ticketId}" placeholder="Yanıtınızı buraya yazın..."></textarea>
+                <input type="file" id="file-${ticketId}" accept="image/*">
+                <button onclick="replyToTicket('${ticketId}')">Yanıt Gönder</button>
+              </div>
+            </div>
+          `;
+        }
+      } catch (error) {
+        ticketList.innerHTML = '<p style="text-align: center; opacity: 0.7;">Talepler yüklenemedi.</p>';
+        showNotification('Talepler yüklenirken bir hata oluştu.');
+      }
+    }
+
+    async function replyToTicket(ticketId) {
+      const replyText = document.getElementById(`reply-${ticketId}`).value;
+      const fileInput = document.getElementById(`file-${ticketId}`);
+      const file = fileInput.files[0];
+
+      if (!replyText && !file) {
+        showNotification('Yanıt veya dosya ekleyin!');
+        return;
+      }
+
+      let messageObj = {
+        sender: currentUser,
+        timestamp: Date.now()
+      };
+
+      if (replyText) messageObj.text = replyText;
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = async (e) => {
+          messageObj.image = e.target.result;
+          await sendReply(ticketId, messageObj);
+        };
+        reader.readAsDataURL(file);
+      } else {
+        await sendReply(ticketId, messageObj);
+      }
+    }
+
+    async function sendReply(ticketId, messageObj) {
+      try {
+        const response = await fetch(`${API_BASE_URL}/support-tickets/${ticketId}/reply`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${localStorage.getItem('adminToken') || ''}`
+          },
+          body: JSON.stringify(messageObj)
+        });
+        if (response.ok) {
+          document.getElementById(`reply-${ticketId}`).value = '';
+          document.getElementById(`file-${ticketId}`).value = '';
+          showNotification(`Ticket #${ticketId} için yanıt gönderildi!`);
+          loadTickets();
+        } else {
+          showNotification('Yanıt gönderilirken bir hata oluştu.');
+        }
+      } catch (error) {
+        showNotification('Bir hata oluştu, lütfen tekrar deneyin.');
+      }
     }
 
     window.onload = function() {
-      document.querySelector('nav').classList.add('show');
-      document.querySelector('.maintenance-section').classList.add('show');
-      document.querySelector('footer').classList.add('show');
+      if (!currentUser) {
+        showNotification('Lütfen giriş yapın!');
+        setTimeout(() => window.location.href = 'https://www.minehost.com.tr/auth.html', 2000);
+      } else {
+        loadTickets();
+        setInterval(loadTickets, 5000); // 5 saniyede bir otomatik yenile
+      }
     };
   </script>
 </body>
