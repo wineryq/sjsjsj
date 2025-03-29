@@ -472,17 +472,17 @@
       <img src="image/logo.png" alt="MineHost Logo" class="nav-logo">
       <ul id="nav-links">
         <li><a href="/" onclick="trackAction('Clicked Home Link')">Home</a></li>
-        <li><a href="/team.html" onclick="trackAction('Clicked Team Link')">Ekip</a></li>
-        <li><a href="domain.html" onclick="trackAction('Clicked Domain Link')">Alan Adı</a></li>
+        <li><a href="/team" onclick="trackAction('Clicked Team Link')">Ekip</a></li>
+        <li><a href="/domain" onclick="trackAction('Clicked Domain Link')">Alan Adı</a></li>
         <li class="dropdown">
           <a href="#" class="dropbtn">Sunucular</a>
           <div class="dropdown-content">
-            <a href="physical.html" onclick="trackAction('Clicked Physical Servers Link')">Fiziksel Sunucu</a>
-            <a href="vds.html" onclick="trackAction('Clicked Virtual Servers Link')">Sanal Sunucu</a>
+            <a href="/physical" onclick="trackAction('Clicked Physical Servers Link')">Fiziksel Sunucu</a>
+            <a href="/vds" onclick="trackAction('Clicked Virtual Servers Link')">Sanal Sunucu</a>
           </div>
         </li>
-        <li><a href="profile.html">Profil</a></li>
-        <li><a href="support.html">Destek</a></li>
+        <li><a href="/profile">Profil</a></li>
+        <li><a href="/support">Destek</a></li>
         <li><a href="https://discord.gg/minehost" onclick="trackAction('Clicked Discord Link')">Discord</a></li>
         <li><a href="#" onclick="logout()">Çıkış Yap</a></li>
       </ul>
@@ -533,15 +533,15 @@
       <div class="footer-section">
         <h4>Hosting</h4>
         <ul>
-          <li><a href="#">cPanel Hosting</a></li>
-          <li><a href="#">Plesk Hosting</a></li>
+          <li><a href="/cpanel">cPanel Hosting</a></li>
+          <li><a href="/plesk">Plesk Hosting</a></li>
         </ul>
       </div>
       <div class="footer-section">
         <h4>Sunucu</h4>
         <ul>
-          <li><a href="vds.html">Sanal Sunucu</a></li>
-          <li><a href="physical.html">Fiziksel Sunucu</a></li>
+          <li><a href="/vds">Sanal Sunucu</a></li>
+          <li><a href="/physical">Fiziksel Sunucu</a></li>
         </ul>
       </div>
       <div class="footer-section">
@@ -605,7 +605,7 @@
       localStorage.removeItem('lastIP');
       localStorage.removeItem('isAdmin');
       showNotification("Çıkış yaptınız!");
-      setTimeout(() => window.location.href = 'auth.html', 1000);
+      setTimeout(() => window.location.href = '/auth', 1000);
     }
 
     window.onload = function() {
@@ -621,7 +621,7 @@
           localStorage.removeItem('loggedInEmail');
           localStorage.removeItem('lastIP');
           localStorage.removeItem('isAdmin');
-          setTimeout(() => window.location.href = 'auth.html', 1000);
+          setTimeout(() => window.location.href = '/auth', 1000);
         } else {
           showNotification(`Hoş geldiniz, ${currentUser}! (Otomatik giriş)`);
         }
