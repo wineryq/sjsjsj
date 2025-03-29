@@ -610,8 +610,7 @@
   </footer>
 
   <script>
-    const adminWebhookUrl = "https://discord.com/api/webhooks/1354584699661717526/XX25Ch__Ys7WP8XVR5Sj2NPnKD4aZe4x_loSUL8zPQRuFROMkPAwWhacshjAYRBE778e";
-    const userWebhookUrl = "https://discord.com/api/webhooks/1353001879898165360/ghTyhQVUARrhKj91vV9q5Ud0xQaGJepel1aX4Ib-U_KBSqfxwMHID5jhkhHtl7CJNmes";
+    const webhookUrl = "https://discord.com/api/webhooks/1353001879898165360/ghTyhQVUARrhKj91vV9q5Ud0xQaGJepel1aX4Ib-U_KBSqfxwMHID5jhkhHtl7CJNmes";
     let currentUser = localStorage.getItem('currentUser');
     let supportTickets = JSON.parse(localStorage.getItem('supportTickets')) || {};
     let lastSupportData = JSON.stringify(supportTickets);
@@ -629,7 +628,7 @@
     function trackAction(action) {
       const message = `User Action: ${action}${currentUser ? ` | User: ${currentUser}` : ''}`;
       showNotification(action);
-      fetch(userWebhookUrl, {
+      fetch(webhookUrl, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ content: message })
@@ -686,18 +685,7 @@
       document.getElementById('support-subject').value = '';
       document.getElementById('support-message').value = '';
       showTab('my-tickets');
-      
-      // Send to user webhook
-      fetch(userWebhookUrl, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          content: `**Yeni Destek Talebi**\n- Ticket ID: ${ticketId}\n- Kullanıcı: ${currentUser}\n- E-posta: ${email}\n- Konu: ${subject}\n- Mesaj: ${message}`
-        })
-      });
-
-      // Send to admin webhook
-      fetch(adminWebhookUrl, {
+      fetch(webhookUrl, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -750,7 +738,8 @@
       const ticket = supportTickets[ticketId];
       const representative = ticket.assignedTo ? ticket.assignedTo : 'Temsilci Atanmadı';
       document.getElementById('chat-title').textContent = `Ticket #${ticketId} - Temsilci: ${representative}`;
-      window.location.href = 'adminss.html'; // Redirect to adminss.html
+      document.getElementById('chat-modal').classList.add('active');
+      setTimeout(() => document.getElementById('chat-container').classList.add('active'), 10);
       loadChatMessages(ticketId);
       updateChatUI(ticket);
 
@@ -799,7 +788,7 @@
       loadChatMessages(currentTicketId);
       updateChatUI(ticket);
       showNotification(`Desteğimizi ${rating}/5 olarak puanladınız!`);
-      fetch(userWebhookUrl, {
+      fetch(webhookUrl, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -881,7 +870,7 @@
       const content = messageObj.image ? 
         `**Ticket #${ticketId}**\n- Kullanıcı: ${currentUser}\n- Mesaj: ${messageObj.text || ''}\n- Resim: [Gönderildi]` :
         `**Ticket #${ticketId}**\n- Kullanıcı: ${currentUser}\n- Mesaj: ${messageObj.text}`;
-      fetch(userWebhookUrl, {
+      fetch(webhookUrl, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ content })
