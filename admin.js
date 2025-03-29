@@ -18,7 +18,7 @@ const adminPasswordsFromJS = {
     showAdmins: true
   },
   "minehostumutksifresi1199": {
-    name: "Umut K..",
+    name: "Umut K.",
     email: "kerem.test@tempmail.com", // Geçici e-posta adresi
     showMembers: true,
     showSupport: true,
