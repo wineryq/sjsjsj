@@ -1,1354 +1,298 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="tr">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>MineHost - Admin Panel</title>
+  <title>Bakım Modu - MineHost</title>
   <style>
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
     }
-
     body {
       font-family: 'Montserrat', Arial, sans-serif;
       background: linear-gradient(135deg, #1a1a2e 0%, #0f3460 100%);
       color: #fff;
       line-height: 1.6;
       overflow-x: hidden;
-      min-height: 100vh;
+      height: 100vh;
       display: flex;
       flex-direction: column;
+      justify-content: space-between;
     }
-
     .container {
       max-width: 1400px;
       margin: 0 auto;
       padding: 0 20px;
     }
-
-    .auth-container {
-      background: rgba(26, 26, 46, 0.95);
-      border: 1px solid rgba(255, 215, 0, 0.3);
-      padding: 3rem;
-      max-width: 450px;
-      margin: 10rem auto;
-      border-radius: 20px;
-      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
-      text-align: center;
-      opacity: 0;
-      transform: translateY(50px);
-      transition: all 0.8s ease;
-    }
-
-    .auth-container.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    .auth-container.hidden {
-      display: none;
-    }
-
-    .auth-container h2 {
-      font-size: 2.2rem;
-      background: linear-gradient(90deg, #ffd700, #ffffff);
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
-      margin-bottom: 2rem;
-      text-shadow: 0 2px 5px rgba(255, 215, 0, 0.3);
-    }
-
-    .auth-container input {
+    nav {
+      padding: 1.5rem 0;
+      position: fixed;
       width: 100%;
-      padding: 1rem;
-      margin: 0.7rem 0;
-      border: 1px solid rgba(255, 215, 0, 0.3);
-      border-radius: 10px;
-      background: rgba(255, 255, 255, 0.1);
-      color: #fff;
-      font-size: 1rem;
-      transition: all 0.3s ease;
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+      top: 0;
+      z-index: 1000;
+      background: rgba(26, 26, 46, 0.9);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
     }
-
-    .auth-container input:focus {
-      border-color: #ffd700;
-      background: rgba(255, 255, 255, 0.15);
-      box-shadow: 0 0 15px rgba(255, 215, 0, 0.5);
-      outline: none;
-    }
-
-    .auth-container label {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin-top: 1rem;
-      font-size: 1rem;
-      color: #ffd700;
-    }
-
-    .auth-container input[type="checkbox"] {
-      width: auto;
-      margin-right: 0.5rem;
-    }
-
-    .admin-panel {
-      padding: 8rem 1rem 4rem;
-      display: none;
-      opacity: 0;
-      transform: translateY(50px);
-      transition: all 0.8s ease;
-    }
-
-    .admin-panel.active {
-      display: block;
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    .categories {
-      display: flex;
-      gap: 1.5rem;
-      justify-content: center;
-      margin-bottom: 3rem;
-      flex-wrap: wrap;
-    }
-
-    .category-btn {
-      padding: 1rem 2.5rem;
-      background: linear-gradient(90deg, #ffd700, #e6b800);
-      color: #1a1a2e;
-      border: none;
-      border-radius: 50px;
-      font-size: 1.2rem;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      opacity: 0;
-      transform: scale(0.9);
-      box-shadow: 0 5px 15px rgba(255, 215, 0, 0.4);
-    }
-
-    .category-btn.show {
-      opacity: 1;
-      transform: scale(1);
-    }
-
-    .category-btn:hover, .category-btn.active {
-      background: linear-gradient(90deg, #e6b800, #ffd700);
-      transform: scale(1.05);
-      box-shadow: 0 8px 20px rgba(255, 215, 0, 0.6);
-    }
-
-    .admin-section {
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid rgba(255, 215, 0, 0.2);
-      padding: 2rem;
-      border-radius: 15px;
-      display: none;
-      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
-      opacity: 0;
-      transform: translateY(20px);
-      transition: all 0.5s ease;
-    }
-
-    .admin-section.active {
-      display: block;
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    h1, h2 {
-      font-size: 2.5rem;
-      background: linear-gradient(90deg, #ffd700, #ffffff);
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
-      text-align: center;
-      margin-bottom: 2rem;
-      text-shadow: 0 2px 5px rgba(255, 215, 0, 0.3);
-    }
-
-    .member, .support-ticket, .admin-entry {
-      background: rgba(255, 255, 255, 0.1);
-      padding: 1.5rem;
-      margin: 1rem 0;
-      border-radius: 10px;
-      transition: all 0.3s ease;
-    }
-
-    .member:hover, .support-ticket:hover, .admin-entry:hover {
-      background: rgba(255, 255, 255, 0.15);
-      transform: translateY(-5px);
-      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-    }
-
-    button {
-      padding: 0.8rem 2rem;
-      background: linear-gradient(90deg, #ffd700, #e6b800);
-      color: #1a1a2e;
-      border: none;
-      border-radius: 50px;
-      cursor: pointer;
-      margin: 0.5rem;
-      font-weight: 600;
-      transition: all 0.3s ease;
-      box-shadow: 0 5px 15px rgba(255, 215, 0, 0.4);
-    }
-
-    button:hover {
-      background: linear-gradient(90deg, #e6b800, #ffd700);
-      transform: scale(1.05);
-      box-shadow: 0 8px 20px rgba(255, 215, 0, 0.6);
-    }
-
-    .delete-btn {
-      background: linear-gradient(90deg, #f44336, #d32f2f);
-    }
-
-    .delete-btn:hover {
-      background: linear-gradient(90deg, #d32f2f, #f44336);
-    }
-
-    .profile-edit, .admin-edit {
-      display: none;
-      margin-top: 1rem;
-    }
-
-    .profile-edit input, .admin-section input, .admin-section textarea, .admin-edit input {
-      width: 100%;
-      padding: 0.8rem;
-      margin: 0.5rem 0;
-      border: 1px solid rgba(255, 215, 0, 0.3);
-      border-radius: 5px;
-      background: rgba(255, 255, 255, 0.1);
-      color: #fff;
-      font-size: 1rem;
-      transition: all 0.3s ease;
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-    }
-
-    .profile-edit input:focus, .admin-section input:focus, .admin-section textarea:focus, .admin-edit input:focus {
-      border-color: #ffd700;
-      background: rgba(255, 255, 255, 0.2);
-      box-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
-      outline: none;
-    }
-
-    .support-ticket textarea {
-      height: 150px;
-      resize: vertical;
-    }
-
-    .messages {
-      max-height: 250px;
-      overflow-y: auto;
-      margin-bottom: 1rem;
-      padding: 1rem;
-      background: rgba(0, 0, 0, 0.2);
-      border-radius: 10px;
-    }
-
-    .message {
-      background: rgba(255, 215, 0, 0.15);
-      padding: 0.7rem;
-      margin: 0.5rem 0;
-      border-radius: 5px;
-    }
-
-    .message img {
-      max-width: 100%;
-      border-radius: 5px;
-      margin-top: 0.5rem;
-    }
-
-    .ticket-header {
+    nav .container {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 1rem;
-      flex-wrap: wrap;
-      gap: 1rem;
     }
-
-    .status {
-      font-weight: 600;
-      padding: 0.3rem 0.8rem;
-      border-radius: 5px;
-      display: inline-block;
+    .nav-logo {
+      height: 50px;
+      transition: transform 0.3s ease;
     }
-
-    .status-waiting { background: #ff9800; }
-    .status-answered { background: #2196f3; }
-    .status-resolved { background: #4caf50; }
-    .status-closed { background: #f44336; }
-
-    .notification {
-      position: fixed;
-      top: 20px;
-      right: 20px;
-      background: rgba(255, 215, 0, 0.2);
-      border: 1px solid #ffd700;
-      border-radius: 10px;
-      padding: 1rem 2rem;
-      color: #fff;
-      z-index: 1000;
-      display: none;
-      opacity: 0;
-      transform: translateY(-20px);
-      transition: all 0.5s ease;
-    }
-
-    .notification.show {
-      display: block;
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    .notification .progress-bar {
-      width: 100%;
-      height: 3px;
-      background: rgba(255, 255, 255, 0.2);
-      margin-top: 0.5rem;
-      border-radius: 2px;
-      overflow: hidden;
-    }
-
-    .notification .progress-bar .progress {
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(90deg, #ffd700, #e6b800);
-      animation: progress 5s linear forwards;
-    }
-
-    .typing-indicator {
-      font-style: italic;
-      color: #ffd700;
-      opacity: 0.7;
-      display: none;
-      margin-bottom: 1rem;
-    }
-
-    .checkbox-group {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 1rem;
-      margin: 0.5rem 0;
-    }
-
-    .checkbox-group label {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      font-size: 0.9rem;
-    }
-
-    .quick-messages {
-      display: flex;
-      gap: 0.5rem;
-      margin-bottom: 1rem;
-      flex-wrap: wrap;
-    }
-
-    .quick-message-btn {
-      padding: 0.5rem 1rem;
-      background: linear-gradient(90deg, #2196f3, #1976d2);
-      color: #fff;
-      border: none;
-      border-radius: 50px;
-      cursor: pointer;
-      font-size: 0.9rem;
-      transition: all 0.3s ease;
-      box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
-    }
-
-    .quick-message-btn:hover {
-      background: linear-gradient(90deg, #1976d2, #2196f3);
+    .nav-logo:hover {
       transform: scale(1.05);
-      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
     }
-
-    .rating-container {
-      display: none;
+    nav ul {
+      display: flex;
+      list-style: none;
+      gap: 2rem;
+    }
+    nav ul li a {
+      color: #fff;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 1.1rem;
+      transition: color 0.3s ease, transform 0.3s ease;
+    }
+    nav ul li a:hover {
+      color: #ffd700;
+      transform: translateY(-2px);
+    }
+    .maintenance-section {
+      flex-grow: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
       text-align: center;
-      margin-top: 1rem;
+      padding: 2rem;
     }
-
-    .rating-container p {
+    .maintenance-container {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 215, 0, 0.2);
+      border-radius: 15px;
+      padding: 3rem;
+      max-width: 800px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    }
+    .maintenance-container h1 {
+      font-size: 3rem;
+      background: linear-gradient(90deg, #ffd700, #ffffff);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      margin-bottom: 1.5rem;
+      animation: pulse 2s infinite;
+    }
+    .maintenance-container p {
       font-size: 1.2rem;
+      opacity: 0.9;
+      margin-bottom: 2rem;
+    }
+    .spinner {
+      width: 60px;
+      height: 60px;
+      border: 5px solid rgba(255, 215, 0, 0.2);
+      border-top: 5px solid #ffd700;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      margin: 0 auto;
+    }
+    footer {
+      padding: 3rem 1rem;
+      background: rgba(26, 26, 46, 0.9);
+    }
+    footer .footer-container {
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 2rem;
+      margin-bottom: 2rem;
+    }
+    footer .footer-section {
+      flex: 1;
+      min-width: 200px;
+    }
+    footer .footer-section h4 {
+      font-size: 1.2rem;
+      margin-bottom: 1rem;
+      color: #ffd700;
+    }
+    footer .footer-section ul {
+      list-style: none;
+    }
+    footer .footer-section ul li {
       margin-bottom: 0.5rem;
     }
-
-    .stars {
-      display: flex;
-      justify-content: center;
-      gap: 0.5rem;
+    footer .footer-section ul li a {
+      color: #fff;
+      text-decoration: none;
+      font-size: 0.9rem;
+      opacity: 0.8;
+      transition: color 0.3s ease;
     }
-
-    .star {
-      font-size: 2rem;
-      color: #ccc;
-      cursor: pointer;
-      transition: all 0.3s ease;
-    }
-
-    .star:hover, .star.filled {
+    footer .footer-section ul li a:hover {
       color: #ffd700;
-      transform: scale(1.2);
-      text-shadow: 0 0 10px rgba(255, 215, 0, 0.8);
     }
-
-    @keyframes star-fill {
-      0% { transform: scale(1); }
-      50% { transform: scale(1.5); }
-      100% { transform: scale(1.2); }
-    }
-
-    .star.filled {
-      animation: star-fill 0.5s ease;
-    }
-
-    .modal {
-      display: none;
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0, 0, 0, 0.7);
-      z-index: 1000;
-      justify-content: center;
-      align-items: center;
-    }
-
-    .modal-content {
-      background: rgba(26, 26, 46, 0.95);
-      border: 1px solid rgba(255, 215, 0, 0.3);
-      padding: 2rem;
-      border-radius: 15px;
-      text-align: center;
-      max-width: 400px;
-      width: 90%;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-      opacity: 0;
-      transform: translateY(-50px);
-      transition: all 0.5s ease;
-    }
-
-    .modal.show .modal-content {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    .modal-content p {
-      font-size: 1.2rem;
-      margin-bottom: 1.5rem;
-    }
-
-    .modal-buttons {
+    footer .footer-section .contact-info {
       display: flex;
-      gap: 1rem;
-      justify-content: center;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.9rem;
+      opacity: 0.8;
     }
-
-    .modal-buttons button {
-      padding: 0.7rem 1.5rem;
+    footer .footer-section .contact-info i {
+      color: #ffd700;
       font-size: 1rem;
     }
-
-    .modal-buttons .confirm-btn {
-      background: linear-gradient(90deg, #f44336, #d32f2f);
+    footer .footer-bottom {
+      text-align: center;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      padding-top: 1rem;
     }
-
-    .modal-buttons .confirm-btn:hover {
-      background: linear-gradient(90deg, #d32f2f, #f44336);
+    footer .footer-bottom p {
+      font-size: 0.9rem;
+      opacity: 0.8;
     }
-
-    .modal-buttons .cancel-btn {
-      background: linear-gradient(90deg, #2196f3, #1976d2);
+    footer .logo {
+      height: 60px;
+      margin-bottom: 1rem;
     }
-
-    .modal-buttons .cancel-btn:hover {
-      background: linear-gradient(90deg, #1976d2, #2196f3);
-    }
-
     @media (max-width: 768px) {
-      .auth-container {
-        padding: 2rem;
-        max-width: 90%;
-        margin: 5rem auto;
+      nav {
+        padding: 1rem;
       }
-
-      .auth-container h2 {
-        font-size: 1.8rem;
-      }
-
-      .auth-container input {
-        font-size: 0.9rem;
-        padding: 0.8rem;
-      }
-
-      .auth-container label {
-        font-size: 0.9rem;
-      }
-
-      .admin-panel {
-        padding: 5rem 1rem 3rem;
-      }
-
-      h1, h2 {
-        font-size: 2rem;
-      }
-
-      .categories {
+      nav .container {
         flex-direction: column;
         gap: 1rem;
       }
-
-      .category-btn {
-        padding: 0.8rem 2rem;
+      .nav-logo {
+        height: 40px;
+      }
+      nav ul {
+        flex-wrap: wrap;
+        gap: 1rem;
+        justify-content: center;
+      }
+      nav ul li a {
+        font-size: 0.9rem;
+      }
+      .maintenance-container {
+        padding: 2rem;
+      }
+      .maintenance-container h1 {
+        font-size: 2rem;
+      }
+      .maintenance-container p {
         font-size: 1rem;
       }
-
-      .admin-section {
-        padding: 1.5rem;
+      .spinner {
+        width: 50px;
+        height: 50px;
       }
-
-      .member, .support-ticket, .admin-entry {
-        padding: 1rem;
-      }
-
-      button {
-        padding: 0.7rem 1.5rem;
-        font-size: 0.9rem;
-      }
-
-      .profile-edit input, .admin-section input, .admin-section textarea, .admin-edit input {
-        font-size: 0.9rem;
-        padding: 0.7rem;
-      }
-
-      .support-ticket textarea {
-        height: 120px;
-      }
-
-      .messages {
-        max-height: 200px;
-      }
-
-      .checkbox-group label {
-        font-size: 0.85rem;
-      }
-
-      .quick-message-btn {
-        padding: 0.4rem 0.8rem;
-        font-size: 0.8rem;
-      }
-
-      .star {
-        font-size: 1.5rem;
-      }
-
-      .modal-content {
-        padding: 1.5rem;
-      }
-
-      .modal-content p {
-        font-size: 1rem;
-      }
-
-      .modal-buttons button {
-        padding: 0.5rem 1rem;
-        font-size: 0.9rem;
+      footer .footer-container {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
       }
     }
-
     @media (max-width: 480px) {
-      .auth-container h2 {
-        font-size: 1.5rem;
+      nav ul {
+        gap: 0.8rem;
       }
-
-      .auth-container input {
-        font-size: 0.85rem;
-        padding: 0.7rem;
+      nav ul li a {
+        font-size: 0.8rem;
       }
-
-      .auth-container label {
-        font-size: 0.85rem;
-      }
-
-      h1, h2 {
+      .maintenance-container h1 {
         font-size: 1.8rem;
       }
-
-      .category-btn {
-        padding: 0.7rem 1.5rem;
+      .maintenance-container p {
         font-size: 0.9rem;
       }
-
-      .admin-section {
-        padding: 1rem;
-      }
-
-      button {
-        padding: 0.6rem 1.2rem;
-        font-size: 0.85rem;
-      }
-
-      .profile-edit input, .admin-section input, .admin-section textarea, .admin-edit input {
-        font-size: 0.85rem;
-        padding: 0.6rem;
-      }
-
-      .support-ticket textarea {
-        height: 100px;
-      }
-
-      .messages {
-        max-height: 150px;
-      }
-
-      .checkbox-group label {
-        font-size: 0.8rem;
-      }
-
-      .quick-message-btn {
-        padding: 0.3rem 0.6rem;
-        font-size: 0.7rem;
-      }
-
-      .star {
-        font-size: 1.2rem;
+      .spinner {
+        width: 40px;
+        height: 40px;
       }
     }
-
-    @keyframes progress {
-      0% { width: 100%; }
-      100% { width: 0%; }
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+      100% { transform: scale(1); }
     }
   </style>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 </head>
 <body>
-  <div class="notification" id="notification">
-    <p id="notification-text"></p>
-    <div class="progress-bar">
-      <div class="progress"></div>
+  <nav>
+    <div class="container">
+      <img src="image/logo.png" alt="MineHost Logo" class="nav-logo">
+      <ul>
+        <li><a href="/">Ana Sayfa</a></li>
+        <li><a href="/team">Ekip</a></li>
+        <li><a href="/domain">Alan Adı</a></li>
+        <li><a href="/vds">Sanal Sunucu</a></li>
+        <li><a href="/physical">Fiziksel Sunucu</a></li>
+        <li><a href="/support">Destek</a></li>
+      </ul>
     </div>
-  </div>
+  </nav>
 
-  <div class="modal" id="delete-modal">
-    <div class="modal-content">
-      <p id="delete-modal-text"></p>
-      <div class="modal-buttons">
-        <button class="confirm-btn" onclick="confirmDelete()">Evet</button>
-        <button class="cancel-btn" onclick="closeModal()">Hayır</button>
+  <section class="maintenance-section">
+    <div class="maintenance-container">
+      <h1>Bakım Modundayız!</h1>
+      <p>Bakımdayız lütfen sonra tekrar deneyin.!</p>
+      <div class="spinner"></div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container footer-container">
+      <div class="footer-section">
+        <h4>Hosting</h4>
+        <ul>
+          <li><a href="/cpanel">cPanel Hosting</a></li>
+          <li><a href="/plesk">Plesk Hosting</a></li>
+        </ul>
+      </div>
+      <div class="footer-section">
+        <h4>Sunucu</h4>
+        <ul>
+          <li><a href="/vds">Sanal Sunucu</a></li>
+          <li><a href="/physical">Fiziksel Sunucu</a></li>
+        </ul>
+      </div>
+      <div class="footer-section">
+        <h4>İletişim</h4>
+        <ul>
+          <li class="contact-info">
+            <i class="fas fa-envelope"></i>
+            <span>minehost@minehost.com.tr</span>
+          </li>
+          <li class="contact-info">
+            <i class="fas fa-phone"></i>
+            <span>+63 963 852 7197</span>
+          </li>
+          <li class="contact-info">
+            <i class="fas fa-map-marker-alt"></i>
+            <span>Ankara/Türkiye</span>
+          </li>
+        </ul>
       </div>
     </div>
-  </div>
-
-  <div class="auth-container" id="admin-login">
-    <h2>Admin Giriş</h2>
-    <input type="password" id="admin-password" placeholder="Admin Şifresi" onkeydown="if(event.key === 'Enter') initiateLogin()">
-    <label>
-      <input type="checkbox" id="remember-me"> Beni Hatırla
-    </label>
-    <button onclick="initiateLogin()">Giriş Yap</button>
-  </div>
-
-  <div class="container admin-panel" id="admin-panel">
-    <h1>Admin Kontrol Paneli</h1>
-    <div class="categories" id="categories"></div>
-
-    <div class="admin-section" id="members-section">
-      <h2>Üye İşlemleri</h2>
-      <div id="member-list"></div>
+    <div class="footer-bottom">
+      <img src="image/logo.png" alt="MineHost Logo" class="logo">
+      <p>© 2025 MineHost. Tüm hakları saklıdır.</p>
     </div>
-
-    <div class="admin-section" id="support-section">
-      <h2>Destek Talepleri</h2>
-      <div id="support-list"></div>
-    </div>
-
-    <div class="admin-section" id="server-section">
-      <h2>Sunucumuz Ayarları</h2>
-      <div id="server-settings">
-        <input type="text" id="server-name-input" placeholder="Sunucu Adı">
-        <input type="text" id="server-description-input" placeholder="Sunucu Açıklaması">
-        <input type="text" id="server-discord-input" placeholder="Discord Linki">
-        <input type="text" id="server-website-input" placeholder="Website Linki">
-        <button onclick="saveServerSettings()">Kaydet</button>
-      </div>
-    </div>
-
-    <div class="admin-section" id="sponsor-section">
-      <h2>Sponsor Ayarları</h2>
-      <div id="sponsor-settings">
-        <input type="text" id="sponsor-name-input" placeholder="Sponsor Adı">
-        <input type="text" id="sponsor-description-input" placeholder="Sponsor Açıklaması">
-        <input type="text" id="sponsor-discord-input" placeholder="Discord Linki">
-        <input type="text" id="sponsor-website-input" placeholder="Website Linki">
-        <button onclick="saveSponsorSettings()">Kaydet</button>
-      </div>
-    </div>
-
-    <div class="admin-section" id="admins-section">
-      <h2>Admin Yönetimi</h2>
-      <div id="admin-list"></div>
-      <div>
-        <input type="text" id="new-admin-name" placeholder="Admin Adı">
-        <input type="text" id="new-admin-password" placeholder="Şifre">
-        <div class="checkbox-group">
-          <label><input type="checkbox" id="new-admin-members"> Üye İşlemleri</label>
-          <label><input type="checkbox" id="new-admin-support"> Destek Talepleri</label>
-          <label><input type="checkbox" id="new-admin-server"> Sunucumuz Ayarları</label>
-          <label><input type="checkbox" id="new-admin-sponsor"> Sponsor Ayarları</label>
-          <label><input type="checkbox" id="new-admin-admins"> Admin Yönetimi</label>
-        </div>
-        <button onclick="addAdmin()">Admin Ekle</button>
-      </div>
-    </div>
-  </div>
-
-  <script src="admin.js"></script>
-  <script>
-    const webhookUrl = "https://discord.com/api/webhooks/1354584699661717526/XX25Ch__Ys7WP8XVR5Sj2NPnKD4aZe4x_loSUL8zPQRuFROMkPAwWhacshjAYRBE778e";
-    let users = JSON.parse(localStorage.getItem('users')) || {};
-    let supportTickets = JSON.parse(localStorage.getItem('supportTickets')) || {};
-    let adminPasswords = {};
-    const lastIP = localStorage.getItem('lastAdminIP') || '';
-    const simulatedIP = "192.168.1.1";
-    let lastSupportData = JSON.stringify(supportTickets);
-    let lastUsersData = JSON.stringify(users);
-    let lastAdminsData = JSON.stringify(adminPasswords);
-    let currentAdminName = '';
-    let currentAdminPermissions = {};
-    let typingTimeout;
-    let userToDelete = null;
-
-    function showNotification(message) {
-      const notification = document.getElementById('notification');
-      const notificationText = document.getElementById('notification-text');
-      notificationText.textContent = message;
-      notification.classList.add('show');
-      setTimeout(() => notification.classList.remove('show'), 5000);
-    }
-
-    function initiateLogin() {
-      const password = document.getElementById('admin-password').value;
-      adminPasswords = JSON.parse(localStorage.getItem('adminPasswords')) || adminPasswordsFromJS || {};
-
-      if (!adminPasswords.hasOwnProperty(password)) {
-        showNotification("Yanlış şifre! Kayıtlı şifreler arasında bulunamadı.");
-        return;
-      }
-
-      const rememberMe = document.getElementById('remember-me').checked;
-      currentAdminPermissions = adminPasswords[password];
-      currentAdminName = adminPasswords[password].name;
-      localStorage.setItem('isAdmin', 'true');
-      localStorage.setItem('lastAdminIP', simulatedIP);
-      localStorage.setItem('currentAdminPassword', password);
-      localStorage.setItem('rememberMe', rememberMe ? 'true' : 'false');
-      localStorage.setItem('adminPasswords', JSON.stringify(adminPasswords));
-      document.getElementById('admin-login').classList.add('hidden');
-      document.getElementById('admin-panel').classList.add('active');
-      setupAdminPanel();
-      startAutoRefresh();
-      showNotification(`Hoş geldiniz, ${currentAdminName}!`);
-      sendToWebhook(null, { text: `**Admin Girişi**\n- Admin: ${currentAdminName}` });
-    }
-
-    function sendToWebhook(ticketId, messageObj) {
-      let content;
-      if (ticketId) {
-        content = messageObj.image ? 
-          `**Ticket #${ticketId}**\n- Admin: ${currentAdminName}\n- Mesaj: ${messageObj.text || ''}\n- Resim: [Gönderildi]` :
-          `**Ticket #${ticketId}**\n- Admin: ${currentAdminName}\n- Mesaj: ${messageObj.text}`;
-      } else {
-        content = messageObj.text;
-      }
-      fetch(webhookUrl, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ content })
-      }).catch(() => {}); // Hata durumunda konsola yazdırmıyoruz
-    }
-
-    function setupAdminPanel() {
-      const categories = document.getElementById('categories');
-      categories.innerHTML = '';
-
-      if (currentAdminPermissions.showMembers) {
-        categories.innerHTML += `<button class="category-btn" onclick="showCategory('members')">Üye İşlemleri</button>`;
-      }
-      if (currentAdminPermissions.showSupport) {
-        categories.innerHTML += `<button class="category-btn" onclick="showCategory('support')">Destek Talepleri</button>`;
-      }
-      if (currentAdminPermissions.showServer) {
-        categories.innerHTML += `<button class="category-btn" onclick="showCategory('server')">Sunucumuz Ayarları</button>`;
-      }
-      if (currentAdminPermissions.showSponsor) {
-        categories.innerHTML += `<button class="category-btn" onclick="showCategory('sponsor')">Sponsor Ayarları</button>`;
-      }
-      if (currentAdminPermissions.showAdmins) {
-        categories.innerHTML += `<button class="category-btn" onclick="showCategory('admins')">Admin Yönetimi</button>`;
-      }
-
-      document.querySelectorAll('.category-btn').forEach((btn, index) => {
-        setTimeout(() => btn.classList.add('show'), index * 200);
-      });
-
-      if (currentAdminPermissions.showSupport) {
-        showCategory('support');
-      } else if (currentAdminPermissions.showMembers) {
-        showCategory('members');
-      } else if (currentAdminPermissions.showServer) {
-        showCategory('server');
-      } else if (currentAdminPermissions.showSponsor) {
-        showCategory('sponsor');
-      } else if (currentAdminPermissions.showAdmins) {
-        showCategory('admins');
-      }
-    }
-
-    function showCategory(category) {
-      document.querySelectorAll('.admin-section').forEach(section => section.classList.remove('active'));
-      document.querySelectorAll('.category-btn').forEach(btn => btn.classList.remove('active'));
-      document.getElementById(`${category}-section`).classList.add('active');
-      document.querySelector(`[onclick="showCategory('${category}')"]`).classList.add('active');
-      if (category === 'members') loadMembers();
-      if (category === 'support') loadSupportTickets();
-      if (category === 'server') loadServerSettings();
-      if (category === 'sponsor') loadSponsorSettings();
-      if (category === 'admins') loadAdmins();
-    }
-
-    function loadMembers() {
-      const memberList = document.getElementById('member-list');
-      memberList.innerHTML = '';
-      for (let username in users) {
-        const user = users[username];
-        const isBanned = user.banned || false;
-        memberList.innerHTML += `
-          <div class="member">
-            <p><strong>Kullanıcı:</strong> ${username}</p>
-            <p><strong>Şifre:</strong> ${user.password || 'Bilinmiyor'}</p>
-            <p><strong>E-posta:</strong> ${user.email || 'Yok'}</p>
-            <p><strong>IP:</strong> ${user.lastIP || 'Bilinmiyor'}</p>
-            <p><strong>Durum:</strong> ${isBanned ? 'Banlı' : 'Aktif'}</p>
-            <button onclick="toggleBan('${username}')">${isBanned ? 'Ban Kaldır' : 'Banla'}</button>
-            <button onclick="showProfileEdit('${username}')">Yönet</button>
-            <button onclick="loginAsUser('${username}')">Hesaba Gir</button>
-            <button class="delete-btn" onclick="showDeleteModal('${username}')">Hesabı Sil</button>
-            <div class="profile-edit" id="edit-${username}">
-              <input type="text" id="edit-name-${username}" value="${user.name || ''}" placeholder="İsim">
-              <input type="email" id="edit-email-${username}" value="${user.email || ''}" placeholder="E-posta">
-              <input type="text" id="edit-phone-${username}" value="${user.phone || ''}" placeholder="Telefon">
-              <input type="password" id="edit-password-${username}" placeholder="Yeni Şifre">
-              <button onclick="saveProfile('${username}')">Kaydet</button>
-            </div>
-          </div>
-        `;
-      }
-    }
-
-    function showDeleteModal(username) {
-      userToDelete = username;
-      const modal = document.getElementById('delete-modal');
-      const modalText = document.getElementById('delete-modal-text');
-      modalText.textContent = `${username} kullanıcısını silmek istediğinize emin misiniz?`;
-      modal.classList.add('show');
-    }
-
-    function closeModal() {
-      const modal = document.getElementById('delete-modal');
-      modal.classList.remove('show');
-      userToDelete = null;
-    }
-
-    function confirmDelete() {
-      if (userToDelete) {
-        delete users[userToDelete];
-        localStorage.setItem('users', JSON.stringify(users));
-        loadMembers();
-        showNotification(`${userToDelete} hesabı silindi!`);
-        sendToWebhook(null, { text: `**Üye Silindi**\n- Kullanıcı: ${userToDelete}\n- Silen: ${currentAdminName}` });
-        closeModal();
-      }
-    }
-
-    function toggleBan(username) {
-      users[username].banned = !users[username].banned;
-      localStorage.setItem('users', JSON.stringify(users));
-      loadMembers();
-      showNotification(`${username} ${users[username].banned ? 'banlandı!' : 'banı kaldırıldı!'}`);
-      sendToWebhook(null, { text: `**Üye Durumu Değiştirildi**\n- Kullanıcı: ${username}\n- Durum: ${users[username].banned ? 'Banlandı' : 'Banı Kaldırıldı'}\n- Admin: ${currentAdminName}` });
-    }
-
-    function showProfileEdit(username) {
-      const editDiv = document.getElementById(`edit-${username}`);
-      editDiv.style.display = editDiv.style.display === 'block' ? 'none' : 'block';
-    }
-
-    function saveProfile(username) {
-      const name = document.getElementById(`edit-name-${username}`).value;
-      const email = document.getElementById(`edit-email-${username}`).value;
-      const phone = document.getElementById(`edit-phone-${username}`).value;
-      const password = document.getElementById(`edit-password-${username}`).value;
-
-      if (name) users[username].name = name;
-      if (email) users[username].email = email;
-      if (phone) users[username].phone = phone;
-      if (password) users[username].password = password;
-
-      localStorage.setItem('users', JSON.stringify(users));
-      showNotification(`${username} profili güncellendi!`);
-      sendToWebhook(null, { text: `**Üye Profili Güncellendi**\n- Kullanıcı: ${username}\n- Admin: ${currentAdminName}` });
-      loadMembers();
-    }
-
-    function loginAsUser(username) {
-      localStorage.setItem('currentUser', username);
-      localStorage.setItem('loggedInEmail', users[username].email || '');
-      localStorage.setItem('lastIP', users[username].lastIP || 'Bilinmiyor');
-      showNotification(`${username} hesabına giriş yapıldı!`);
-      sendToWebhook(null, { text: `**Hesaba Giriş**\n- Kullanıcı: ${username}\n- Admin: ${currentAdminName}` });
-      window.location.href = 'support.html';
-    }
-
-    function loadSupportTickets() {
-      const supportList = document.getElementById('support-list');
-      supportList.innerHTML = '';
-
-      if (!supportTickets || Object.keys(supportTickets).length === 0) {
-        supportList.innerHTML = '<p style="text-align: center; opacity: 0.7;">Henüz destek talebi yok.</p>';
-        return;
-      }
-
-      for (let ticketId in supportTickets) {
-        const ticket = supportTickets[ticketId];
-        let statusText = '';
-        let statusClass = '';
-        switch (ticket.status) {
-          case 'waiting': statusText = 'Cevap Bekleniyor'; statusClass = 'status-waiting'; break;
-          case 'answered': statusText = 'Cevaplandı'; statusClass = 'status-answered'; break;
-          case 'resolved': statusText = 'Çözüldü'; statusClass = 'status-resolved'; break;
-          case 'closed': statusText = 'Kapandı'; statusClass = 'status-closed'; break;
-          default: statusText = 'Bilinmiyor'; statusClass = 'status-waiting';
-        }
-
-        let messagesHTML = '<div class="messages">';
-        if (ticket.messages && Array.isArray(ticket.messages)) {
-          ticket.messages.forEach(msg => {
-            const messageContent = msg.image ? 
-              `${msg.text || ''}<br><img src="${msg.image}" alt="Uploaded Image">` :
-              msg.text || 'Mesaj yok';
-            messagesHTML += `<div class="message"><strong>${msg.sender || 'Bilinmeyen Gönderici'}:</strong> ${messageContent} (${new Date(msg.timestamp).toLocaleString()})</div>`;
-          });
-        }
-        messagesHTML += '</div>';
-
-        const isClosedOrResolved = ticket.status === 'closed' || ticket.status === 'resolved';
-        const isAssignedToCurrentAdmin = ticket.assignedTo === currentAdminName;
-
-        supportList.innerHTML += `
-          <div class="support-ticket">
-            <div class="ticket-header">
-              <span><strong>Ticket ID:</strong> ${ticketId} | <strong>Kullanıcı:</strong> ${ticket.username || 'Bilinmeyen Kullanıcı'} | <strong>Konu:</strong> ${ticket.subject || 'Konu yok'}</span>
-              <span class="status ${statusClass}">${statusText}</span>
-            </div>
-            <p><strong>E-posta:</strong> ${ticket.email || 'E-posta yok'}</p>
-            ${ticket.assignedTo ? `<p><strong>Devralan:</strong> ${ticket.assignedTo}</p>` : ''}
-            ${messagesHTML}
-            <div class="reply-section" id="reply-section-${ticketId}" style="${isClosedOrResolved ? 'display: none;' : ''}">
-              ${isAssignedToCurrentAdmin || !ticket.assignedTo ? `
-                <div class="quick-messages">
-                  <button class="quick-message-btn" onclick="setQuickMessage('${ticketId}', 'welcome')">Hoşgeldiniz</button>
-                  <button class="quick-message-btn" onclick="setQuickMessage('${ticketId}', 'not-understood')">Anlayamadım</button>
-                  <button class="quick-message-btn" onclick="setQuickMessage('${ticketId}', 'goodbye')">Hoşçakal</button>
-                </div>
-                <textarea id="reply-${ticketId}" placeholder="Yanıtınızı buraya yazın..."></textarea>
-                <div class="typing-indicator" id="typing-${ticketId}">Yazıyor...</div>
-                <input type="file" id="file-${ticketId}" accept="image/*">
-                <button onclick="replyToTicket('${ticketId}')">Yanıt Gönder</button>
-              ` : `<p>Bu ticket ${ticket.assignedTo} tarafından devralınmış.</p>`}
-              <button onclick="resolveTicket('${ticketId}')">Çözüldü</button>
-              <button onclick="closeTicket('${ticketId}')">Kapat</button>
-              <button onclick="assignTicket('${ticketId}')">${ticket.assignedTo ? 'Devri Bırak' : 'Devral'}</button>
-              <button class="delete-btn" onclick="deleteTicket('${ticketId}')">Sil</button>
-            </div>
-            <div class="rating-container" id="rating-${ticketId}" style="${isClosedOrResolved ? 'display: block;' : 'display: none;'}">
-              <p>Bu desteği nasıl değerlendirirsiniz?</p>
-              <div class="stars" id="stars-${ticketId}">
-                <span class="star" data-value="1" onclick="rateTicket('${ticketId}', 1)">★</span>
-                <span class="star" data-value="2" onclick="rateTicket('${ticketId}', 2)">★</span>
-                <span class="star" data-value="3" onclick="rateTicket('${ticketId}', 3)">★</span>
-                <span class="star" data-value="4" onclick="rateTicket('${ticketId}', 4)">★</span>
-                <span class="star" data-value="5" onclick="rateTicket('${ticketId}', 5)">★</span>
-              </div>
-            </div>
-          </div>
-        `;
-
-        const replyInput = document.getElementById(`reply-${ticketId}`);
-        if (replyInput) {
-          replyInput.oninput = () => {
-            clearTimeout(typingTimeout);
-            document.getElementById(`typing-${ticketId}`).style.display = 'block';
-            typingTimeout = setTimeout(() => {
-              document.getElementById(`typing-${ticketId}`).style.display = 'none';
-            }, 1000);
-          };
-        }
-      }
-    }
-
-    function setQuickMessage(ticketId, type) {
-      const replyInput = document.getElementById(`reply-${ticketId}`);
-      if (!replyInput) return;
-      if (type === 'welcome') {
-        replyInput.value = `Merhaba! Ben ${currentAdminName}. Size nasıl yardımcı olabilirim?`;
-      } else if (type === 'not-understood') {
-        replyInput.value = 'Demek istediğinizi anlayamadım, lütfen tekrar anlatabilir misiniz?';
-      } else if (type === 'goodbye') {
-        replyInput.value = 'Sorununuz çözülmüştür, bizi tercih ettiğiniz için teşekkür eder, iyi günler dileriz. Ayrıca destek sonunda çıkan puanlamayı doldurmayı unutmayın.';
-      }
-    }
-
-    function replyToTicket(ticketId) {
-      const replyText = document.getElementById(`reply-${ticketId}`).value;
-      const fileInput = document.getElementById(`file-${ticketId}`);
-      const file = fileInput.files[0];
-      const ticket = supportTickets[ticketId];
-
-      if (!replyText && !file) {
-        showNotification("Yanıt veya dosya ekleyin!");
-        return;
-      }
-
-      let messageObj = {
-        sender: currentAdminName,
-        timestamp: Date.now()
-      };
-
-      if (replyText) messageObj.text = replyText;
-      if (file) {
-        const reader = new FileReader();
-        reader.onload = (e) => {
-          messageObj.image = e.target.result;
-          ticket.messages.push(messageObj);
-          ticket.status = 'answered';
-          localStorage.setItem('supportTickets', JSON.stringify(supportTickets));
-          loadSupportTickets();
-          sendToWebhook(ticketId, messageObj);
-        };
-        reader.readAsDataURL(file);
-      } else {
-        ticket.messages.push(messageObj);
-        ticket.status = 'answered';
-        localStorage.setItem('supportTickets', JSON.stringify(supportTickets));
-        loadSupportTickets();
-        sendToWebhook(ticketId, messageObj);
-      }
-
-      document.getElementById(`reply-${ticketId}`).value = '';
-      fileInput.value = '';
-      showNotification(`Ticket #${ticketId} yanıtlandı!`);
-    }
-
-    function resolveTicket(ticketId) {
-      supportTickets[ticketId].status = 'resolved';
-      localStorage.setItem('supportTickets', JSON.stringify(supportTickets));
-      loadSupportTickets();
-      showNotification(`Ticket #${ticketId} çözüldü!`);
-      sendToWebhook(null, { text: `**Ticket Çözüldü**\n- Ticket ID: ${ticketId}\n- Admin: ${currentAdminName}` });
-    }
-
-    function closeTicket(ticketId) {
-      supportTickets[ticketId].status = 'closed';
-      supportTickets[ticketId].messages.push({
-        sender: 'System',
-        text: 'Bu ticket kapatıldı.',
-        timestamp: Date.now()
-      });
-      localStorage.setItem('supportTickets', JSON.stringify(supportTickets));
-      loadSupportTickets();
-      showNotification(`Ticket #${ticketId} kapandı!`);
-      sendToWebhook(null, { text: `**Ticket Kapatıldı**\n- Ticket ID: ${ticketId}\n- Admin: ${currentAdminName}` });
-    }
-
-    function assignTicket(ticketId) {
-      const ticket = supportTickets[ticketId];
-      if (ticket.assignedTo === currentAdminName) {
-        ticket.assignedTo = null;
-        showNotification(`Ticket #${ticketId} devri bırakıldı!`);
-        sendToWebhook(null, { text: `**Ticket Devri Bırakıldı**\n- Ticket ID: ${ticketId}\n- Admin: ${currentAdminName}` });
-      } else if (!ticket.assignedTo) {
-        ticket.assignedTo = currentAdminName;
-        showNotification(`Ticket #${ticketId} devralındı!`);
-        sendToWebhook(null, { text: `**Ticket Devralındı**\n- Ticket ID: ${ticketId}\n- Admin: ${currentAdminName}` });
-      } else {
-        showNotification(`Bu ticket ${ticket.assignedTo} tarafından devralınmış!`);
-        return;
-      }
-      localStorage.setItem('supportTickets', JSON.stringify(supportTickets));
-      loadSupportTickets();
-    }
-
-    function deleteTicket(ticketId) {
-      if (confirm(`Ticket #${ticketId} silinsin mi?`)) {
-        delete supportTickets[ticketId];
-        localStorage.setItem('supportTickets', JSON.stringify(supportTickets));
-        loadSupportTickets();
-        showNotification(`Ticket #${ticketId} silindi!`);
-        sendToWebhook(null, { text: `**Ticket Silindi**\n- Ticket ID: ${ticketId}\n- Silen: ${currentAdminName}` });
-      }
-    }
-
-    function rateTicket(ticketId, rating) {
-      const stars = document.querySelectorAll(`#stars-${ticketId} .star`);
-      stars.forEach((star, index) => {
-        if (index < rating) {
-          star.classList.add('filled');
-        } else {
-          star.classList.remove('filled');
-        }
-      });
-      supportTickets[ticketId].rating = rating;
-      localStorage.setItem('supportTickets', JSON.stringify(supportTickets));
-      showNotification(`Puanınız için teşekkürler! (${rating}/5)`);
-      sendToWebhook(null, { text: `**Ticket Puanlandı**\n- Ticket ID: ${ticketId}\n- Puan: ${rating}/5\n- Admin: ${currentAdminName}` });
-      document.getElementById(`rating-${ticketId}`).style.pointerEvents = 'none';
-    }
-
-    function loadServerSettings() {
-      const serverData = JSON.parse(localStorage.getItem('serverData')) || {
-        name: "MineHost",
-        description: "Yüksek performanslı hosting ve sunucu çözümleri ile işinizi büyütün.",
-        discord: "https://discord.gg/minehost",
-        website: "https://www.minehost.com.tr/"
-      };
-      document.getElementById('server-name-input').value = serverData.name;
-      document.getElementById('server-description-input').value = serverData.description;
-      document.getElementById('server-discord-input').value = serverData.discord;
-      document.getElementById('server-website-input').value = serverData.website;
-    }
-
-    function saveServerSettings() {
-      const serverData = {
-        name: document.getElementById('server-name-input').value || "MineHost",
-        description: document.getElementById('server-description-input').value || "Yüksek performanslı hosting ve sunucu çözümleri ile işinizi büyütün.",
-        discord: document.getElementById('server-discord-input').value || "https://discord.gg/minehost",
-        website: document.getElementById('server-website-input').value || "https://www.minehost.com.tr/"
-      };
-      localStorage.setItem('serverData', JSON.stringify(serverData));
-      showNotification("Sunucumuz ayarları kaydedildi!");
-      sendToWebhook(null, { text: `**Sunucu Ayarları Güncellendi**\n- Admin: ${currentAdminName}` });
-    }
-
-    function loadSponsorSettings() {
-      const sponsorData = JSON.parse(localStorage.getItem('sponsorData')) || {
-        name: "Sponsor Adı",
-        description: "Sponsor açıklaması burada yer alır.",
-        discord: "#",
-        website: "#"
-      };
-      document.getElementById('sponsor-name-input').value = sponsorData.name;
-      document.getElementById('sponsor-description-input').value = sponsorData.description;
-      document.getElementById('sponsor-discord-input').value = sponsorData.discord;
-      document.getElementById('sponsor-website-input').value = sponsorData.website;
-    }
-
-    function saveSponsorSettings() {
-      const sponsorData = {
-        name: document.getElementById('sponsor-name-input').value || "Sponsor Adı",
-        description: document.getElementById('sponsor-description-input').value || "Sponsor açıklaması burada yer alır.",
-        discord: document.getElementById('sponsor-discord-input').value || "#",
-        website: document.getElementById('sponsor-website-input').value || "#"
-      };
-      localStorage.setItem('sponsorData', JSON.stringify(sponsorData));
-      showNotification("Sponsor ayarları kaydedildi!");
-      sendToWebhook(null, { text: `**Sponsor Ayarları Güncellendi**\n- Admin: ${currentAdminName}` });
-    }
-
-    function loadAdmins() {
-      const adminList = document.getElementById('admin-list');
-      adminList.innerHTML = '';
-      adminPasswords = JSON.parse(localStorage.getItem('adminPasswords')) || adminPasswordsFromJS || {};
-      for (let password in adminPasswords) {
-        const admin = adminPasswords[password];
-        adminList.innerHTML += `
-          <div class="admin-entry">
-            <p><strong>Ad:</strong> ${admin.name}</p>
-            <p><strong>Şifre:</strong> ${password}</p>
-            <p><strong>Yetkiler:</strong> 
-              ${admin.showMembers ? 'Üye İşlemleri, ' : ''} 
-              ${admin.showSupport ? 'Destek Talepleri, ' : ''} 
-              ${admin.showServer ? 'Sunucumuz Ayarları, ' : ''} 
-              ${admin.showSponsor ? 'Sponsor Ayarları, ' : ''} 
-              ${admin.showAdmins ? 'Admin Yönetimi' : ''} 
-            </p>
-            <button onclick="showAdminEdit('${password}')">Düzenle</button>
-            <button onclick="deleteAdmin('${password}')">Sil</button>
-            <div class="admin-edit" id="edit-admin-${password}">
-              <input type="text" id="edit-admin-name-${password}" value="${admin.name}" placeholder="Admin Adı">
-              <input type="text" id="edit-admin-password-${password}" value="${password}" placeholder="Yeni Şifre">
-              <div class="checkbox-group">
-                <label><input type="checkbox" id="edit-admin-members-${password}" ${admin.showMembers ? 'checked' : ''}> Üye İşlemleri</label>
-                <label><input type="checkbox" id="edit-admin-support-${password}" ${admin.showSupport ? 'checked' : ''}> Destek Talepleri</label>
-                <label><input type="checkbox" id="edit-admin-server-${password}" ${admin.showServer ? 'checked' : ''}> Sunucumuz Ayarları</label>
-                <label><input type="checkbox" id="edit-admin-sponsor-${password}" ${admin.showSponsor ? 'checked' : ''}> Sponsor Ayarları</label>
-                <label><input type="checkbox" id="edit-admin-admins-${password}" ${admin.showAdmins ? 'checked' : ''}> Admin Yönetimi</label>
-              </div>
-              <button onclick="saveAdmin('${password}')">Kaydet</button>
-            </div>
-          </div>
-        `;
-      }
-    }
-
-    function showAdminEdit(password) {
-      const editDiv = document.getElementById(`edit-admin-${password}`);
-      editDiv.style.display = editDiv.style.display === 'block' ? 'none' : 'block';
-    }
-
-    function saveAdmin(oldPassword) {
-      const newName = document.getElementById(`edit-admin-name-${oldPassword}`).value;
-      const newPassword = document.getElementById(`edit-admin-password-${oldPassword}`).value;
-      const showMembers = document.getElementById(`edit-admin-members-${oldPassword}`).checked;
-      const showSupport = document.getElementById(`edit-admin-support-${oldPassword}`).checked;
-      const showServer = document.getElementById(`edit-admin-server-${oldPassword}`).checked;
-      const showSponsor = document.getElementById(`edit-admin-sponsor-${oldPassword}`).checked;
-      const showAdmins = document.getElementById(`edit-admin-admins-${oldPassword}`).checked;
-
-      if (!newName || !newPassword) {
-        showNotification("Ad ve şifre boş olamaz!");
-        return;
-      }
-
-      adminPasswords = JSON.parse(localStorage.getItem('adminPasswords')) || adminPasswordsFromJS || {};
-      delete adminPasswords[oldPassword];
-      adminPasswords[newPassword] = {
-        name: newName,
-        showMembers,
-        showSupport,
-        showServer,
-        showSponsor,
-        showAdmins
-      };
-      localStorage.setItem('adminPasswords', JSON.stringify(adminPasswords));
-      loadAdmins();
-      showNotification(`${newName} güncellendi!`);
-      sendToWebhook(null, { text: `**Admin Güncellendi**\n- Ad: ${newName}\n- Admin: ${currentAdminName}` });
-    }
-
-    function deleteAdmin(password) {
-      if (confirm(`Admin ${adminPasswords[password].name} silinsin mi?`)) {
-        adminPasswords = JSON.parse(localStorage.getItem('adminPasswords')) || adminPasswordsFromJS || {};
-        delete adminPasswords[password];
-        localStorage.setItem('adminPasswords', JSON.stringify(adminPasswords));
-        loadAdmins();
-        showNotification("Admin silindi!");
-        sendToWebhook(null, { text: `**Admin Silindi**\n- Ad: ${adminPasswords[password]?.name || 'Bilinmeyen'}\n- Silen: ${currentAdminName}` });
-      }
-    }
-
-    function addAdmin() {
-      const name = document.getElementById('new-admin-name').value;
-      const password = document.getElementById('new-admin-password').value;
-      const showMembers = document.getElementById('new-admin-members').checked;
-      const showSupport = document.getElementById('new-admin-support').checked;
-      const showServer = document.getElementById('new-admin-server').checked;
-      const showSponsor = document.getElementById('new-admin-sponsor').checked;
-      const showAdmins = document.getElementById('new-admin-admins').checked;
-
-      if (!name || !password) {
-        showNotification("Ad ve şifre boş olamaz!");
-        return;
-      }
-
-      adminPasswords = JSON.parse(localStorage.getItem('adminPasswords')) || adminPasswordsFromJS || {};
-      if (adminPasswords[password]) {
-        showNotification("Bu şifre zaten kullanılıyor!");
-        return;
-      }
-
-      adminPasswords[password] = {
-        name,
-        showMembers,
-        showSupport,
-        showServer,
-        showSponsor,
-        showAdmins
-      };
-      localStorage.setItem('adminPasswords', JSON.stringify(adminPasswords));
-      document.getElementById('new-admin-name').value = '';
-      document.getElementById('new-admin-password').value = '';
-      document.getElementById('new-admin-members').checked = false;
-      document.getElementById('new-admin-support').checked = false;
-      document.getElementById('new-admin-server').checked = false;
-      document.getElementById('new-admin-sponsor').checked = false;
-      document.getElementById('new-admin-admins').checked = false;
-      loadAdmins();
-      showNotification(`${name} eklendi!`);
-      sendToWebhook(null, { text: `**Yeni Admin Eklendi**\n- Ad: ${name}\n- Ekleyen: ${currentAdminName}` });
-    }
-
-    function startAutoRefresh() {
-      setInterval(() => {
-        const currentSupportData = localStorage.getItem('supportTickets');
-        const currentUsersData = localStorage.getItem('users');
-        const currentAdminsData = localStorage.getItem('adminPasswords');
-        
-        if (currentSupportData !== lastSupportData && document.getElementById('support-section').classList.contains('active')) {
-          supportTickets = JSON.parse(currentSupportData) || {};
-          loadSupportTickets();
-          lastSupportData = currentSupportData;
-        }
-        
-        if (currentUsersData !== lastUsersData && document.getElementById('members-section').classList.contains('active')) {
-          users = JSON.parse(currentUsersData) || {};
-          loadMembers();
-          lastUsersData = currentUsersData;
-        }
-
-        if (currentAdminsData !== lastAdminsData && document.getElementById('admins-section').classList.contains('active')) {
-          adminPasswords = JSON.parse(currentAdminsData) || adminPasswordsFromJS || {};
-          loadAdmins();
-          lastAdminsData = currentAdminsData;
-        }
-      }, 1000);
-    }
-
-    window.onload = function() {
-      const storedPassword = localStorage.getItem('currentAdminPassword');
-      const rememberMe = localStorage.getItem('rememberMe') === 'true';
-      const adminLogin = document.getElementById('admin-login');
-      const adminPanel = document.getElementById('admin-panel');
-
-      adminPasswords = JSON.parse(localStorage.getItem('adminPasswords')) || adminPasswordsFromJS || {};
-
-      if (localStorage.getItem('isAdmin') === 'true' && 
-          lastIP === simulatedIP && 
-          storedPassword && 
-          adminPasswords[storedPassword] && 
-          rememberMe) {
-        currentAdminPermissions = adminPasswords[storedPassword];
-        currentAdminName = adminPasswords[storedPassword].name;
-        adminLogin.classList.add('hidden');
-        adminPanel.classList.add('active');
-        setupAdminPanel();
-        startAutoRefresh();
-        showNotification(`Hoş geldiniz, ${currentAdminName}! (Otomatik giriş)`);
-        sendToWebhook(null, { text: `**Admin Otomatik Giriş**\n- Admin: ${currentAdminName}` });
-      } else {
-        adminLogin.classList.add('visible');
-      }
-    };
-  </script>
+  </footer>
 </body>
 </html>
