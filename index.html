@@ -649,19 +649,19 @@
       </div>
       <nav>
         <ul id="nav-menu">
-          <li style="--i: 1;"><a href="/" onclick="a('b')">Ana Sayfa</a></li>
-          <li style="--i: 2;"><a href="/team" onclick="a('c')">Ekip</a></li>
+          <li style="--i: 1;"><a href="/" onclick="a('Ana Sayfa', '/'); return false;">Ana Sayfa</a></li>
+          <li style="--i: 2;"><a href="/team" onclick="a('Ekip', '/team'); return false;">Ekip</a></li>
           <li class="dropdown-container" style="--i: 3;">
             <a href="#" class="dropdown-toggle">Hizmetlerimiz <span class="arrow">↓</span></a>
             <div class="dropdown">
-              <a href="/physical">Fiziksel Sunucu</a>
-              <a href="/vds">Sanal Sunucu</a>
-              <a href="/domain">Alan Adı</a>
+              <a href="/physical" onclick="a('Fiziksel Sunucu', '/physical'); return false;">Fiziksel Sunucu</a>
+              <a href="/vds" onclick="a('Sanal Sunucu', '/vds'); return false;">Sanal Sunucu</a>
+              <a href="/domain" onclick="a('Alan Adı', '/domain'); return false;">Alan Adı</a>
             </div>
           </li>
-          <li style="--i: 4;"><a href="/support">Destek</a></li>
-          <li style="--i: 5;"><a href="https://discord.gg/minehost" onclick="a('g')">Discord</a></li>
-          <li style="--i: 6;"><a href="#" onclick="h()">Çıkış Yap</a></li>
+          <li style="--i: 4;"><a href="/support" onclick="a('Destek', '/support'); return false;">Destek</a></li>
+          <li style="--i: 5;"><a href="https://discord.gg/minehost" onclick="a('Discord', 'https://discord.gg/minehost'); return false;">Discord</a></li>
+          <li style="--i: 6;"><a href="#" onclick="h(); return false;">Çıkış Yap</a></li>
         </ul>
       </nav>
     </div>
@@ -718,32 +718,32 @@
         <div class="footer-section">
           <h4>Hizmetler</h4>
           <ul>
-            <li><a href="/vds">Sanal Sunucu</a></li>
-            <li><a href="/physical">Fiziksel Sunucu</a></li>
-            <li><a href="#">cPanel Hosting</a></li>
-            <li><a href="#">Plesk Hosting</a></li>
+            <li><a href="/vds" onclick="a('Sanal Sunucu', '/vds'); return false;">Sanal Sunucu</a></li>
+            <li><a href="/physical" onclick="a('Fiziksel Sunucu', '/physical'); return false;">Fiziksel Sunucu</a></li>
+            <li><a href="#" onclick="a('cPanel Hosting', '#'); return false;">cPanel Hosting</a></li>
+            <li><a href="#" onclick="a('Plesk Hosting', '#'); return false;">Plesk Hosting</a></li>
           </ul>
         </div>
         <div class="footer-section">
           <h4>İletişim</h4>
           <ul>
-            <li><a href="mailto:minehost@minehost.com.tr">minehost@minehost.com.tr</a></li>
-            <li><a href="tel:+639638527197">+63 963 852 7197</a></li>
-            <li><a href="#">Ankara/Türkiye</a></li>
+            <li><a href="mailto:minehost@minehost.com.tr" onclick="a('E-posta', 'mailto:minehost@minehost.com.tr'); return false;">minehost@minehost.com.tr</a></li>
+            <li><a href="tel:+639638527197" onclick="a('Telefon', 'tel:+639638527197'); return false;">+63 963 852 7197</a></li>
+            <li><a href="#" onclick="a('Konum', '#'); return false;">Ankara/Türkiye</a></li>
           </ul>
         </div>
         <div class="footer-section">
           <h4>Bizi Takip Edin</h4>
           <div class="social-links">
-            <a href="https://discord.gg/minehost" onclick="a('g')"><i class="fab fa-discord"></i></a>
-            <a href="#"><i class="fab fa-twitter"></i></a>
-            <a href="#"><i class="fab fa-instagram"></i></a>
+            <a href="https://discord.gg/minehost" onclick="a('Discord', 'https://discord.gg/minehost'); return false;"><i class="fab fa-discord"></i></a>
+            <a href="#" onclick="a('Twitter', '#'); return false;"><i class="fab fa-twitter"></i></a>
+            <a href="#" onclick="a('Instagram', '#'); return false;"><i class="fab fa-instagram"></i></a>
           </div>
         </div>
       </div>
       <div class="footer-bottom">
         <p>© 2025 MineHost. Tüm hakları saklıdır.</p>
-        <p class="made-by">Made by <a href="https://discord.com/users/1316714899312873556" target="_blank">Wineryy</a></p>
+        <p class="made-by">Made by <a href="https://discord.com/users/1316714899312873556" onclick="a('Wineryy', 'https://discord.com/users/1316714899312873556'); return false;">Wineryy</a></p>
       </div>
     </div>
   </footer>
@@ -767,13 +767,16 @@
     function r(b) {
       console.log("Notification would be sent to Discord: ", b);
     }
-    function a(c) {
+    function a(c, url) {
       const d = `User Action: ${c}`;
       s(d);
       r(d);
+      if (url && url !== '#') {
+        setTimeout(() => window.location.href = url, 1000); // 1 saniye bekleyip yönlendir
+      }
     }
     function i() {
-      a('Clicked Services Button');
+      a('Clicked Services Button', null);
       document.querySelector('.services-section').scrollIntoView({ behavior: 'smooth' });
     }
     function h() {
@@ -812,5 +815,5 @@
   s1.setAttribute('crossorigin','*');
   s0.parentNode.insertBefore(s1,s0);
   })();
-  </script>
-  <!--End of Tawk.to Script-->
+</script>
+<!--End of Tawk.to Script-->
