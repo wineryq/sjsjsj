@@ -3,9 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>MineHost - Güçlü VDS ve Sunucu Çözümleri</title>
-  <meta name="description" content="MineHost ile yüksek performanslı VDS ve fiziksel sunucu hizmetleri. Güvenilir, hızlı ve kesintisiz hosting çözümleri için hemen keşfedin!">
-  <link rel="icon" type="image/png" href="image/logo.png">
+  <title>MineHost - Bakımdayız</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
   <style>
     * {
       margin: 0;
@@ -19,6 +19,9 @@
       line-height: 1.6;
       overflow-x: hidden;
       position: relative;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
     }
     body::before {
       content: '';
@@ -70,303 +73,56 @@
       80% { transform: rotate(340deg) scale(0.95); }
       100% { transform: rotate(360deg) scale(1); }
     }
-    .hamburger {
-      display: none;
+    .maintenance {
+      flex: 1;
+      display: flex;
       flex-direction: column;
-      gap: 6px;
-      cursor: pointer;
-      z-index: 1001;
-      position: absolute;
-      right: 20px;
-      padding: 8px;
-      border-radius: 50%;
-      background: rgba(124, 58, 237, 0.2);
-      transition: background 0.3s ease;
-    }
-    .hamburger:hover {
-      background: rgba(124, 58, 237, 0.4);
-    }
-    .hamburger span {
-      width: 30px;
-      height: 4px;
-      background: #c4b5fd;
-      border-radius: 5px;
-      transition: all 0.3s ease;
-      box-shadow: 0 0 5px rgba(124, 58, 237, 0.5);
-    }
-    .hamburger.active span:nth-child(1) {
-      transform: rotate(45deg) translate(5px, 5px);
-    }
-    .hamburger.active span:nth-child(2) {
-      opacity: 0;
-    }
-    .hamburger.active span:nth-child(3) {
-      transform: rotate(-45deg) translate(5px, -5px);
-    }
-    .close-btn {
-      display: none;
-      position: fixed;
-      top: 20px;
-      right: 20px;
-      width: 40px;
-      height: 40px;
-      background: rgba(124, 58, 237, 0.3);
-      border-radius: 50%;
-      cursor: pointer;
-      z-index: 1002;
-      transition: transform 0.3s ease, background 0.3s ease;
-    }
-    .close-btn:hover {
-      transform: rotate(90deg);
-      background: rgba(124, 58, 237, 0.5);
-    }
-    .close-btn::before,
-    .close-btn::after {
-      content: '';
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      width: 20px;
-      height: 3px;
-      background: #c4b5fd;
-      transform: translate(-50%, -50%) rotate(45deg);
-    }
-    .close-btn::after {
-      transform: translate(-50%, -50%) rotate(-45deg);
-    }
-    nav {
-      display: flex;
+      justify-content: center;
       align-items: center;
-      z-index: 1001;
-    }
-    nav ul {
-      display: flex;
-      list-style: none;
-      gap: 1.5rem;
-      margin: 0;
-      padding: 0;
-    }
-    nav ul li {
-      opacity: 0;
-      transform: translateY(-20px);
-      animation: fadeInDown 0.5s forwards;
-      animation-delay: calc(0.1s * var(--i));
-      position: relative;
-    }
-    @keyframes fadeInDown {
-      0% { opacity: 0; transform: translateY(-20px); }
-      100% { opacity: 1; transform: translateY(0); }
-    }
-    nav ul li a {
-      color: #d1d5db;
-      text-decoration: none;
-      font-weight: 500;
-      font-size: 1rem;
-      padding: 0.5rem 1rem;
-      border-radius: 5px;
-      transition: all 0.3s ease;
-      display: flex;
-      align-items: center;
-    }
-    nav ul li a:hover {
-      background: rgba(124, 58, 237, 0.2);
-      color: #c4b5fd;
-      transform: scale(1.05);
-    }
-    nav ul li.dropdown-container {
-      position: relative;
-    }
-    nav ul li.dropdown-container .dropdown-toggle {
-      cursor: pointer;
-    }
-    nav ul li.dropdown-container .dropdown-toggle .arrow {
-      margin-left: 5px;
-      display: inline-block;
-      transition: transform 0.3s ease;
-    }
-    nav ul li.dropdown-container:hover .dropdown-toggle .arrow,
-    nav ul li.dropdown-container.active .dropdown-toggle .arrow {
-      animation: bounceArrow 0.6s infinite;
-    }
-    @keyframes bounceArrow {
-      0% { transform: translateY(0); }
-      50% { transform: translateY(-3px); }
-      100% { transform: translateY(0); }
-    }
-    nav ul li.dropdown-container .dropdown {
-      position: absolute;
-      top: 100%;
-      left: 0;
-      background: rgba(10, 15, 31, 0.95);
-      border: 1px solid rgba(124, 58, 237, 0.3);
-      border-radius: 5px;
-      z-index: 10;
-      opacity: 0;
-      visibility: hidden;
-      transform: translateY(-10px);
-      transition: all 0.3s ease;
-    }
-    nav ul li.dropdown-container:hover .dropdown,
-    nav ul li.dropdown-container.active .dropdown {
-      opacity: 1;
-      visibility: visible;
-      transform: translateY(0);
-    }
-    nav ul li.dropdown-container .dropdown a {
-      display: block;
-      padding: 0.5rem 1rem;
-      color: #d1d5db;
-      text-decoration: none;
-      font-size: 1rem;
-      border-bottom: 1px solid rgba(124, 58, 237, 0.2);
-    }
-    nav ul li.dropdown-container .dropdown a:last-child {
-      border-bottom: none;
-    }
-    nav ul li.dropdown-container .dropdown a:hover {
-      background: rgba(124, 58, 237, 0.2);
-      color: #c4b5fd;
-    }
-    .overlay {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0, 0, 0, 0.6);
-      backdrop-filter: blur(5px);
-      z-index: 998;
-      opacity: 0;
-      visibility: hidden;
-      transition: all 0.3s ease;
-    }
-    .overlay.active {
-      opacity: 1;
-      visibility: visible;
-    }
-    .main-section {
-      padding: 6rem 1rem;
       text-align: center;
+      padding: 4rem 1rem;
       position: relative;
-      overflow: hidden;
+      z-index: 2;
+    }
+    .maintenance h1 {
+      font-size: 4rem;
+      font-weight: 800;
+      color: #fff;
+      margin-bottom: 1rem;
+      text-shadow: 0 0 20px rgba(124, 58, 237, 0.5);
+      animation: glow 2s infinite alternate;
+    }
+    @keyframes glow {
+      0% { text-shadow: 0 0 10px rgba(124, 58, 237, 0.5), 0 0 20px rgba(124, 58, 237, 0.3); }
+      100% { text-shadow: 0 0 20px rgba(124, 58, 237, 0.7), 0 0 40px rgba(124, 58, 237, 0.5); }
+    }
+    .maintenance h1 span {
+      color: #7c3aed;
+    }
+    .maintenance p {
+      font-size: 1.5rem;
+      max-width: 700px;
+      margin: 0 auto 2rem;
+      color: #9ca3af;
+      animation: fadeIn 1s ease-in-out 1s forwards;
       opacity: 0;
-      animation: fadeIn 1s forwards 0.5s;
     }
     @keyframes fadeIn {
       0% { opacity: 0; transform: translateY(20px); }
       100% { opacity: 1; transform: translateY(0); }
     }
-    .main-section::after {
-      content: '';
-      position: absolute;
-      top: -50%;
-      left: -50%;
-      width: 200%;
-      height: 200%;
-      background: radial-gradient(circle, rgba(124, 58, 237, 0.15), transparent 70%);
-      animation: rotate 20s linear infinite;
-      z-index: -1;
+    .loader {
+      width: 60px;
+      height: 60px;
+      border: 6px solid #7c3aed;
+      border-top: 6px solid transparent;
+      border-radius: 50%;
+      animation: spin 1.5s linear infinite;
+      margin: 2rem auto;
     }
-    @keyframes rotate {
+    @keyframes spin {
       0% { transform: rotate(0deg); }
       100% { transform: rotate(360deg); }
-    }
-    .main-section h1 {
-      font-size: 3.5rem;
-      font-weight: 800;
-      color: #fff;
-      margin-bottom: 1rem;
-      text-shadow: 0 0 20px rgba(124, 58, 237, 0.5);
-    }
-    .main-section h1 span {
-      color: #7c3aed;
-    }
-    .main-section p {
-      font-size: 1.2rem;
-      max-width: 700px;
-      margin: 0 auto 2rem;
-      color: #9ca3af;
-    }
-    .cta-btn {
-      padding: 0.8rem 2rem;
-      background: #7c3aed;
-      color: #fff;
-      border: none;
-      border-radius: 8px;
-      font-size: 1.1rem;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.3s ease;
-    }
-    .cta-btn:hover {
-      background: #6d28d9;
-      box-shadow: 0 0 15px rgba(124, 58, 237, 0.5);
-      transform: translateY(-3px);
-    }
-    .services-section {
-      padding: 4rem 1rem;
-      background: rgba(10, 15, 31, 0.5);
-      opacity: 0;
-      animation: fadeIn 1s forwards 1s;
-    }
-    .services-section h2 {
-      text-align: center;
-      font-size: 2.5rem;
-      color: #fff;
-      margin-bottom: 2rem;
-    }
-    .services-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 1.5rem;
-    }
-    .service-card {
-      background: rgba(31, 41, 55, 0.8);
-      padding: 2rem;
-      border-radius: 10px;
-      text-align: center;
-      border: 1px solid rgba(124, 58, 237, 0.2);
-      opacity: 0;
-      animation: fadeInUp 0.8s forwards;
-      animation-delay: calc(0.2s * var(--i));
-      position: relative;
-      transform-style: preserve-3d;
-      transition: transform 0.3s ease;
-    }
-    .service-card:hover {
-      transform: translateY(-5px) rotateX(5deg) rotateY(5deg);
-      box-shadow: 0 10px 20px rgba(124, 58, 237, 0.3);
-      border-color: #7c3aed;
-    }
-    @keyframes fadeInUp {
-      0% { opacity: 0; transform: translateY(20px); }
-      100% { opacity: 1; transform: translateY(0); }
-    }
-    .service-card h3 {
-      font-size: 1.5rem;
-      color: #c4b5fd;
-      margin-bottom: 0.5rem;
-    }
-    .service-card p {
-      font-size: 1rem;
-      color: #9ca3af;
-    }
-    .about-section {
-      padding: 4rem 1rem;
-      text-align: center;
-      opacity: 0;
-      animation: fadeIn 1s forwards 1.5s;
-    }
-    .about-section h2 {
-      font-size: 2.5rem;
-      color: #fff;
-      margin-bottom: 1.5rem;
-    }
-    .about-section p {
-      font-size: 1.1rem;
-      max-width: 800px;
-      margin: 0 auto 1rem;
-      color: #9ca3af;
     }
     footer {
       padding: 3rem 1rem;
@@ -375,8 +131,6 @@
       text-align: center;
       position: relative;
       overflow: hidden;
-      opacity: 0;
-      animation: fadeIn 1s forwards 2s;
     }
     footer::before {
       content: '';
@@ -464,111 +218,17 @@
     footer .made-by a:hover {
       color: #7c3aed;
     }
-    .notification {
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      background: rgba(124, 58, 237, 0.2);
-      border: 1px solid #7c3aed;
-      border-radius: 8px;
-      padding: 0.8rem 1.5rem;
-      color: #fff;
-      z-index: 1000;
-      display: none;
-      opacity: 0;
-      transform: translateY(20px);
-      transition: all 0.3s ease;
-    }
-    .notification.show {
-      display: block;
-      opacity: 1;
-      transform: translateY(0);
-    }
     @media (max-width: 768px) {
-      .hamburger {
-        display: flex;
-      }
-      .close-btn {
-        display: none;
-      }
-      .close-btn.active {
-        display: block;
-      }
-      nav ul {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: rgba(10, 15, 31, 0.98);
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        margin: 0;
-        padding: 0;
-        transform: translateX(-100%);
-        transition: transform 0.5s ease-in-out;
-        z-index: 1000;
-      }
-      nav ul.active {
-        transform: translateX(0);
-      }
-      nav ul li {
-        opacity: 0;
-        transform: translateX(-20px);
-        animation: slideIn 0.5s forwards;
-        animation-delay: calc(0.1s * var(--i));
-      }
-      @keyframes slideIn {
-        0% { opacity: 0; transform: translateX(-20px); }
-        100% { opacity: 1; transform: translateX(0); }
-      }
-      nav ul li a {
-        font-size: 1.5rem;
-        padding: 1rem;
-      }
-      nav ul li.dropdown-container .dropdown {
-        position: static;
-        width: 100%;
-        background: none;
-        border: none;
-        opacity: 0;
-        visibility: hidden;
-        transform: translateY(-10px);
-      }
-      nav ul li.dropdown-container.active .dropdown {
-        opacity: 1;
-        visibility: visible;
-        transform: translateY(0);
-      }
-      nav ul li.dropdown-container .dropdown a {
-        font-size: 1.2rem;
-        border-bottom: none;
-      }
-      .main-section h1 {
+      .maintenance h1 {
         font-size: 2.5rem;
       }
-      .main-section p {
+      .maintenance p {
         font-size: 1rem;
       }
-      .cta-btn {
-        padding: 0.7rem 1.5rem;
-        font-size: 1rem;
-      }
-      .services-section h2 {
-        font-size: 2rem;
-      }
-      .service-card {
-        padding: 1.5rem;
-      }
-      .service-card h3 {
-        font-size: 1.3rem;
-      }
-      .about-section h2 {
-        font-size: 2rem;
-      }
-      .about-section p {
-        font-size: 1rem;
+      .loader {
+        width: 40px;
+        height: 40px;
+        border-width: 4px;
       }
       footer .footer-content {
         flex-direction: column;
@@ -579,136 +239,19 @@
         margin-bottom: 1.5rem;
       }
     }
-    @media (min-width: 769px) {
-      nav ul {
-        flex-direction: row;
-        position: static;
-        width: auto;
-        height: auto;
-        background: none;
-        transform: none;
-        transition: none;
-      }
-      nav ul li a {
-        font-size: 1rem;
-      }
-    }
-    @media (max-width: 480px) {
-      .hamburger {
-        padding: 6px;
-      }
-      .hamburger span {
-        width: 25px;
-        height: 3px;
-      }
-      .main-section h1 {
-        font-size: 2rem;
-      }
-      .main-section p {
-        font-size: 0.9rem;
-      }
-      .cta-btn {
-        padding: 0.6rem 1.2rem;
-        font-size: 0.9rem;
-      }
-      .services-section h2 {
-        font-size: 1.8rem;
-      }
-      .service-card h3 {
-        font-size: 1.2rem;
-      }
-      .service-card p {
-        font-size: 0.9rem;
-      }
-      .about-section h2 {
-        font-size: 1.8rem;
-      }
-      .about-section p {
-        font-size: 0.9rem;
-      }
-    }
   </style>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 </head>
 <body>
-  <div class="notification" id="notification">
-    <p id="notification-text"></p>
-  </div>
-
-  <div class="overlay" id="overlay"></div>
-  <div class="close-btn" id="close-btn"></div>
-
   <header>
     <div class="container">
       <img src="image/logo.png" alt="MineHost Logo" class="logo" id="header-logo">
-      <div class="hamburger" id="hamburger">
-        <span></span>
-        <span></span>
-        <span></span>
-      </div>
-      <nav>
-        <ul id="nav-menu">
-          <li style="--i: 1;"><a href="/" onclick="a('b')">Ana Sayfa</a></li>
-          <li style="--i: 2;"><a href="/team" onclick="a('c')">Ekip</a></li>
-          <li class="dropdown-container" style="--i: 3;">
-            <a href="#" class="dropdown-toggle">Hizmetlerimiz <span class="arrow">↓</span></a>
-            <div class="dropdown">
-              <a href="/physical">Fiziksel Sunucu</a>
-              <a href="/vds">Sanal Sunucu</a>
-              <a href="/domain">Alan Adı</a>
-            </div>
-          </li>
-          <li style="--i: 4;"><a href="/support">Destek</a></li>
-          <li style="--i: 5;"><a href="https://discord.gg/minehost" onclick="a('g')">Discord</a></li>
-          <li style="--i: 6;"><a href="#" onclick="h()">Çıkış Yap</a></li>
-        </ul>
-      </nav>
     </div>
   </header>
 
-  <section class="main-section">
-    <div class="container">
-      <h1>Güçlü <span>Hosting</span> Çözümleri</h1>
-      <p>MineHost ile projelerinizi hızlandırın! Yüksek performanslı VDS ve fiziksel sunucularımızla kesintisiz bir deneyim sunuyoruz.</p>
-      <button class="cta-btn" onclick="i()">Hizmetleri Keşfet</button>
-    </div>
-  </section>
-
-  <section class="services-section" id="services">
-    <div class="container">
-      <h2>Hizmetlerimiz</h2>
-      <div class="services-grid">
-        <div class="service-card" style="--i: 1;">
-          <h3>VDS</h3>
-          <p>Yüksek performanslı sanal sunucular.</p>
-        </div>
-        <div class="service-card" style="--i: 2;">
-          <h3>cPanel</h3>
-          <p>Kolay ve güçlü hosting yönetimi.</p>
-        </div>
-        <div class="service-card" style="--i: 3;">
-          <h3>Plesk</h3>
-          <p>Esnek ve güvenli kontrol paneli.</p>
-        </div>
-        <div class="service-card" style="--i: 4;">
-          <h3>DDoS Koruması</h3>
-          <p>3Tbps+ nShield ile tam güvenlik.</p>
-        </div>
-        <div class="service-card" style="--i: 5;">
-          <h3>Web Hosting</h3>
-          <p>Hızlı ve güvenilir hosting hizmetleri.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="about-section">
-    <div class="container">
-      <h2>Hakkımızda</h2>
-      <p>MineHost, 2024 yılında kurulmuş bir VDS hosting şirketidir. Amacımız, müşterilerimize en iyi performansı ve güvenilirliği sunarak projelerini desteklemektir.</p>
-      <p>500'den fazla memnun müşteri ve 5+ aktif sunucu ile sektörde fark yaratıyoruz. Ryzen işlemciler, NVMe SSD'ler ve güçlü DDoS koruması ile hizmetinizdeyiz.</p>
-    </div>
+  <section class="maintenance">
+    <h1><span>Bakım</span>dayız</h1>
+    <p>Sistemlerimiz şu anda bakımda. En kısa sürede geri döneceğiz, sabrınız için teşekkürler!</p>
+    <div class="loader"></div>
   </section>
 
   <footer>
@@ -735,7 +278,7 @@
         <div class="footer-section">
           <h4>Bizi Takip Edin</h4>
           <div class="social-links">
-            <a href="https://discord.gg/minehost" onclick="a('g')"><i class="fab fa-discord"></i></a>
+            <a href="https://discord.gg/minehost"><i class="fab fa-discord"></i></a>
             <a href="#"><i class="fab fa-twitter"></i></a>
             <a href="#"><i class="fab fa-instagram"></i></a>
           </div>
@@ -749,54 +292,10 @@
   </footer>
 
   <script>
-    const x = document.getElementById('notification'),
-          y = document.getElementById('notification-text'),
-          z = document.getElementById('hamburger'),
-          w = document.getElementById('nav-menu'),
-          v = document.getElementById('overlay'),
-          u = document.getElementById('close-btn'),
-          t = document.getElementById('header-logo'),
-          dropdownToggle = document.querySelector('.dropdown-toggle'),
-          dropdownContainer = document.querySelector('.dropdown-container');
-
-    function s(a) {
-      y.textContent = a;
-      x.classList.add('show');
-      setTimeout(() => x.classList.remove('show'), 5000);
-    }
-    function r(b) {
-      console.log("Notification would be sent to Discord: ", b);
-    }
-    function a(c) {
-      const d = `User Action: ${c}`;
-      s(d);
-      r(d);
-    }
-    function i() {
-      a('Clicked Services Button');
-      document.querySelector('.services-section').scrollIntoView({ behavior: 'smooth' });
-    }
-    function h() {
-      s("Çıkış yaptınız!");
-      setTimeout(() => window.location.href = '/auth', 1000);
-    }
-    function o() {
-      const n = z.classList.toggle('active');
-      w.classList.toggle('active');
-      v.classList.toggle('active');
-      u.classList.toggle('active');
-    }
-    function toggleDropdown() {
-      dropdownContainer.classList.toggle('active');
-    }
-
-    z.addEventListener('click', o);
-    u.addEventListener('click', o);
-    v.addEventListener('click', o);
-    t.addEventListener('click', () => t.classList.add('spin'));
-    dropdownToggle.addEventListener('click', (e) => {
-      e.preventDefault();
-      toggleDropdown();
+    const headerLogo = document.getElementById('header-logo');
+    headerLogo.addEventListener('click', () => {
+      headerLogo.classList.add('spin');
+      setTimeout(() => headerLogo.classList.remove('spin'), 1200);
     });
   </script>
 </body>
