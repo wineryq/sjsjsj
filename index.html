@@ -73,7 +73,150 @@
       80% { transform: rotate(340deg) scale(0.95); }
       100% { transform: rotate(360deg) scale(1); }
     }
-    .maintenance {
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 6px;
+      cursor: pointer;
+      z-index: 1001;
+      position: absolute;
+      right: 20px;
+      padding: 8px;
+      border-radius: 50%;
+      background: rgba(124, 58, 237, 0.2);
+      transition: background 0.3s ease;
+    }
+    .hamburger:hover {
+      background: rgba(124, 58, 237, 0.4);
+    }
+    .hamburger span {
+      width: 30px;
+      height: 4px;
+      background: #c4b5fd;
+      border-radius: 5px;
+      transition: all 0.3s ease;
+      box-shadow: 0 0 5px rgba(124, 58, 237, 0.5);
+    }
+    .hamburger.active span:nth-child(1) {
+      transform: rotate(45deg) translate(5px, 5px);
+    }
+    .hamburger.active span:nth-child(2) {
+      opacity: 0;
+    }
+    .hamburger.active span:nth-child(3) {
+      transform: rotate(-45deg) translate(5px, -5px);
+    }
+    nav {
+      display: flex;
+      align-items: center;
+      z-index: 1001;
+    }
+    nav ul {
+      display: flex;
+      list-style: none;
+      gap: 1.5rem;
+      margin: 0;
+      padding: 0;
+    }
+    nav ul li {
+      opacity: 0;
+      transform: translateY(-20px);
+      animation: fadeInDown 0.5s forwards;
+      animation-delay: calc(0.1s * var(--i));
+      position: relative;
+    }
+    @keyframes fadeInDown {
+      0% { opacity: 0; transform: translateY(-20px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+    nav ul li a {
+      color: #d1d5db;
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 1rem;
+      padding: 0.5rem 1rem;
+      border-radius: 5px;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+    }
+    nav ul li a:hover {
+      background: rgba(124, 58, 237, 0.2);
+      color: #c4b5fd;
+      transform: scale(1.05);
+    }
+    nav ul li.dropdown-container {
+      position: relative;
+    }
+    nav ul li.dropdown-container .dropdown-toggle {
+      cursor: pointer;
+    }
+    nav ul li.dropdown-container .dropdown-toggle .arrow {
+      margin-left: 5px;
+      display: inline-block;
+      transition: transform 0.3s ease;
+    }
+    nav ul li.dropdown-container:hover .dropdown-toggle .arrow,
+    nav ul li.dropdown-container.active .dropdown-toggle .arrow {
+      animation: bounceArrow 0.6s infinite;
+    }
+    @keyframes bounceArrow {
+      0% { transform: translateY(0); }
+      50% { transform: translateY(-3px); }
+      100% { transform: translateY(0); }
+    }
+    nav ul li.dropdown-container .dropdown {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      background: rgba(10, 15, 31, 0.95);
+      border: 1px solid rgba(124, 58, 237, 0.3);
+      border-radius: 5px;
+      z-index: 10;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(-10px);
+      transition: all 0.3s ease;
+    }
+    nav ul li.dropdown-container:hover .dropdown,
+    nav ul li.dropdown-container.active .dropdown {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+    nav ul li.dropdown-container .dropdown a {
+      display: block;
+      padding: 0.5rem 1rem;
+      color: #d1d5db;
+      text-decoration: none;
+      font-size: 1rem;
+      border-bottom: 1px solid rgba(124, 58, 237, 0.2);
+    }
+    nav ul li.dropdown-container .dropdown a:last-child {
+      border-bottom: none;
+    }
+    nav ul li.dropdown-container .dropdown a:hover {
+      background: rgba(124, 58, 237, 0.2);
+      color: #c4b5fd;
+    }
+    .overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.6);
+      backdrop-filter: blur(5px);
+      z-index: 998;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s ease;
+    }
+    .overlay.active {
+      opacity: 1;
+      visibility: visible;
+    }
+    .maintenance-section {
       flex: 1;
       display: flex;
       flex-direction: column;
@@ -83,8 +226,14 @@
       padding: 4rem 1rem;
       position: relative;
       z-index: 2;
+      opacity: 0;
+      animation: fadeIn 1s forwards 0.5s;
     }
-    .maintenance h1 {
+    @keyframes fadeIn {
+      0% { opacity: 0; transform: translateY(20px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+    .maintenance-section h1 {
       font-size: 4rem;
       font-weight: 800;
       color: #fff;
@@ -96,20 +245,14 @@
       0% { text-shadow: 0 0 10px rgba(124, 58, 237, 0.5), 0 0 20px rgba(124, 58, 237, 0.3); }
       100% { text-shadow: 0 0 20px rgba(124, 58, 237, 0.7), 0 0 40px rgba(124, 58, 237, 0.5); }
     }
-    .maintenance h1 span {
+    .maintenance-section h1 span {
       color: #7c3aed;
     }
-    .maintenance p {
+    .maintenance-section p {
       font-size: 1.5rem;
       max-width: 700px;
       margin: 0 auto 2rem;
       color: #9ca3af;
-      animation: fadeIn 1s ease-in-out 1s forwards;
-      opacity: 0;
-    }
-    @keyframes fadeIn {
-      0% { opacity: 0; transform: translateY(20px); }
-      100% { opacity: 1; transform: translateY(0); }
     }
     .loader {
       width: 60px;
@@ -124,105 +267,53 @@
       0% { transform: rotate(0deg); }
       100% { transform: rotate(360deg); }
     }
-    footer {
-      padding: 3rem 1rem;
-      background: linear-gradient(180deg, rgba(10, 15, 31, 0.9), rgba(5, 10, 25, 1));
-      border-top: 1px solid rgba(124, 58, 237, 0.5);
-      text-align: center;
-      position: relative;
-      overflow: hidden;
-    }
-    footer::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: radial-gradient(circle at 50% 0%, rgba(124, 58, 237, 0.2), transparent 70%);
-      z-index: 0;
-    }
-    footer .container {
-      position: relative;
-      z-index: 1;
-    }
-    footer .logo {
-      height: 60px;
-      margin-bottom: 1.5rem;
-      transition: transform 0.3s ease;
-    }
-    footer .logo:hover {
-      transform: scale(1.1);
-    }
-    footer .footer-content {
-      display: flex;
-      justify-content: space-between;
-      flex-wrap: wrap;
-      gap: 2rem;
-      margin-bottom: 2rem;
-    }
-    footer .footer-section {
-      flex: 1;
-      min-width: 200px;
-    }
-    footer .footer-section h4 {
-      font-size: 1.2rem;
-      color: #c4b5fd;
-      margin-bottom: 1rem;
-      text-transform: uppercase;
-    }
-    footer .footer-section ul {
-      list-style: none;
-    }
-    footer .footer-section ul li {
-      margin-bottom: 0.5rem;
-    }
-    footer .footer-section ul li a {
-      color: #9ca3af;
-      text-decoration: none;
-      font-size: 0.9rem;
-      transition: color 0.3s ease;
-    }
-    footer .footer-section ul li a:hover {
-      color: #7c3aed;
-    }
-    footer .social-links a {
-      color: #d1d5db;
-      font-size: 1.2rem;
-      margin: 0 0.5rem;
-      transition: color 0.3s ease, transform 0.3s ease;
-    }
-    footer .social-links a:hover {
-      color: #7c3aed;
-      transform: translateY(-3px);
-    }
-    footer .footer-bottom {
-      border-top: 1px solid rgba(124, 58, 237, 0.3);
-      padding-top: 1.5rem;
-      margin-top: 1.5rem;
-    }
-    footer .footer-bottom p {
-      font-size: 0.9rem;
-      color: #9ca3af;
-    }
-    footer .made-by {
-      font-size: 0.9rem;
-      color: #9ca3af;
-      margin-top: 1rem;
-    }
-    footer .made-by a {
-      color: #c4b5fd;
-      text-decoration: none;
-      transition: color 0.3s ease;
-    }
-    footer .made-by a:hover {
-      color: #7c3aed;
-    }
     @media (max-width: 768px) {
-      .maintenance h1 {
+      .hamburger {
+        display: flex;
+      }
+      nav ul {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(10, 15, 31, 0.98);
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        margin: 0;
+        padding: 0;
+        transform: translateX(-100%);
+        transition: transform 0.5s ease-in-out;
+        z-index: 1000;
+      }
+      nav ul.active {
+        transform: translateX(0);
+      }
+      nav ul li {
+        opacity: 0;
+        transform: translateX(-20px);
+        animation: slideIn 0.5s forwards;
+        animation-delay: calc(0.1s * var(--i));
+      }
+      @keyframes slideIn {
+        0% { opacity: 0; transform: translateX(-20px); }
+        100% { opacity: 1; transform: translateX(0); }
+      }
+      nav ul li a {
+        font-size: 1.5rem;
+        padding: 1rem;
+      }
+      nav ul li.dropdown-container .dropdown {
+        position: static;
+        width: 100%;
+        background: none;
+        border: none;
+      }
+      .maintenance-section h1 {
         font-size: 2.5rem;
       }
-      .maintenance p {
+      .maintenance-section p {
         font-size: 1rem;
       }
       .loader {
@@ -230,72 +321,95 @@
         height: 40px;
         border-width: 4px;
       }
-      footer .footer-content {
-        flex-direction: column;
-        align-items: center;
-        text-align: center;
-      }
-      footer .footer-section {
-        margin-bottom: 1.5rem;
-      }
     }
   </style>
 </head>
 <body>
+  <div class="overlay" id="overlay"></div>
+
   <header>
     <div class="container">
       <img src="image/logo.png" alt="MineHost Logo" class="logo" id="header-logo">
+      <div class="hamburger" id="hamburger">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+      <nav>
+        <ul id="nav-menu">
+          <li style="--i: 1;"><a href="/" onclick="a('b')">Ana Sayfa</a></li>
+          <li style="--i: 2;"><a href="/team" onclick="a('c')">Ekip</a></li>
+          <li class="dropdown-container" style="--i: 3;">
+            <a href="#" class="dropdown-toggle">Hizmetlerimiz <span class="arrow">↓</span></a>
+            <div class="dropdown">
+              <a href="/physical">Fiziksel Sunucu</a>
+              <a href="/vds">Sanal Sunucu</a>
+              <a href="/domain">Alan Adı</a>
+            </div>
+          </li>
+          <li style="--i: 4;"><a href="/support">Destek</a></li>
+          <li style="--i: 5;"><a href="https://discord.gg/minehost" onclick="a('g')">Discord</a></li>
+          <li style="--i: 6;"><a href="#" onclick="h()">Çıkış Yap</a></li>
+        </ul>
+      </nav>
     </div>
   </header>
 
-  <section class="maintenance">
-    <h1><span>Bakım</span>dayız</h1>
-    <p>Sistemlerimiz şu anda bakımda. En kısa sürede geri döneceğiz, sabrınız için teşekkürler!</p>
-    <div class="loader"></div>
+  <section class="maintenance-section">
+    <div class="container">
+      <h1><span>Bakım</span>dayız</h1>
+      <p>Sistemlerimiz şu anda bakımda. En kısa sürede geri döneceğiz, sabrınız için teşekkürler!</p>
+      <div class="loader"></div>
+    </div>
   </section>
 
-  <footer>
-    <div class="container">
-      <img src="image/logo.png" alt="MineHost Logo" class="logo">
-      <div class="footer-content">
-        <div class="footer-section">
-          <h4>Hizmetler</h4>
-          <ul>
-            <li><a href="/vds">Sanal Sunucu</a></li>
-            <li><a href="/physical">Fiziksel Sunucu</a></li>
-            <li><a href="#">cPanel Hosting</a></li>
-            <li><a href="#">Plesk Hosting</a></li>
-          </ul>
-        </div>
-        <div class="footer-section">
-          <h4>İletişim</h4>
-          <ul>
-            <li><a href="mailto:minehost@minehost.com.tr">minehost@minehost.com.tr</a></li>
-            <li><a href="tel:+639638527197">+63 963 852 7197</a></li>
-            <li><a href="#">Ankara/Türkiye</a></li>
-          </ul>
-        </div>
-        <div class="footer-section">
-          <h4>Bizi Takip Edin</h4>
-          <div class="social-links">
-            <a href="https://discord.gg/minehost"><i class="fab fa-discord"></i></a>
-            <a href="#"><i class="fab fa-twitter"></i></a>
-            <a href="#"><i class="fab fa-instagram"></i></a>
-          </div>
-        </div>
-      </div>
-      <div class="footer-bottom">
-        <p>© 2025 MineHost. Tüm hakları saklıdır.</p>
-        <p class="made-by">Made by <a href="https://discord.com/users/1316714899312873556" target="_blank">Wineryy</a></p>
-      </div>
-    </div>
-  </footer>
-
   <script>
-    const headerLogo = document.getElementById('header-logo');
-    headerLogo.addEventListener('click', () => {
-      headerLogo.classList.add('spin');
-      setTimeout(() => headerLogo.classList.remove('spin'), 1200);
+    const z = document.getElementById('hamburger'),
+          w = document.getElementById('nav-menu'),
+          v = document.getElementById('overlay'),
+          t = document.getElementById('header-logo'),
+          dropdownToggle = document.querySelector('.dropdown-toggle'),
+          dropdownContainer = document.querySelector('.dropdown-container');
+
+    function s(a) {
+      const notification = document.createElement('div');
+      notification.className = 'notification show';
+      notification.style.cssText = `
+        position: fixed; bottom: 20px; right: 20px; background: rgba(124, 58, 237, 0.2);
+        border: 1px solid #7c3aed; border-radius: 8px; padding: 0.8rem 1.5rem;
+        color: #fff; z-index: 1000; transition: all 0.3s ease;
+      `;
+      notification.innerHTML = `<p>${a}</p>`;
+      document.body.appendChild(notification);
+      setTimeout(() => notification.remove(), 5000);
+    }
+    function r(b) {
+      console.log("Notification would be sent to Discord: ", b);
+    }
+    function a(c) {
+      const d = `User Action: ${c}`;
+      s(d);
+      r(d);
+    }
+    function h() {
+      s("Çıkış yaptınız!");
+      setTimeout(() => window.location.href = '/auth', 1000);
+    }
+    function o() {
+      const n = z.classList.toggle('active');
+      w.classList.toggle('active');
+      v.classList.toggle('active');
+    }
+    function toggleDropdown() {
+      dropdownContainer.classList.toggle('active');
+    }
+
+    z.addEventListener('click', o);
+    v.addEventListener('click', o);
+    t.addEventListener('click', () => t.classList.add('spin'));
+    dropdownToggle.addEventListener('click', (e) => {
+      e.preventDefault();
+      toggleDropdown();
     });
   </script>
 </body>
