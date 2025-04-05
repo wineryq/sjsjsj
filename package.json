@@ -1,0 +1,28 @@
+{
+  "name": "minehost",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "description": "Minehost - Premium Hosting & VDS Çözümleri",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "start": "vite --host"
+  },
+  "dependencies": {
+    "vue": "^3.3.4",
+    "vue-router": "^4.2.4"
+  },
+  "devDependencies": {
+    "@types/node": "^20.5.0",
+    "@vitejs/plugin-vue": "^4.2.3",
+    "typescript": "^5.0.2",
+    "vite": "^4.4.5",
+    "vue-tsc": "^1.8.5"
+  },
+  "author": "Minehost",
+  "main": "server.js",
+  "keywords": [],
+  "license": "ISC"
+}
