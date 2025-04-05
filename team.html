@@ -3,9 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>MineHost - Ekibimiz</title>
-  <meta name="description" content="MineHost ekibimizle tanışın! Profesyonel yönetim ve destek ekibimiz.">
-  <link rel="icon" type="image/png" href="image/favicon.png">
+  <title>MineHost - Bakımdayız</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
   <style>
@@ -21,6 +19,9 @@
       line-height: 1.6;
       overflow-x: hidden;
       position: relative;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
     }
     body::before {
       content: '';
@@ -48,9 +49,6 @@
       background: rgba(10, 15, 31, 0.95);
       border-bottom: 1px solid rgba(124, 58, 237, 0.3);
       z-index: 1000;
-      position: fixed;
-      width: 100%;
-      top: 0;
     }
     header .container {
       display: flex;
@@ -107,37 +105,6 @@
     }
     .hamburger.active span:nth-child(3) {
       transform: rotate(-45deg) translate(5px, -5px);
-    }
-    .close-btn {
-      display: none;
-      position: fixed;
-      top: 20px;
-      right: 20px;
-      width: 40px;
-      height: 40px;
-      background: rgba(124, 58, 237, 0.3);
-      border-radius: 50%;
-      cursor: pointer;
-      z-index: 1002;
-      transition: transform 0.3s ease, background 0.3s ease;
-    }
-    .close-btn:hover {
-      transform: rotate(90deg);
-      background: rgba(124, 58, 237, 0.5);
-    }
-    .close-btn::before,
-    .close-btn::after {
-      content: '';
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      width: 20px;
-      height: 3px;
-      background: #c4b5fd;
-      transform: translate(-50%, -50%) rotate(45deg);
-    }
-    .close-btn::after {
-      transform: translate(-50%, -50%) rotate(-45deg);
     }
     nav {
       display: flex;
@@ -249,253 +216,60 @@
       opacity: 1;
       visibility: visible;
     }
-    .team-hero {
-      padding: 6rem 1rem 4rem;
+    .maintenance-section {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
       text-align: center;
+      padding: 4rem 1rem;
       position: relative;
-      overflow: hidden;
+      z-index: 2;
       opacity: 0;
       animation: fadeIn 1s forwards 0.5s;
-      margin-top: 70px; /* Header height compensation */
     }
     @keyframes fadeIn {
       0% { opacity: 0; transform: translateY(20px); }
       100% { opacity: 1; transform: translateY(0); }
     }
-    .team-hero::after {
-      content: '';
-      position: absolute;
-      top: -50%;
-      left: -50%;
-      width: 200%;
-      height: 200%;
-      background: radial-gradient(circle, rgba(124, 58, 237, 0.15), transparent 70%);
-      animation: rotate 20s linear infinite;
-      z-index: -1;
-    }
-    @keyframes rotate {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
-    }
-    .team-hero h1 {
-      font-size: 3.5rem;
+    .maintenance-section h1 {
+      font-size: 4rem;
       font-weight: 800;
       color: #fff;
       margin-bottom: 1rem;
       text-shadow: 0 0 20px rgba(124, 58, 237, 0.5);
+      animation: glow 2s infinite alternate;
     }
-    .team-hero h1 span {
+    @keyframes glow {
+      0% { text-shadow: 0 0 10px rgba(124, 58, 237, 0.5), 0 0 20px rgba(124, 58, 237, 0.3); }
+      100% { text-shadow: 0 0 20px rgba(124, 58, 237, 0.7), 0 0 40px rgba(124, 58, 237, 0.5); }
+    }
+    .maintenance-section h1 span {
       color: #7c3aed;
     }
-    .team-hero p {
-      font-size: 1.2rem;
+    .maintenance-section p {
+      font-size: 1.5rem;
       max-width: 700px;
       margin: 0 auto 2rem;
       color: #9ca3af;
     }
-    .team-section {
-      padding: 4rem 1rem;
-      background: rgba(10, 15, 31, 0.5);
-      text-align: center;
-    }
-    .team-section h2 {
-      font-size: 2.5rem;
-      color: #fff;
-      margin-bottom: 2rem;
-      text-shadow: 0 0 20px rgba(124, 58, 237, 0.5);
-    }
-    .carousel-container {
-      overflow: hidden;
-      max-width: 800px;
-      margin: 0 auto;
-      position: relative;
-    }
-    .carousel {
-      display: flex;
-      gap: 2rem;
-      padding: 1rem 0;
-      width: max-content;
-    }
-    .carousel.right {
-      animation: slideRight 20s linear infinite;
-    }
-    .carousel.left {
-      animation: slideLeft 20s linear infinite;
-    }
-    @keyframes slideRight {
-      0% { transform: translateX(0); }
-      100% { transform: translateX(-50%); }
-    }
-    @keyframes slideLeft {
-      0% { transform: translateX(-50%); }
-      100% { transform: translateX(0); }
-    }
-    .team-member {
-      background: rgba(31, 41, 55, 0.8);
-      padding: 1rem;
-      border-radius: 10px;
-      border: 1px solid rgba(124, 58, 237, 0.2);
-      min-width: 200px;
-      cursor: pointer;
-      transition: all 0.3s ease;
-    }
-    .team-member:hover {
-      transform: scale(1.05);
-      border-color: #7c3aed;
-      box-shadow: 0 0 15px rgba(124, 58, 237, 0.5);
-    }
-    .team-member .profile-pic {
+    .loader {
       width: 60px;
       height: 60px;
-      background: #7c3aed;
+      border: 6px solid #7c3aed;
+      border-top: 6px solid transparent;
       border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin: 0 auto 0.5rem;
-      font-size: 2rem;
-      font-weight: 800;
-      color: #fff;
+      animation: spin 1.5s linear infinite;
+      margin: 2rem auto;
     }
-    .team-member h3 {
-      color: #c4b5fd;
-      font-size: 1.3rem;
-      margin-bottom: 0.5rem;
-    }
-    .team-member p {
-      color: #9ca3af;
-      font-size: 1rem;
-      margin: 0.2rem 0;
-    }
-    .team-member .role {
-      color: #7c3aed;
-      font-weight: 500;
-    }
-    .notification {
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      background: rgba(124, 58, 237, 0.2);
-      border: 1px solid #7c3aed;
-      border-radius: 8px;
-      padding: 0.8rem 1.5rem;
-      color: #fff;
-      z-index: 1000;
-      display: none;
-      opacity: 0;
-      transform: translateY(20px);
-      transition: all 0.3s ease;
-    }
-    .notification.show {
-      display: block;
-      opacity: 1;
-      transform: translateY(0);
-    }
-    footer {
-      padding: 3rem 1rem;
-      background: linear-gradient(180deg, rgba(10, 15, 31, 0.9), rgba(5, 10, 25, 1));
-      border-top: 1px solid rgba(124, 58, 237, 0.5);
-      text-align: center;
-      position: relative;
-      overflow: hidden;
-      opacity: 0;
-      animation: fadeIn 1s forwards 2s;
-    }
-    footer::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: radial-gradient(circle at 50% 0%, rgba(124, 58, 237, 0.2), transparent 70%);
-      z-index: 0;
-    }
-    footer .container {
-      position: relative;
-      z-index: 1;
-    }
-    footer .logo {
-      height: 60px;
-      margin-bottom: 1.5rem;
-      transition: transform 0.3s ease;
-    }
-    footer .logo:hover {
-      transform: scale(1.1);
-    }
-    footer .footer-content {
-      display: flex;
-      justify-content: space-between;
-      flex-wrap: wrap;
-      gap: 2rem;
-      margin-bottom: 2rem;
-    }
-    footer .footer-section {
-      flex: 1;
-      min-width: 200px;
-    }
-    footer .footer-section h4 {
-      font-size: 1.2rem;
-      color: #c4b5fd;
-      margin-bottom: 1rem;
-      text-transform: uppercase;
-    }
-    footer .footer-section ul {
-      list-style: none;
-    }
-    footer .footer-section ul li {
-      margin-bottom: 0.5rem;
-    }
-    footer .footer-section ul li a {
-      color: #9ca3af;
-      text-decoration: none;
-      font-size: 0.9rem;
-      transition: color 0.3s ease;
-    }
-    footer .footer-section ul li a:hover {
-      color: #7c3aed;
-    }
-    footer .social-links a {
-      color: #d1d5db;
-      font-size: 1.2rem;
-      margin: 0 0.5rem;
-      transition: color 0.3s ease, transform 0.3s ease;
-    }
-    footer .social-links a:hover {
-      color: #7c3aed;
-      transform: translateY(-3px);
-    }
-    footer .footer-bottom {
-      border-top: 1px solid rgba(124, 58, 237, 0.3);
-      padding-top: 1.5rem;
-      margin-top: 1.5rem;
-    }
-    footer .footer-bottom p {
-      font-size: 0.9rem;
-      color: #9ca3af;
-    }
-    footer .made-by {
-      font-size: 0.9rem;
-      color: #9ca3af;
-      margin-top: 1rem;
-    }
-    footer .made-by a {
-      color: #c4b5fd;
-      text-decoration: none;
-      transition: color 0.3s ease;
-    }
-    footer .made-by a:hover {
-      color: #7c3aed;
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
     }
     @media (max-width: 768px) {
       .hamburger {
         display: flex;
-      }
-      .close-btn {
-        display: none;
-      }
-      .close-btn.active {
-        display: block;
       }
       nav ul {
         position: fixed;
@@ -535,86 +309,23 @@
         width: 100%;
         background: none;
         border: none;
-        opacity: 0;
-        visibility: hidden;
-        transform: translateY(-10px);
       }
-      nav ul li.dropdown-container.active .dropdown {
-        opacity: 1;
-        visibility: visible;
-        transform: translateY(0);
-      }
-      nav ul li.dropdown-container .dropdown a {
-        font-size: 1.2rem;
-        border-bottom: none;
-      }
-      .team-hero h1 {
+      .maintenance-section h1 {
         font-size: 2.5rem;
       }
-      .team-hero p {
+      .maintenance-section p {
         font-size: 1rem;
       }
-      .carousel-container {
-        max-width: 100%;
-      }
-      .team-member {
-        min-width: 150px;
-      }
-      .team-section h2 {
-        font-size: 2rem;
-      }
-      .team-member .profile-pic {
-        width: 50px;
-        height: 50px;
-        font-size: 1.5rem;
-      }
-      footer .footer-content {
-        flex-direction: column;
-        align-items: center;
-        text-align: center;
-      }
-      footer .footer-section {
-        margin-bottom: 1.5rem;
-      }
-    }
-    @media (min-width: 769px) {
-      nav ul {
-        flex-direction: row;
-        position: static;
-        width: auto;
-        height: auto;
-        background: none;
-        transform: none;
-        transition: none;
-      }
-      nav ul li a {
-        font-size: 1rem;
-      }
-    }
-    @media (max-width: 480px) {
-      .hamburger {
-        padding: 6px;
-      }
-      .hamburger span {
-        width: 25px;
-        height: 3px;
-      }
-      .team-hero h1 {
-        font-size: 2rem;
-      }
-      .team-hero p {
-        font-size: 0.9rem;
+      .loader {
+        width: 40px;
+        height: 40px;
+        border-width: 4px;
       }
     }
   </style>
 </head>
 <body>
-  <div class="notification" id="notification">
-    <p id="notification-text"></p>
-  </div>
-
   <div class="overlay" id="overlay"></div>
-  <div class="close-btn" id="close-btn"></div>
 
   <header>
     <div class="container">
@@ -644,142 +355,33 @@
     </div>
   </header>
 
-  <section class="team-hero">
+  <section class="maintenance-section">
     <div class="container">
-      <h1>Profesyonel <span>Ekibimiz</span></h1>
-      <p>MineHost'un uzman yönetim ve destek ekibiyle tanışın! Hizmetlerimizde kalite ve güven sunuyoruz.</p>
+      <h1><span>Bakım</span>dayız</h1>
+      <p>Sistemlerimiz şu anda bakımda. En kısa sürede geri döneceğiz, sabrınız için teşekkürler!</p>
+      <div class="loader"></div>
     </div>
   </section>
-
-  <section class="team-section">
-    <div class="container">
-      <h2>Ekip</h2>
-      <div class="carousel-container">
-        <h3>YÖNETİM</h3>
-        <div class="carousel right" id="management-carousel">
-          <div class="team-member" onclick="window.location.href='https://discord.gg/minehost'">
-            <div class="profile-pic">U</div>
-            <h3>Umut</h3>
-            <p>@wineryy</p>
-            <p class="role">FOUNDER / OWNER</p>
-          </div>
-          <div class="team-member" onclick="window.location.href='https://discord.gg/minehost'">
-            <div class="profile-pic">A</div>
-            <h3>Ahmet</h3>
-            <p>@_nark0z</p>
-            <p class="role">FOUNDER</p>
-          </div>
-          <div class="team-member" onclick="window.location.href='https://discord.gg/minehost'">
-            <div class="profile-pic">T</div>
-            <h3>Tolga</h3>
-            <p>@tolga.mic</p>
-            <p class="role">Yönetici</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="team-section">
-    <div class="container">
-      <div class="carousel-container">
-        <h3>DESTEK</h3>
-        <div class="carousel left" id="support-carousel">
-          <div class="team-member" onclick="window.location.href='https://discord.gg/minehost'">
-            <div class="profile-pic">M</div>
-            <h3>Mert</h3>
-            <p>@ateshcim</p>
-            <p class="role">SUPPORT</p>
-          </div>
-          <div class="team-member" onclick="window.location.href='https://discord.gg/minehost'">
-            <div class="profile-pic">K</div>
-            <h3>Kasım</h3>
-            <p>@nowdizzyxd</p>
-            <p class="role">SUPPORT</p>
-          </div>
-          <div class="team-member" onclick="window.location.href='https://discord.gg/minehost'">
-            <div class="profile-pic">E</div>
-            <h3>Efe</h3>
-            <p>@efetr.developer</p>
-            <p class="role">SUPPORT</p>
-          </div>
-          <div class="team-member" onclick="window.location.href='https://discord.gg/minehost'">
-            <div class="profile-pic">Y</div>
-            <h3>Yavuz</h3>
-            <p>@yavuzshances</p>
-            <p class="role">SUPPORT</p>
-          </div>
-          <div class="team-member" onclick="window.location.href='https://discord.gg/minehost'">
-            <div class="profile-pic">D</div>
-            <h3>Damla</h3>
-            <p>@yven_v2</p>
-            <p class="role">VOICE SUPPORT</p>
-          </div>
-          <div class="team-member" onclick="window.location.href='https://discord.gg/minehost'">
-            <div class="profile-pic">B</div>
-            <h3>Burak</h3>
-            <p>@rion_xdd</p>
-            <p class="role">WEBSITE SUPPORT</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <footer>
-    <div class="container">
-      <img src="image/logo.png" alt="MineHost Logo" class="logo">
-      <div class="footer-content">
-        <div class="footer-section">
-          <h4>Hizmetler</h4>
-          <ul>
-            <li><a href="/vds">Sanal Sunucu</a></li>
-            <li><a href="/physical">Fiziksel Sunucu</a></li>
-            <li><a href="#">cPanel Hosting</a></li>
-            <li><a href="#">Plesk Hosting</a></li>
-          </ul>
-        </div>
-        <div class="footer-section">
-          <h4>İletişim</h4>
-          <ul>
-            <li><a href="mailto:minehost@minehost.com.tr">minehost@minehost.com.tr</a></li>
-            <li><a href="tel:+639638527197">+63 963 852 7197</a></li>
-            <li><a href="#">Ankara/Türkiye</a></li>
-          </ul>
-        </div>
-        <div class="footer-section">
-          <h4>Bizi Takip Edin</h4>
-          <div class="social-links">
-            <a href="https://discord.gg/minehost" onclick="a('g')"><i class="fab fa-discord"></i></a>
-            <a href="#"><i class="fab fa-twitter"></i></a>
-            <a href="#"><i class="fab fa-instagram"></i></a>
-          </div>
-        </div>
-      </div>
-      <div class="footer-bottom">
-        <p>© 2025 MineHost. Tüm hakları saklıdır.</p>
-        <p class="made-by">Made by <a href="https://discord.com/users/1316714899312873556" target="_blank">Wineryy</a></p>
-      </div>
-    </div>
-  </footer>
 
   <script>
-    const x = document.getElementById('notification'),
-          y = document.getElementById('notification-text'),
-          z = document.getElementById('hamburger'),
+    const z = document.getElementById('hamburger'),
           w = document.getElementById('nav-menu'),
           v = document.getElementById('overlay'),
-          u = document.getElementById('close-btn'),
           t = document.getElementById('header-logo'),
           dropdownToggle = document.querySelector('.dropdown-toggle'),
-          dropdownContainer = document.querySelector('.dropdown-container'),
-          managementCarousel = document.getElementById('management-carousel'),
-          supportCarousel = document.getElementById('support-carousel');
+          dropdownContainer = document.querySelector('.dropdown-container');
 
     function s(a) {
-      y.textContent = a;
-      x.classList.add('show');
-      setTimeout(() => x.classList.remove('show'), 5000);
+      const notification = document.createElement('div');
+      notification.className = 'notification show';
+      notification.style.cssText = `
+        position: fixed; bottom: 20px; right: 20px; background: rgba(124, 58, 237, 0.2);
+        border: 1px solid #7c3aed; border-radius: 8px; padding: 0.8rem 1.5rem;
+        color: #fff; z-index: 1000; transition: all 0.3s ease;
+      `;
+      notification.innerHTML = `<p>${a}</p>`;
+      document.body.appendChild(notification);
+      setTimeout(() => notification.remove(), 5000);
     }
     function r(b) {
       console.log("Notification would be sent to Discord: ", b);
@@ -797,34 +399,18 @@
       const n = z.classList.toggle('active');
       w.classList.toggle('active');
       v.classList.toggle('active');
-      u.classList.toggle('active');
     }
-    function toggleDropdown(e) {
-      e.preventDefault();
+    function toggleDropdown() {
       dropdownContainer.classList.toggle('active');
     }
 
-    function setupInfiniteCarousel(carousel) {
-      const items = carousel.children;
-      const itemCount = items.length;
-      const totalWidth = Array.from(items).reduce((sum, item) => sum + item.offsetWidth + 32, 0);
-
-      for (let i = 0; i < itemCount; i++) {
-        carousel.appendChild(items[i].cloneNode(true));
-      }
-
-      const duration = totalWidth / 50;
-      carousel.style.animationDuration = `${duration}s`;
-    }
-
-    setupInfiniteCarousel(managementCarousel);
-    setupInfiniteCarousel(supportCarousel);
-
     z.addEventListener('click', o);
-    u.addEventListener('click', o);
     v.addEventListener('click', o);
     t.addEventListener('click', () => t.classList.add('spin'));
-    dropdownToggle.addEventListener('click', toggleDropdown);
+    dropdownToggle.addEventListener('click', (e) => {
+      e.preventDefault();
+      toggleDropdown();
+    });
   </script>
 </body>
 </html>
@@ -839,5 +425,5 @@
   s1.setAttribute('crossorigin','*');
   s0.parentNode.insertBefore(s1,s0);
   })();
-</script>
-<!--End of Tawk.to Script-->
+  </script>
+  <!--End of Tawk.to Script-->
