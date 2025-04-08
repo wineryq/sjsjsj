@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MineHost - Bakımdayız</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: 'Inter', Arial, sans-serif;
+      background: #0a0f1f;
+      color: #d1d5db;
+      line-height: 1.6;
+      overflow-x: hidden;
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle at 50% 50%, rgba(124, 58, 237, 0.1), transparent 70%);
+      z-index: -1;
+      animation: pulse 15s infinite;
+    }
+    @keyframes pulse {
+      0% { transform: scale(1); opacity: 0.5; }
+      50% { transform: scale(1.2); opacity: 0.3; }
+      100% { transform: scale(1); opacity: 0.5; }
+    }
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+    header {
+      padding: 1rem 0;
+      background: rgba(10, 15, 31, 0.95);
+      border-bottom: 1px solid rgba(124, 58, 237, 0.3);
+      z-index: 1000;
+    }
+    header .container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: relative;
+    }
+    .logo {
+      height: 45px;
+      transition: transform 0.3s ease;
+      cursor: pointer;
+    }
+    .logo:hover {
+      transform: rotate(5deg);
+    }
+    .logo.spin {
+      animation: spinWithBounce 1.2s ease-in-out;
+    }
+    @keyframes spinWithBounce {
+      0% { transform: rotate(0deg) scale(1); }
+      50% { transform: rotate(180deg) scale(1.1); }
+      80% { transform: rotate(340deg) scale(0.95); }
+      100% { transform: rotate(360deg) scale(1); }
+    }
+    .maintenance {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 4rem 1rem;
+      position: relative;
+      z-index: 2;
+    }
+    .maintenance h1 {
+      font-size: 4rem;
+      font-weight: 800;
+      color: #fff;
+      margin-bottom: 1rem;
+      text-shadow: 0 0 20px rgba(124, 58, 237, 0.5);
+      animation: glow 2s infinite alternate;
+    }
+    @keyframes glow {
+      0% { text-shadow: 0 0 10px rgba(124, 58, 237, 0.5), 0 0 20px rgba(124, 58, 237, 0.3); }
+      100% { text-shadow: 0 0 20px rgba(124, 58, 237, 0.7), 0 0 40px rgba(124, 58, 237, 0.5); }
+    }
+    .maintenance h1 span {
+      color: #7c3aed;
+    }
+    .maintenance p {
+      font-size: 1.5rem;
+      max-width: 700px;
+      margin: 0 auto 2rem;
+      color: #9ca3af;
+      animation: fadeIn 1s ease-in-out 1s forwards;
+      opacity: 0;
+    }
+    @keyframes fadeIn {
+      0% { opacity: 0; transform: translateY(20px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+    .loader {
+      width: 60px;
+      height: 60px;
+      border: 6px solid #7c3aed;
+      border-top: 6px solid transparent;
+      border-radius: 50%;
+      animation: spin 1.5s linear infinite;
+      margin: 2rem auto;
+    }
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    footer {
+      padding: 3rem 1rem;
+      background: linear-gradient(180deg, rgba(10, 15, 31, 0.9), rgba(5, 10, 25, 1));
+      border-top: 1px solid rgba(124, 58, 237, 0.5);
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    footer::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle at 50% 0%, rgba(124, 58, 237, 0.2), transparent 70%);
+      z-index: 0;
+    }
+    footer .container {
+      position: relative;
+      z-index: 1;
+    }
+    footer .logo {
+      height: 60px;
+      margin-bottom: 1.5rem;
+      transition: transform 0.3s ease;
+    }
+    footer .logo:hover {
+      transform: scale(1.1);
+    }
+    footer .footer-content {
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 2rem;
+      margin-bottom: 2rem;
+    }
+    footer .footer-section {
+      flex: 1;
+      min-width: 200px;
+    }
+    footer .footer-section h4 {
+      font-size: 1.2rem;
+      color: #c4b5fd;
+      margin-bottom: 1rem;
+      text-transform: uppercase;
+    }
+    footer .footer-section ul {
+      list-style: none;
+    }
+    footer .footer-section ul li {
+      margin-bottom: 0.5rem;
+    }
+    footer .footer-section ul li a {
+      color: #9ca3af;
+      text-decoration: none;
+      font-size: 0.9rem;
+      transition: color 0.3s ease;
+    }
+    footer .footer-section ul li a:hover {
+      color: #7c3aed;
+    }
+    footer .social-links a {
+      color: #d1d5db;
+      font-size: 1.2rem;
+      margin: 0 0.5rem;
+      transition: color 0.3s ease, transform 0.3s ease;
+    }
+    footer .social-links a:hover {
+      color: #7c3aed;
+      transform: translateY(-3px);
+    }
+    footer .footer-bottom {
+      border-top: 1px solid rgba(124, 58, 237, 0.3);
+      padding-top: 1.5rem;
+      margin-top: 1.5rem;
+    }
+    footer .footer-bottom p {
+      font-size: 0.9rem;
+      color: #9ca3af;
+    }
+    footer .made-by {
+      font-size: 0.9rem;
+      color: #9ca3af;
+      margin-top: 1rem;
+    }
+    footer .made-by a {
+      color: #c4b5fd;
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+    footer .made-by a:hover {
+      color: #7c3aed;
+    }
+    @media (max-width: 768px) {
+      .maintenance h1 {
+        font-size: 2.5rem;
+      }
+      .maintenance p {
+        font-size: 1rem;
+      }
+      .loader {
+        width: 40px;
+        height: 40px;
+        border-width: 4px;
+      }
+      footer .footer-content {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+      }
+      footer .footer-section {
+        margin-bottom: 1.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container">
+      <img src="image/logo.png" alt="MineHost Logo" class="logo" id="header-logo">
+    </div>
+  </header>
+
+  <section class="maintenance">
+    <h1><span>Bakım</span>dayız</h1>
+    <p>Sistemlerimiz şu anda bakımda. En kısa sürede geri döneceğiz, sabrınız için teşekkürler!</p>
+    <div class="loader"></div>
+  </section>
+
+  <footer>
+    <div class="container">
+      <img src="image/logo.png" alt="MineHost Logo" class="logo">
+      <div class="footer-content">
+        <div class="footer-section">
+          <h4>Hizmetler</h4>
+          <ul>
+            <li><a href="/vds">Sanal Sunucu</a></li>
+            <li><a href="/physical">Fiziksel Sunucu</a></li>
+            <li><a href="#">cPanel Hosting</a></li>
+            <li><a href="#">Plesk Hosting</a></li>
+          </ul>
+        </div>
+        <div class="footer-section">
+          <h4>İletişim</h4>
+          <ul>
+            <li><a href="mailto:minehost@minehost.com.tr">minehost@minehost.com.tr</a></li>
+            <li><a href="tel:+639638527197">+63 963 852 7197</a></li>
+            <li><a href="#">Ankara/Türkiye</a></li>
+          </ul>
+        </div>
+        <div class="footer-section">
+          <h4>Bizi Takip Edin</h4>
+          <div class="social-links">
+            <a href="https://discord.gg/minehost"><i class="fab fa-discord"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-instagram"></i></a>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>© 2025 MineHost. Tüm hakları saklıdır.</p>
+        <p class="made-by">Made by <a href="https://discord.com/users/1316714899312873556" target="_blank">Wineryy</a></p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const headerLogo = document.getElementById('header-logo');
+    headerLogo.addEventListener('click', () => {
+      headerLogo.classList.add('spin');
+      setTimeout(() => headerLogo.classList.remove('spin'), 1200);
+    });
+  </script>
+</body>
+</html>
